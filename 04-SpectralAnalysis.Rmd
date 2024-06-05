@@ -10,6 +10,7 @@ library(imputeTS)
 library(TSA)
 library(stlplus)
 library(biwavelet)
+library(scales)
 ```
 
 ### Dataset    
@@ -82,8 +83,6 @@ mtm1 <- mtm(df4,output = 1,verbose = F) %>%
   mutate(Period = 1/Frequency) %>%
   dplyr::select(Period, Power)
 
-
-library(scales)
 reverselog_trans <- function(base = exp(1)) {
   trans <- function(x) -log(x, base)
   inv <- function(x) base^(-x)
@@ -254,6 +253,7 @@ plot(lomb$scanned, lomb$spec, type = "l", log = "xy",
 ```{r}
 # Convert to matrix format required by biwavelet
 dat <- cbind(time_vec, dis_vec)
+dat <- dat[1:1880,]
 
 # Compute wavelet transform
 wav <- biwavelet::wt(dat)
@@ -261,4 +261,10 @@ wav <- biwavelet::wt(dat)
 # Plot wavelet power spectrum
 biwavelet::plot.biwavelet(wav, plot.phase = FALSE, type = "power.norm")
 ```
+
+We'll explore wavelets more in the next chapter.
+
+## Takeaways
+
+There are many methods for looking at the spectra of time series. For unevenly sampled series, we are more limited in methods, and interpolation may cause artifacts in our analyses.
 
