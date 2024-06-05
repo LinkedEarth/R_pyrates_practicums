@@ -1,80 +1,275 @@
-# Spectral Analysis in R
+# 04-Spectral Analysis
 
-## Data Description
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
-This tutorial makes use of the following dataset, stored in CSV format:
+![](http://linked.earth/FROGS/images/Pyrateslogo.jpg){width=400}
 
-Lisiecki, L. E., and Raymo, M. E. (2005), A Pliocene-Pleistocene stack of 57 globally distributed benthic δ18O records, Paleoceanography, 20, PA1003, doi:10.1029/2004PA001071.
+Recall that in spectral analysis we step into a "bizarro world", switching from the time domain to the frequency domain. There, two essential features are of interest: peaks, and background. In this tutorial, we will perform spectral analysis on Rio Grande streamflow, and see if we can learn anything interesting about it in this way.
 
-## Demonstration
+### Packages
+In addition to the standard R packages (tidyverse, lubridate), this tutorial showcases: 
+- [imputeTS](https://cran.r-project.org/web/packages/imputeTS/index.html) for time series imputation
+- [TSA](https://cran.r-project.org/web/packages/TSA/index.html) for time series analysis, including spectral analysis
+- [stlplus](https://cran.r-project.org/web/packages/stlplus/index.html) for STL decomposition
+- [biwavelet](https://cran.r-project.org/web/packages/biwavelet/index.html) for wavelet analysis
 
-Let’s import the necessary packages:
-
-```{r}
+```{r, message=FALSE}
 library(tidyverse)
-library(geoChronR)
+library(imputeTS)
+library(TSA)
+library(stlplus)
+library(biwavelet)
 ```
 
-Let’s first import data and plot it so that up means “warm”:
+### Dataset    
+We will be looking at the daily discharge of the Rio Grande, which has been measured at Embudo, NM since 1889. The data and their associated metadata may be retrieved from the [USGS website](https://waterdata.usgs.gov/nwis/dv?cb_00060=on&format=rdb&site_no=08279500&legacy=&referred_module=sw&period=&begin_date=1889-01-01&end_date=2024-05-20). Let's load them and have a look:
 
 ```{r}
+df <- read.table('https://waterdata.usgs.gov/nwis/dv?cb_00060=on&format=rdb&site_no=08279500&legacy=&referred_module=sw&period=&begin_date=1889-01-01&end_date=2024-05-20', skip=35, sep="\t")
+names(df) <- c('agency', 'site_no', 'datetime','discharge (cf/s)','code')
+df$datetime <- lubridate::as_datetime(df$datetime)
+head(df)
+```
 
-#Import data
-lr04 <- read.csv("https://raw.githubusercontent.com/LinkedEarth/RLeapFROGS/binder/static/module3/lr04.csv")
+First, let us inspect the distribution of values:
 
-#Initial viz
-ggplot(data = lr04, mapping = aes(x=Year,y=d18O))+geom_line() + scale_y_reverse() +
-  labs(title = "57 globally distributed benthic δ18O records, Lisiecki et al., 2005",
-       x = "Year (ky BP)",
-       y = "\u03B418O (\u2030)") +
+```{r}
+hist(df$`discharge (cf/s)`, main = "Distribution of Rio Grande Discharge", xlab = "Discharge (cf/s)")
+```
+
+Like many other variables, streamflow is **positively skewed**: the distribution is asymmetric, with most values near zero and few instances of very high streamflow. Now let's inspect the temporal behavior:
+
+```{r}
+ggplot(df, aes(x = datetime, y = `discharge (cf/s)`)) +
+  geom_line() +
+  labs(x = "Time", y = "Discharge (cf/s)")
+```
+
+
+
+
+```{r}
+discharge_monthly <- df %>%
+  group_by(Date = floor_date(ymd(df$datetime), '1 month')) %>%
+  summarise(discharge = mean(`discharge (cf/s)`, na.rm = TRUE), .groups = 'drop')
+
+
+ggplot(discharge_monthly, aes(x=Date, y=discharge)) +
+  labs(title = "Rio Grande at Embudo, NM (monthly)",
+       x="Year (CE)",
+       y="dicharge (cf/s)") +
+  geom_line() +
+  ggtitle("Rio Grand Discharge") +
   theme_light()
 
 ```
 
-Let’s work with the first 3 million years (3000 kyr) of the record for illustrative purposes:
+```{r}
+missing_vals <- discharge_monthly$Date[which(is.na(discharge_monthly$discharge))]
+missing_vals
 
-```{r pressure, echo=FALSE}
-#Trim data
-lr04_trimmed <- lr04 %>%
-  dplyr::filter(Year < 3000)
+df3 <- discharge_monthly %>%
+  filter(Date > max(missing_vals))
 
-#Trimmed viz
-ggplot(data = lr04_trimmed, mapping = aes(x=Year,y=d18O))+geom_line() + scale_y_reverse() +
-  labs(title = "57 globally distributed benthic δ18O records, Lisiecki et al., 2005",
-       x = "Year (ky BP)",
-       y = "\u03B418O (\u2030)") +
+hist(as.numeric(diff(df3$Date)),main = "Distribution of Time Steps", xlab = "Days")
+
+df4 <- df3 %>%
+  mutate(Date = decimal_date(Date)) |> 
+  astrochron::linterp(dt=(1/12),genplot = F) %>%
+  filter(Date > max(missing_vals))
+
+ggplot(df4, aes(x=Date, y=discharge)) +
+  labs(title = "Rio Grande at Embudo, NM (30.4375-day period)",
+       x="Year (CE)",
+       y="dicharge (cf/s)") +
+  geom_line() +
   theme_light()
+```
+
+```{r}
+mtm1 <- mtm(df4,output = 1,verbose = F) %>%
+  mutate(Period = 1/Frequency) %>%
+  dplyr::select(Period, Power)
+
+
+library(scales)
+reverselog_trans <- function(base = exp(1)) {
+  trans <- function(x) -log(x, base)
+  inv <- function(x) base^(-x)
+  trans_new(paste0("reverselog-", format(base)), trans, inv, 
+            log_breaks(base = base), 
+            domain = c(1e-100, Inf))
+}
+
+ggplot(mtm1, aes(x=Period, y=Power)) +
+  labs(title = "Rio Grande discharge spectrum (mtm)") +
+  geom_line() +
+  scale_y_log10() + 
+  scale_x_continuous(trans = reverselog_trans(10),
+                     breaks = c(100,50,20,10,5,2,1,0.5,0.2),
+                     limits = c(100,0.2)) +
+  theme_light()
+```
+The prominent feature is a strong annual cycle and higher-order harmonics, super-imposed on a “warm colored” background (i.e. variations at long timescales are larger than variations at short timescales). There are hints of long-term scaling as well, one in the subannual range, and one from period of 1 to 50y. We may be interested in the shape of this background, and whether it can be fit by one or more power laws.
+
+In addition, we may be interested in interannual (year-to-year) to interdecadal (decade-to-decade) variations in streamflow. We would like to know whether the peak observed around 3-4 years in the plot above is *significant* with respect to a reasonable null.
+
+To do both of these things it would make sense to remove the annual cycle. We'll use STL decomposition for this.
+
+Now, because of the positive skew mentioned above, it turns out that the STL decomposition has trouble with this dataset. Instead, we can use the gaussianize() to map this dataset to a standard normal. There are applications for which this would be undesirable, but for this purpose it is good:
+
+Gaussianize is available as part of the geoChronR package - but it's also pretty simple, so let's just define that here: 
+
+```{r}
+gaussianize <- function(X) {
+    if (!is.matrix(X)) {
+        X = as.matrix(X)
+    }
+    p = NCOL(X)
+    n = NROW(X)
+    Xn = matrix(data = NA, nrow = n, ncol = p)
+    for (j in 1:p) {
+        nz <- which(!is.na(X[, j]))
+        N <- length(nz)
+        R <- rank(X[nz, j])
+        CDF <- R/N - 1/(2 * N)
+        Xn[nz, j] <- qnorm(CDF)
+    }
+    return(Xn)
+}
 
 ```
 
-## Spectral methods
 
-Here's a quick overview of the five spectral analysis methods we'll cover:
+Let's take a look at how this affects the spectrum:
 
-**Basic Periodogram**, which uses a Fourier transform. The method has various windowing available to reduce variance.
+```{r}
+df5 <- df4 |> 
+  mutate(discharge = gaussianize(discharge))
+  
+  
+mtm2 <-   mtm(df5,output = 1,verbose = F) %>%
+  mutate(Period = 1/Frequency) %>%
+  dplyr::select(Period, Power)
 
-**Welch’s Periodogram**, a variant of the basic periodogram, which uses Welch’s method of overlapping segments. The periodogram of the full timeseries is the average of the segment periodograms.
+ggplot(mtm2, aes(x=Period, y=Power)) +
+  labs(title = "Rio Grande discharge spectrum (mtm)") +
+  geom_line() +
+  scale_y_log10() + 
+  scale_x_continuous(trans = reverselog_trans(10),
+                     breaks = c(100,50,20,10,5,2,1,0.5,0.2),
+                     limits = c(100,0.2)) +
+  theme_light()
+```
 
-**Multi-Taper Method (MTM)**, which attempts to reduce the variance of spectral estimates by using a small set of tapers rather than the unique data taper or spectral window
-
-**Lomb-Scargle Periodogram**, an inverse approach designed for unevenly-spaced datasets. Several windows are available and Welch’s segmentation can also be used with this method.
-
-**Weighted Wavelet Z-transform**, a wavelet-based method also made for unevenly-spaced datasets.
-
-Let’s have a look at the various methods. Since the first three methods require evenly-spaced data, we will be using a simple linear interpolation. The effect of pre-processing on the periodogram is discussed further in this notebook.
+We see that the spectrum is nearly unchanged, but now we can apply STL:
 
 
 ```{r}
-#Extend the 'Year' column to be continuous and annual over the trimmed interval
-Year_interp <- seq(ceiling(min(lr04_trimmed$Year)), floor(max(lr04_trimmed$Year)), by = 1)
-
-#Use a linear fit to interpolate the d18O series
-d18O_interp <- approx(lr04_trimmed$Year, lr04_trimmed$d18O, xout = Year_interp, f = 0.5)$y
-
-#Put these new vectors into a data frame
-lr04_interp <- data.frame(Year=Year_interp,
-                          d18O=d18O_interp)
-
-#Take a look at the first few observations of the interpolated series
-head(lr04_interp)
+dis <- ts(as.numeric(df5$discharge), start = c(1889, 1), frequency = 12)
+stl_res <- stl(dis, s.window = "periodic")
+plot(stl_res)
 ```
+
+Now let's apply spectral analysis to the trend component:
+
+```{r}
+df6 <- df5 |> 
+  mutate(discharge = as.numeric(stl_res$time.series[,2]))
+
+  
+mtm3 <-   mtm(df6,output = 1,verbose = F) %>%
+  mutate(Period = 1/Frequency) 
+
+trendOnlySpectrum <- ggplot(mtm3, aes(x=Period, y=Power)) +
+  labs(title = "Rio Grande discharge trend-only spectrum (mtm)") +
+  geom_line() +
+  geom_line(aes(y = AR1_95_power),color = "red") +
+  scale_y_log10() + 
+  scale_x_continuous(trans = reverselog_trans(10),
+                     breaks = c(100,50,20,10,5,2,1,0.5,0.2),
+                     limits = c(100,0.2)) +
+  theme_light()
+
+trendOnlySpectrum
+```
+
+Indeed this removed the annual cycle and its harmonics (for the most part). It's a fairly aggressive treatment, but we can now compare the significance of the interannual peaks w.r.t to an AR(1) benchmark. 
+
+We see that the broadband peak in the 2-10y range is above the AR(1) spectrum, so these frequencies could be considered significant.
+
+## Estimation of scaling behavior
+In this last example, we fit a single scaling exponent to the timeseries, spanning the entire range of frequencies (periods). Under the hood, all we are doing is fitting a straight line to the spectrum:
+
+```{r}
+# Log-transform both axes
+toScale <- filter(mtm3, between(Period,0.2,100))
+log_period <- log10(toScale$Period)
+log_spec <- log10(toScale$Power)
+
+# Fit a line
+fit <- lm(log_spec ~ log_period)
+toScale$plotLine <- predict(fit)
+# Plot
+
+trendOnlySpectrum + 
+  geom_line(data = toScale,aes(x = Period,y = 10^plotLine),color = "blue",linetype = 3)
+
+
+```
+
+This results in a fairly steep exponent near `r round(coef(fit)[2], 2)`. If we were specifically interested in the scaling exponent (spectral slope) between periods of 2-100y, you would do it like so:
+
+```{r}
+# Log-transform both axes
+toScale <- filter(mtm3, between(Period,2,100))
+log_period <- log10(toScale$Period)
+log_spec <- log10(toScale$Power)
+
+# Fit a line
+fitLong <- lm(log_spec ~ log_period)
+toScale$plotLine <- predict(fitLong)
+# Plot
+
+trendOnlySpectrum + 
+  geom_line(data = toScale,aes(x = Period,y = 10^plotLine),color = "blue",linetype = 3)
+
+```
+
+We see that this results in a much flatter line, i.e. a smaller scaling exponent around `r round(coef(fitLong)[2], 2)`.
+
+## Gap-tolerant spectral analysis
+
+We return to the original series and apply 2 techniques to obtain the spectrum, keeping gaps in the series.
+
+1. Lomb-Scargle periodogram:
+```{r}
+# Convert to numeric vector and remove NAs
+dis_vec <- as.numeric(df$`discharge (cf/s)`)
+dis_vec <- dis_vec[!is.na(dis_vec)]
+
+# Create time vector (in days)
+time_vec <- as.numeric(df$datetime[!is.na(df$`discharge (cf/s)`)]) - as.numeric(df$datetime[1])
+
+# Compute Lomb-Scargle periodogram
+lomb <- astrochron::ls(dis_vec, times = time_vec, ofac = 4, scaleType = "period", plot = FALSE)
+
+# Plot
+plot(lomb$scanned, lomb$spec, type = "l", log = "xy",
+     xlab = "Period [days]", ylab = "PSD", main = "Lomb-Scargle Periodogram")
+```
+
+2. Wavelet analysis using the Morlet wavelet:
+```{r}
+# Convert to matrix format required by biwavelet
+dat <- cbind(time_vec, dis_vec)
+
+# Compute wavelet transform
+wav <- biwavelet::wt(dat)
+
+# Plot wavelet power spectrum
+biwavelet::plot.biwavelet(wav, plot.phase = FALSE, type = "power.norm")
+```
+
