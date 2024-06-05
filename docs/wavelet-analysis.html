@@ -4,23 +4,23 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>6.3 Wavelet Analysis | Time Series Analysis in R</title>
+  <title>6.3 Wavelet Analysis | _main.knit</title>
   <meta name="description" content="This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the PyRATES Timeseries Practicums in python by Julien Emile-Geay" />
   <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="6.3 Wavelet Analysis | Time Series Analysis in R" />
+  <meta property="og:title" content="6.3 Wavelet Analysis | _main.knit" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the PyRATES Timeseries Practicums in python by Julien Emile-Geay" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="6.3 Wavelet Analysis | Time Series Analysis in R" />
+  <meta name="twitter:title" content="6.3 Wavelet Analysis | _main.knit" />
   
   <meta name="twitter:description" content="This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the PyRATES Timeseries Practicums in python by Julien Emile-Geay" />
   
 
-<meta name="author" content="David Edge and Nick McKay" />
+<meta name="author" content="David Edge, Nick McKay, and Julien Emile-Geay (with help from Claude.ai)" />
 
 
 <meta name="date" content="2024-06-05" />
@@ -136,7 +136,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> </a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Time Series Analysis in R</a></li>
 <li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="background.html"><a href="background.html"><i class="fa fa-check"></i><b>2.1</b> Background</a></li>
@@ -185,14 +185,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="5" data-path="spectral-analysis-in-r.html"><a href="spectral-analysis-in-r.html"><i class="fa fa-check"></i><b>5</b> Spectral Analysis in R</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="data-description.html"><a href="data-description.html"><i class="fa fa-check"></i><b>5.1</b> Data Description</a></li>
-<li class="chapter" data-level="5.2" data-path="demonstration.html"><a href="demonstration.html"><i class="fa fa-check"></i><b>5.2</b> Demonstration</a></li>
-<li class="chapter" data-level="5.3" data-path="spectral-methods.html"><a href="spectral-methods.html"><i class="fa fa-check"></i><b>5.3</b> Spectral methods</a></li>
+<li class="chapter" data-level="5.0.1" data-path="spectral-analysis-in-r.html"><a href="spectral-analysis-in-r.html#packages-1"><i class="fa fa-check"></i><b>5.0.1</b> Packages</a></li>
+<li class="chapter" data-level="5.0.2" data-path="spectral-analysis-in-r.html"><a href="spectral-analysis-in-r.html#dataset"><i class="fa fa-check"></i><b>5.0.2</b> Dataset</a></li>
+<li class="chapter" data-level="5.1" data-path="aggregate-to-monthly.html"><a href="aggregate-to-monthly.html"><i class="fa fa-check"></i><b>5.1</b> Aggregate to monthly</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="aggregate-to-monthly.html"><a href="aggregate-to-monthly.html#even-sampling"><i class="fa fa-check"></i><b>5.1.1</b> Even sampling</a></li>
+<li class="chapter" data-level="5.1.2" data-path="aggregate-to-monthly.html"><a href="aggregate-to-monthly.html#multi-taper"><i class="fa fa-check"></i><b>5.1.2</b> multi-taper</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="stl.html"><a href="stl.html"><i class="fa fa-check"></i><b>5.2</b> STL</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="stl.html"><a href="stl.html#gaussianize"><i class="fa fa-check"></i><b>5.2.1</b> Gaussianize</a></li>
+<li class="chapter" data-level="5.2.2" data-path="stl.html"><a href="stl.html#mtm-again"><i class="fa fa-check"></i><b>5.2.2</b> MTM, again</a></li>
+<li class="chapter" data-level="5.2.3" data-path="stl.html"><a href="stl.html#applying-stl"><i class="fa fa-check"></i><b>5.2.3</b> Applying STL</a></li>
+<li class="chapter" data-level="5.2.4" data-path="stl.html"><a href="stl.html#the-trend"><i class="fa fa-check"></i><b>5.2.4</b> The trend</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="estimation-of-scaling-behavior.html"><a href="estimation-of-scaling-behavior.html"><i class="fa fa-check"></i><b>5.3</b> Estimation of scaling behavior</a></li>
+<li class="chapter" data-level="5.4" data-path="gap-tolerant-spectral-analysis.html"><a href="gap-tolerant-spectral-analysis.html"><i class="fa fa-check"></i><b>5.4</b> Gap-tolerant spectral analysis</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="gap-tolerant-spectral-analysis.html"><a href="gap-tolerant-spectral-analysis.html#lomb-scargle"><i class="fa fa-check"></i><b>5.4.1</b> Lomb-Scargle</a></li>
+<li class="chapter" data-level="5.4.2" data-path="gap-tolerant-spectral-analysis.html"><a href="gap-tolerant-spectral-analysis.html#wavelet"><i class="fa fa-check"></i><b>5.4.2</b> Wavelet</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="takeaways.html"><a href="takeaways.html"><i class="fa fa-check"></i><b>5.5</b> Takeaways</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="wavelet-transform-in-r.html"><a href="wavelet-transform-in-r.html"><i class="fa fa-check"></i><b>6</b> Wavelet Transform in R</a>
 <ul>
-<li class="chapter" data-level="6.0.1" data-path="wavelet-transform-in-r.html"><a href="wavelet-transform-in-r.html#packages-1"><i class="fa fa-check"></i><b>6.0.1</b> Packages</a></li>
-<li class="chapter" data-level="6.0.2" data-path="wavelet-transform-in-r.html"><a href="wavelet-transform-in-r.html#data-description-1"><i class="fa fa-check"></i><b>6.0.2</b> Data description</a></li>
+<li class="chapter" data-level="6.0.1" data-path="wavelet-transform-in-r.html"><a href="wavelet-transform-in-r.html#packages-2"><i class="fa fa-check"></i><b>6.0.1</b> Packages</a></li>
+<li class="chapter" data-level="6.0.2" data-path="wavelet-transform-in-r.html"><a href="wavelet-transform-in-r.html#data-description"><i class="fa fa-check"></i><b>6.0.2</b> Data description</a></li>
 <li class="chapter" data-level="6.1" data-path="loading-and-visualizing-the-deltad-series.html"><a href="loading-and-visualizing-the-deltad-series.html"><i class="fa fa-check"></i><b>6.1</b> Loading and visualizing the <span class="math inline">\(\delta\)</span>D series</a></li>
 <li class="chapter" data-level="6.2" data-path="sampling-interval.html"><a href="sampling-interval.html"><i class="fa fa-check"></i><b>6.2</b> Sampling interval</a></li>
 <li class="chapter" data-level="6.3" data-path="wavelet-analysis.html"><a href="wavelet-analysis.html"><i class="fa fa-check"></i><b>6.3</b> Wavelet Analysis</a>
@@ -217,7 +235,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Time Series Analysis in R</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"></a>
           </h1>
         </div>
 
@@ -228,21 +246,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="wavelet-analysis" class="section level2 hasAnchor" number="6.3">
 <h2><span class="header-section-number">6.3</span> Wavelet Analysis<a href="wavelet-analysis.html#wavelet-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Lastly, we play with wavelet analysis, which may be used to “unfold” a spectrum and look at its evolution over time. There are several ways to access that functionality in Pyleoclim, but here we use summary_plot, which stacks together the timeseries itself, its scalogram (a plot of the magnitude of the wavelet power), and the power spectral density (PSD) obtained from summing the wavelet coefficients over time.</p>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="wavelet-analysis.html#cb94-1" tabindex="-1"></a>Age.interp <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">ceiling</span>(<span class="fu">min</span>(dDdf<span class="sc">$</span>AgeKy)), <span class="fu">floor</span>(<span class="fu">max</span>(dDdf<span class="sc">$</span>AgeKy)), <span class="at">by=</span><span class="fl">0.5</span>)</span>
-<span id="cb94-2"><a href="wavelet-analysis.html#cb94-2" tabindex="-1"></a></span>
-<span id="cb94-3"><a href="wavelet-analysis.html#cb94-3" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="st">&quot;AgeKy&quot;</span> <span class="ot">=</span> Age.interp,</span>
-<span id="cb94-4"><a href="wavelet-analysis.html#cb94-4" tabindex="-1"></a>        <span class="st">&quot;Deuterium&quot;</span> <span class="ot">=</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="fu">length</span>(Age.interp)))</span>
-<span id="cb94-5"><a href="wavelet-analysis.html#cb94-5" tabindex="-1"></a></span>
-<span id="cb94-6"><a href="wavelet-analysis.html#cb94-6" tabindex="-1"></a>dDdf2 <span class="ot">&lt;-</span> <span class="fu">merge.data.frame</span>(dDdf, df2, <span class="at">all =</span> T)</span>
-<span id="cb94-7"><a href="wavelet-analysis.html#cb94-7" tabindex="-1"></a></span>
-<span id="cb94-8"><a href="wavelet-analysis.html#cb94-8" tabindex="-1"></a>dDdf3 <span class="ot">&lt;-</span> dDdf2 <span class="sc">%&gt;%</span></span>
-<span id="cb94-9"><a href="wavelet-analysis.html#cb94-9" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Temp.interp =</span> <span class="fu">approx</span>(AgeKy, Temperature, AgeKy)<span class="sc">$</span>y) <span class="sc">%&gt;%</span></span>
-<span id="cb94-10"><a href="wavelet-analysis.html#cb94-10" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">D.interp =</span> <span class="fu">approx</span>(AgeKy, Deuterium, AgeKy)<span class="sc">$</span>y) <span class="sc">%&gt;%</span></span>
-<span id="cb94-11"><a href="wavelet-analysis.html#cb94-11" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(AgeKy <span class="sc">%in%</span> Age.interp) <span class="sc">%&gt;%</span></span>
-<span id="cb94-12"><a href="wavelet-analysis.html#cb94-12" tabindex="-1"></a>  <span class="fu">select</span>(AgeKy, D.interp, Temp.interp) <span class="sc">%&gt;%</span></span>
-<span id="cb94-13"><a href="wavelet-analysis.html#cb94-13" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Age =</span> AgeKy)</span>
-<span id="cb94-14"><a href="wavelet-analysis.html#cb94-14" tabindex="-1"></a></span>
-<span id="cb94-15"><a href="wavelet-analysis.html#cb94-15" tabindex="-1"></a><span class="fu">head</span>(dDdf3)</span></code></pre></div>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb114-1"><a href="wavelet-analysis.html#cb114-1" tabindex="-1"></a>Age.interp <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">ceiling</span>(<span class="fu">min</span>(dDdf<span class="sc">$</span>AgeKy)), <span class="fu">floor</span>(<span class="fu">max</span>(dDdf<span class="sc">$</span>AgeKy)), <span class="at">by=</span><span class="fl">0.5</span>)</span>
+<span id="cb114-2"><a href="wavelet-analysis.html#cb114-2" tabindex="-1"></a></span>
+<span id="cb114-3"><a href="wavelet-analysis.html#cb114-3" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="st">&quot;AgeKy&quot;</span> <span class="ot">=</span> Age.interp,</span>
+<span id="cb114-4"><a href="wavelet-analysis.html#cb114-4" tabindex="-1"></a>        <span class="st">&quot;Deuterium&quot;</span> <span class="ot">=</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="fu">length</span>(Age.interp)))</span>
+<span id="cb114-5"><a href="wavelet-analysis.html#cb114-5" tabindex="-1"></a></span>
+<span id="cb114-6"><a href="wavelet-analysis.html#cb114-6" tabindex="-1"></a>dDdf2 <span class="ot">&lt;-</span> <span class="fu">merge.data.frame</span>(dDdf, df2, <span class="at">all =</span> T)</span>
+<span id="cb114-7"><a href="wavelet-analysis.html#cb114-7" tabindex="-1"></a></span>
+<span id="cb114-8"><a href="wavelet-analysis.html#cb114-8" tabindex="-1"></a>dDdf3 <span class="ot">&lt;-</span> dDdf2 <span class="sc">%&gt;%</span></span>
+<span id="cb114-9"><a href="wavelet-analysis.html#cb114-9" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Temp.interp =</span> <span class="fu">approx</span>(AgeKy, Temperature, AgeKy)<span class="sc">$</span>y) <span class="sc">%&gt;%</span></span>
+<span id="cb114-10"><a href="wavelet-analysis.html#cb114-10" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">D.interp =</span> <span class="fu">approx</span>(AgeKy, Deuterium, AgeKy)<span class="sc">$</span>y) <span class="sc">%&gt;%</span></span>
+<span id="cb114-11"><a href="wavelet-analysis.html#cb114-11" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(AgeKy <span class="sc">%in%</span> Age.interp) <span class="sc">%&gt;%</span></span>
+<span id="cb114-12"><a href="wavelet-analysis.html#cb114-12" tabindex="-1"></a>  <span class="fu">select</span>(AgeKy, D.interp, Temp.interp) <span class="sc">%&gt;%</span></span>
+<span id="cb114-13"><a href="wavelet-analysis.html#cb114-13" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Age =</span> AgeKy)</span>
+<span id="cb114-14"><a href="wavelet-analysis.html#cb114-14" tabindex="-1"></a></span>
+<span id="cb114-15"><a href="wavelet-analysis.html#cb114-15" tabindex="-1"></a><span class="fu">head</span>(dDdf3)</span></code></pre></div>
 <pre><code>##   Age  D.interp Temp.interp
 ## 1 1.0 -398.6369 -0.42737296
 ## 2 1.5 -398.3863 -0.40229635
@@ -250,23 +268,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4 2.5 -394.8719  0.14813821
 ## 5 3.0 -395.7483 -0.01805415
 ## 6 3.5 -400.3498 -0.80095654</code></pre>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="wavelet-analysis.html#cb96-1" tabindex="-1"></a>dDdf4 <span class="ot">&lt;-</span> dDdf3 <span class="sc">%&gt;%</span></span>
-<span id="cb96-2"><a href="wavelet-analysis.html#cb96-2" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>Temp.interp)</span>
-<span id="cb96-3"><a href="wavelet-analysis.html#cb96-3" tabindex="-1"></a></span>
-<span id="cb96-4"><a href="wavelet-analysis.html#cb96-4" tabindex="-1"></a>dD_wave <span class="ot">&lt;-</span> biwavelet<span class="sc">::</span><span class="fu">wt</span>(dDdf4, <span class="at">do.sig =</span> F)</span>
-<span id="cb96-5"><a href="wavelet-analysis.html#cb96-5" tabindex="-1"></a></span>
-<span id="cb96-6"><a href="wavelet-analysis.html#cb96-6" tabindex="-1"></a><span class="fu">par</span>(<span class="at">oma =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">5</span>) <span class="sc">+</span> <span class="fl">0.1</span>)</span>
-<span id="cb96-7"><a href="wavelet-analysis.html#cb96-7" tabindex="-1"></a><span class="fu">plot</span>(dD_wave, <span class="at">plot.cb=</span><span class="cn">TRUE</span>, <span class="at">plot.phase=</span><span class="cn">FALSE</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-50-1.png" width="672" /></p>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb116-1"><a href="wavelet-analysis.html#cb116-1" tabindex="-1"></a>dDdf4 <span class="ot">&lt;-</span> dDdf3 <span class="sc">%&gt;%</span></span>
+<span id="cb116-2"><a href="wavelet-analysis.html#cb116-2" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>Temp.interp)</span>
+<span id="cb116-3"><a href="wavelet-analysis.html#cb116-3" tabindex="-1"></a></span>
+<span id="cb116-4"><a href="wavelet-analysis.html#cb116-4" tabindex="-1"></a>dD_wave <span class="ot">&lt;-</span> biwavelet<span class="sc">::</span><span class="fu">wt</span>(dDdf4, <span class="at">do.sig =</span> F)</span>
+<span id="cb116-5"><a href="wavelet-analysis.html#cb116-5" tabindex="-1"></a></span>
+<span id="cb116-6"><a href="wavelet-analysis.html#cb116-6" tabindex="-1"></a><span class="fu">par</span>(<span class="at">oma =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">5</span>) <span class="sc">+</span> <span class="fl">0.1</span>)</span>
+<span id="cb116-7"><a href="wavelet-analysis.html#cb116-7" tabindex="-1"></a><span class="fu">plot</span>(dD_wave, <span class="at">plot.cb=</span><span class="cn">TRUE</span>, <span class="at">plot.phase=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-63-1.png" width="672" /></p>
 <p>The scalogram reveals how spectral power (technically, wavelet power) changes over time. But which aspects of this are significant?</p>
 <div id="null-hypothesis" class="section level3 hasAnchor" number="6.3.1">
 <h3><span class="header-section-number">6.3.1</span> Null hypothesis<a href="wavelet-analysis.html#null-hypothesis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>There are ways to test this using an AR(1) benchmark. Let’s use the conditional-sum-of-squares method to fit the AR1 model. (see ?arima for details)</p>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="wavelet-analysis.html#cb97-1" tabindex="-1"></a>dD_wave <span class="ot">&lt;-</span> biwavelet<span class="sc">::</span><span class="fu">wt</span>(dDdf4, <span class="at">do.sig =</span> <span class="cn">TRUE</span>, <span class="at">arima.method =</span> <span class="st">&quot;CSS&quot;</span>)</span>
-<span id="cb97-2"><a href="wavelet-analysis.html#cb97-2" tabindex="-1"></a></span>
-<span id="cb97-3"><a href="wavelet-analysis.html#cb97-3" tabindex="-1"></a><span class="fu">par</span>(<span class="at">oma =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">5</span>) <span class="sc">+</span> <span class="fl">0.1</span>)</span>
-<span id="cb97-4"><a href="wavelet-analysis.html#cb97-4" tabindex="-1"></a><span class="fu">plot</span>(dD_wave, <span class="at">plot.cb=</span><span class="cn">TRUE</span>, <span class="at">plot.phase=</span><span class="cn">FALSE</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-51-1.png" width="672" /></p>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="wavelet-analysis.html#cb117-1" tabindex="-1"></a>dD_wave <span class="ot">&lt;-</span> biwavelet<span class="sc">::</span><span class="fu">wt</span>(dDdf4, <span class="at">do.sig =</span> <span class="cn">TRUE</span>, <span class="at">arima.method =</span> <span class="st">&quot;CSS&quot;</span>)</span>
+<span id="cb117-2"><a href="wavelet-analysis.html#cb117-2" tabindex="-1"></a></span>
+<span id="cb117-3"><a href="wavelet-analysis.html#cb117-3" tabindex="-1"></a><span class="fu">par</span>(<span class="at">oma =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">5</span>) <span class="sc">+</span> <span class="fl">0.1</span>)</span>
+<span id="cb117-4"><a href="wavelet-analysis.html#cb117-4" tabindex="-1"></a><span class="fu">plot</span>(dD_wave, <span class="at">plot.cb=</span><span class="cn">TRUE</span>, <span class="at">plot.phase=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-64-1.png" width="672" /></p>
 <p>The solid lines delineate regions of the scalogram that are significant against an AR(1) benchmark, thus encircling “islands” of notable power. We see that the 100kyr periodicity is particularly pronounced around 300-600 kyr BP, while the 40 and 20kyr periodicities are more pronounced in the later portions (since 400 ky BP). This may be because of the compaction of the ice at depth, which you wouldn’t know from analyzing just this dataset. Paleoclimate timeseries must always be interpreted with those possible artifacts in mind. There are a lot of significant islands at short (&lt;5ky) scales as well, but it is unclear whether this is reflective of large-scale climate variability.</p>
 </div>
 </div>

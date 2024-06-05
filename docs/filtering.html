@@ -4,23 +4,23 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>3.2 Filtering | Time Series Analysis in R</title>
+  <title>3.2 Filtering | _main.knit</title>
   <meta name="description" content="This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the PyRATES Timeseries Practicums in python by Julien Emile-Geay" />
   <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="3.2 Filtering | Time Series Analysis in R" />
+  <meta property="og:title" content="3.2 Filtering | _main.knit" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the PyRATES Timeseries Practicums in python by Julien Emile-Geay" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="3.2 Filtering | Time Series Analysis in R" />
+  <meta name="twitter:title" content="3.2 Filtering | _main.knit" />
   
   <meta name="twitter:description" content="This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the PyRATES Timeseries Practicums in python by Julien Emile-Geay" />
   
 
-<meta name="author" content="David Edge and Nick McKay" />
+<meta name="author" content="David Edge, Nick McKay, and Julien Emile-Geay (with help from Claude.ai)" />
 
 
 <meta name="date" content="2024-06-05" />
@@ -136,7 +136,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> </a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Time Series Analysis in R</a></li>
 <li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="background.html"><a href="background.html"><i class="fa fa-check"></i><b>2.1</b> Background</a></li>
@@ -185,14 +185,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="5" data-path="spectral-analysis-in-r.html"><a href="spectral-analysis-in-r.html"><i class="fa fa-check"></i><b>5</b> Spectral Analysis in R</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="data-description.html"><a href="data-description.html"><i class="fa fa-check"></i><b>5.1</b> Data Description</a></li>
-<li class="chapter" data-level="5.2" data-path="demonstration.html"><a href="demonstration.html"><i class="fa fa-check"></i><b>5.2</b> Demonstration</a></li>
-<li class="chapter" data-level="5.3" data-path="spectral-methods.html"><a href="spectral-methods.html"><i class="fa fa-check"></i><b>5.3</b> Spectral methods</a></li>
+<li class="chapter" data-level="5.0.1" data-path="spectral-analysis-in-r.html"><a href="spectral-analysis-in-r.html#packages-1"><i class="fa fa-check"></i><b>5.0.1</b> Packages</a></li>
+<li class="chapter" data-level="5.0.2" data-path="spectral-analysis-in-r.html"><a href="spectral-analysis-in-r.html#dataset"><i class="fa fa-check"></i><b>5.0.2</b> Dataset</a></li>
+<li class="chapter" data-level="5.1" data-path="aggregate-to-monthly.html"><a href="aggregate-to-monthly.html"><i class="fa fa-check"></i><b>5.1</b> Aggregate to monthly</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="aggregate-to-monthly.html"><a href="aggregate-to-monthly.html#even-sampling"><i class="fa fa-check"></i><b>5.1.1</b> Even sampling</a></li>
+<li class="chapter" data-level="5.1.2" data-path="aggregate-to-monthly.html"><a href="aggregate-to-monthly.html#multi-taper"><i class="fa fa-check"></i><b>5.1.2</b> multi-taper</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="stl.html"><a href="stl.html"><i class="fa fa-check"></i><b>5.2</b> STL</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="stl.html"><a href="stl.html#gaussianize"><i class="fa fa-check"></i><b>5.2.1</b> Gaussianize</a></li>
+<li class="chapter" data-level="5.2.2" data-path="stl.html"><a href="stl.html#mtm-again"><i class="fa fa-check"></i><b>5.2.2</b> MTM, again</a></li>
+<li class="chapter" data-level="5.2.3" data-path="stl.html"><a href="stl.html#applying-stl"><i class="fa fa-check"></i><b>5.2.3</b> Applying STL</a></li>
+<li class="chapter" data-level="5.2.4" data-path="stl.html"><a href="stl.html#the-trend"><i class="fa fa-check"></i><b>5.2.4</b> The trend</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="estimation-of-scaling-behavior.html"><a href="estimation-of-scaling-behavior.html"><i class="fa fa-check"></i><b>5.3</b> Estimation of scaling behavior</a></li>
+<li class="chapter" data-level="5.4" data-path="gap-tolerant-spectral-analysis.html"><a href="gap-tolerant-spectral-analysis.html"><i class="fa fa-check"></i><b>5.4</b> Gap-tolerant spectral analysis</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="gap-tolerant-spectral-analysis.html"><a href="gap-tolerant-spectral-analysis.html#lomb-scargle"><i class="fa fa-check"></i><b>5.4.1</b> Lomb-Scargle</a></li>
+<li class="chapter" data-level="5.4.2" data-path="gap-tolerant-spectral-analysis.html"><a href="gap-tolerant-spectral-analysis.html#wavelet"><i class="fa fa-check"></i><b>5.4.2</b> Wavelet</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="takeaways.html"><a href="takeaways.html"><i class="fa fa-check"></i><b>5.5</b> Takeaways</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="wavelet-transform-in-r.html"><a href="wavelet-transform-in-r.html"><i class="fa fa-check"></i><b>6</b> Wavelet Transform in R</a>
 <ul>
-<li class="chapter" data-level="6.0.1" data-path="wavelet-transform-in-r.html"><a href="wavelet-transform-in-r.html#packages-1"><i class="fa fa-check"></i><b>6.0.1</b> Packages</a></li>
-<li class="chapter" data-level="6.0.2" data-path="wavelet-transform-in-r.html"><a href="wavelet-transform-in-r.html#data-description-1"><i class="fa fa-check"></i><b>6.0.2</b> Data description</a></li>
+<li class="chapter" data-level="6.0.1" data-path="wavelet-transform-in-r.html"><a href="wavelet-transform-in-r.html#packages-2"><i class="fa fa-check"></i><b>6.0.1</b> Packages</a></li>
+<li class="chapter" data-level="6.0.2" data-path="wavelet-transform-in-r.html"><a href="wavelet-transform-in-r.html#data-description"><i class="fa fa-check"></i><b>6.0.2</b> Data description</a></li>
 <li class="chapter" data-level="6.1" data-path="loading-and-visualizing-the-deltad-series.html"><a href="loading-and-visualizing-the-deltad-series.html"><i class="fa fa-check"></i><b>6.1</b> Loading and visualizing the <span class="math inline">\(\delta\)</span>D series</a></li>
 <li class="chapter" data-level="6.2" data-path="sampling-interval.html"><a href="sampling-interval.html"><i class="fa fa-check"></i><b>6.2</b> Sampling interval</a></li>
 <li class="chapter" data-level="6.3" data-path="wavelet-analysis.html"><a href="wavelet-analysis.html"><i class="fa fa-check"></i><b>6.3</b> Wavelet Analysis</a>
@@ -217,7 +235,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Time Series Analysis in R</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"></a>
           </h1>
         </div>
 
@@ -229,99 +247,99 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2><span class="header-section-number">3.2</span> Filtering<a href="filtering.html#filtering" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The goal of filtering is to enhance part of a signal, or suppress one or more parts. We’ll use R’s <code>signal</code> package, which provides a variety of filters.</p>
 <p>Let’s use data from a Hawai’i seismogram and isolate certain oscillations.</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="filtering.html#cb36-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&#39;https://github.com/LinkedEarth/PyRATES_practicums_py/raw/main/jbook/data/hawaii.e.dat&#39;</span>, <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;time&#39;</span>, <span class="st">&#39;ground_motion&#39;</span>))</span>
-<span id="cb36-2"><a href="filtering.html#cb36-2" tabindex="-1"></a>df<span class="sc">$</span>time <span class="ot">&lt;-</span> df<span class="sc">$</span>time <span class="sc">/</span> <span class="dv">1000</span></span>
-<span id="cb36-3"><a href="filtering.html#cb36-3" tabindex="-1"></a>df<span class="sc">$</span>ground_motion <span class="ot">&lt;-</span> df<span class="sc">$</span>ground_motion <span class="sc">*</span> <span class="dv">1000</span></span>
-<span id="cb36-4"><a href="filtering.html#cb36-4" tabindex="-1"></a></span>
-<span id="cb36-5"><a href="filtering.html#cb36-5" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> ground_motion)) <span class="sc">+</span></span>
-<span id="cb36-6"><a href="filtering.html#cb36-6" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb36-7"><a href="filtering.html#cb36-7" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;time [s]&#39;</span>, <span class="at">y =</span> <span class="st">&#39;amplitude (m)&#39;</span>, <span class="at">title =</span> <span class="st">&#39;Hawaii.e&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="filtering.html#cb35-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&#39;https://github.com/LinkedEarth/PyRATES_practicums_py/raw/main/jbook/data/hawaii.e.dat&#39;</span>, <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;time&#39;</span>, <span class="st">&#39;ground_motion&#39;</span>))</span>
+<span id="cb35-2"><a href="filtering.html#cb35-2" tabindex="-1"></a>df<span class="sc">$</span>time <span class="ot">&lt;-</span> df<span class="sc">$</span>time <span class="sc">/</span> <span class="dv">1000</span></span>
+<span id="cb35-3"><a href="filtering.html#cb35-3" tabindex="-1"></a>df<span class="sc">$</span>ground_motion <span class="ot">&lt;-</span> df<span class="sc">$</span>ground_motion <span class="sc">*</span> <span class="dv">1000</span></span>
+<span id="cb35-4"><a href="filtering.html#cb35-4" tabindex="-1"></a></span>
+<span id="cb35-5"><a href="filtering.html#cb35-5" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> ground_motion)) <span class="sc">+</span></span>
+<span id="cb35-6"><a href="filtering.html#cb35-6" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb35-7"><a href="filtering.html#cb35-7" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;time [s]&#39;</span>, <span class="at">y =</span> <span class="st">&#39;amplitude (m)&#39;</span>, <span class="at">title =</span> <span class="st">&#39;Hawaii.e&#39;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 <div id="filter-types" class="section level3 hasAnchor" number="3.2.1">
 <h3><span class="header-section-number">3.2.1</span> Filter Types<a href="filtering.html#filter-types" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>First, let’s check if the data is evenly spaced:</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="filtering.html#cb37-1" tabindex="-1"></a>diff_time <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">resolution=</span> <span class="fu">diff</span>(df<span class="sc">$</span>time),</span>
-<span id="cb37-2"><a href="filtering.html#cb37-2" tabindex="-1"></a>                        <span class="at">time =</span> <span class="fu">rowMeans</span>(<span class="fu">cbind</span>(df<span class="sc">$</span>time[<span class="sc">-</span><span class="dv">1</span>],df<span class="sc">$</span>time[<span class="sc">-</span><span class="fu">length</span>(df<span class="sc">$</span>time)])))</span>
-<span id="cb37-3"><a href="filtering.html#cb37-3" tabindex="-1"></a></span>
-<span id="cb37-4"><a href="filtering.html#cb37-4" tabindex="-1"></a></span>
-<span id="cb37-5"><a href="filtering.html#cb37-5" tabindex="-1"></a><span class="co">#make a histogram of the options</span></span>
-<span id="cb37-6"><a href="filtering.html#cb37-6" tabindex="-1"></a><span class="fu">ggplot</span>(diff_time) <span class="sc">+</span> </span>
-<span id="cb37-7"><a href="filtering.html#cb37-7" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> time,<span class="at">y =</span> resolution)) <span class="sc">+</span> </span>
-<span id="cb37-8"><a href="filtering.html#cb37-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;time [s]&#39;</span>, <span class="at">y =</span> <span class="st">&#39;time difference [s]&#39;</span>, <span class="at">title =</span> <span class="st">&#39;Resolution&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="filtering.html#cb36-1" tabindex="-1"></a>diff_time <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">resolution=</span> <span class="fu">diff</span>(df<span class="sc">$</span>time),</span>
+<span id="cb36-2"><a href="filtering.html#cb36-2" tabindex="-1"></a>                        <span class="at">time =</span> <span class="fu">rowMeans</span>(<span class="fu">cbind</span>(df<span class="sc">$</span>time[<span class="sc">-</span><span class="dv">1</span>],df<span class="sc">$</span>time[<span class="sc">-</span><span class="fu">length</span>(df<span class="sc">$</span>time)])))</span>
+<span id="cb36-3"><a href="filtering.html#cb36-3" tabindex="-1"></a></span>
+<span id="cb36-4"><a href="filtering.html#cb36-4" tabindex="-1"></a></span>
+<span id="cb36-5"><a href="filtering.html#cb36-5" tabindex="-1"></a><span class="co">#make a histogram of the options</span></span>
+<span id="cb36-6"><a href="filtering.html#cb36-6" tabindex="-1"></a><span class="fu">ggplot</span>(diff_time) <span class="sc">+</span> </span>
+<span id="cb36-7"><a href="filtering.html#cb36-7" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> time,<span class="at">y =</span> resolution)) <span class="sc">+</span> </span>
+<span id="cb36-8"><a href="filtering.html#cb36-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;time [s]&#39;</span>, <span class="at">y =</span> <span class="st">&#39;time difference [s]&#39;</span>, <span class="at">title =</span> <span class="st">&#39;Resolution&#39;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 <p>It appears that the resolution jumps at around the 100th second. Let’s interpolate to get an even resolution of 1ms:</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="filtering.html#cb38-1" tabindex="-1"></a>ts <span class="ot">&lt;-</span> <span class="fu">zoo</span>(df<span class="sc">$</span>ground_motion, df<span class="sc">$</span>time)</span>
-<span id="cb38-2"><a href="filtering.html#cb38-2" tabindex="-1"></a>ts_interp <span class="ot">&lt;-</span> <span class="fu">na.approx</span>(ts, <span class="at">xout =</span> <span class="fu">seq</span>(<span class="fu">min</span>(df<span class="sc">$</span>time), <span class="fu">max</span>(df<span class="sc">$</span>time), <span class="at">by =</span> <span class="fl">0.001</span>))</span>
-<span id="cb38-3"><a href="filtering.html#cb38-3" tabindex="-1"></a></span>
-<span id="cb38-4"><a href="filtering.html#cb38-4" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb38-5"><a href="filtering.html#cb38-5" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> df, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> ground_motion, <span class="at">color =</span> <span class="st">&#39;original&#39;</span>), <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
-<span id="cb38-6"><a href="filtering.html#cb38-6" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">time =</span> <span class="fu">index</span>(ts_interp), <span class="at">ground_motion =</span> <span class="fu">coredata</span>(ts_interp)), </span>
-<span id="cb38-7"><a href="filtering.html#cb38-7" tabindex="-1"></a>           <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> ground_motion, <span class="at">color =</span> <span class="st">&#39;interpolated&#39;</span>), <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
-<span id="cb38-8"><a href="filtering.html#cb38-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;time [s]&#39;</span>, <span class="at">y =</span> <span class="st">&#39;amplitude (m)&#39;</span>, <span class="at">color =</span> <span class="st">&#39;&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="filtering.html#cb37-1" tabindex="-1"></a>ts <span class="ot">&lt;-</span> <span class="fu">zoo</span>(df<span class="sc">$</span>ground_motion, df<span class="sc">$</span>time)</span>
+<span id="cb37-2"><a href="filtering.html#cb37-2" tabindex="-1"></a>ts_interp <span class="ot">&lt;-</span> <span class="fu">na.approx</span>(ts, <span class="at">xout =</span> <span class="fu">seq</span>(<span class="fu">min</span>(df<span class="sc">$</span>time), <span class="fu">max</span>(df<span class="sc">$</span>time), <span class="at">by =</span> <span class="fl">0.001</span>))</span>
+<span id="cb37-3"><a href="filtering.html#cb37-3" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="filtering.html#cb37-4" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb37-5"><a href="filtering.html#cb37-5" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> df, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> ground_motion, <span class="at">color =</span> <span class="st">&#39;original&#39;</span>), <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb37-6"><a href="filtering.html#cb37-6" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">time =</span> <span class="fu">index</span>(ts_interp), <span class="at">ground_motion =</span> <span class="fu">coredata</span>(ts_interp)), </span>
+<span id="cb37-7"><a href="filtering.html#cb37-7" tabindex="-1"></a>           <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> ground_motion, <span class="at">color =</span> <span class="st">&#39;interpolated&#39;</span>), <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb37-8"><a href="filtering.html#cb37-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;time [s]&#39;</span>, <span class="at">y =</span> <span class="st">&#39;amplitude (m)&#39;</span>, <span class="at">color =</span> <span class="st">&#39;&#39;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 <p>The two series are indistinguishable, so we are safe to proceed.</p>
 <div id="lowpass-filter" class="section level4 hasAnchor" number="3.2.1.1">
 <h4><span class="header-section-number">3.2.1.1</span> Lowpass filter<a href="filtering.html#lowpass-filter" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Let’s use a Butterworth filter with a <code>cutoff_scale</code> of 2 to remove all frequencies with a period of less than 2s. This is known as a <strong>low-pass filter</strong>.</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="filtering.html#cb39-1" tabindex="-1"></a>fs <span class="ot">&lt;-</span> <span class="dv">1000</span>  <span class="co"># 1 kHz sampling rate</span></span>
-<span id="cb39-2"><a href="filtering.html#cb39-2" tabindex="-1"></a>f_nyq <span class="ot">&lt;-</span> fs <span class="sc">/</span> <span class="dv">2</span>  <span class="co"># Nyquist frequency</span></span>
-<span id="cb39-3"><a href="filtering.html#cb39-3" tabindex="-1"></a>f_cutoff <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>  <span class="co"># 2s period</span></span>
-<span id="cb39-4"><a href="filtering.html#cb39-4" tabindex="-1"></a></span>
-<span id="cb39-5"><a href="filtering.html#cb39-5" tabindex="-1"></a><span class="co"># Create Butterworth filter</span></span>
-<span id="cb39-6"><a href="filtering.html#cb39-6" tabindex="-1"></a>butter_low <span class="ot">&lt;-</span> <span class="fu">butter</span>(<span class="dv">2</span>, f_cutoff <span class="sc">/</span> f_nyq, <span class="at">type =</span> <span class="st">&quot;low&quot;</span>)</span>
-<span id="cb39-7"><a href="filtering.html#cb39-7" tabindex="-1"></a></span>
-<span id="cb39-8"><a href="filtering.html#cb39-8" tabindex="-1"></a><span class="co"># Apply filter</span></span>
-<span id="cb39-9"><a href="filtering.html#cb39-9" tabindex="-1"></a>lp <span class="ot">&lt;-</span> <span class="fu">filtfilt</span>(butter_low, <span class="fu">coredata</span>(ts_interp))</span>
-<span id="cb39-10"><a href="filtering.html#cb39-10" tabindex="-1"></a></span>
-<span id="cb39-11"><a href="filtering.html#cb39-11" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb39-12"><a href="filtering.html#cb39-12" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">time =</span> <span class="fu">index</span>(ts_interp), <span class="at">ground_motion =</span> <span class="fu">coredata</span>(ts_interp)), </span>
-<span id="cb39-13"><a href="filtering.html#cb39-13" tabindex="-1"></a>           <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> ground_motion, <span class="at">color =</span> <span class="st">&#39;original&#39;</span>)) <span class="sc">+</span></span>
-<span id="cb39-14"><a href="filtering.html#cb39-14" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">time =</span> <span class="fu">index</span>(ts_interp), <span class="at">ground_motion =</span> lp), </span>
-<span id="cb39-15"><a href="filtering.html#cb39-15" tabindex="-1"></a>           <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> ground_motion, <span class="at">color =</span> <span class="st">&#39;low-pass&#39;</span>)) <span class="sc">+</span></span>
-<span id="cb39-16"><a href="filtering.html#cb39-16" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;time [s]&#39;</span>, <span class="at">y =</span> <span class="st">&#39;amplitude (m)&#39;</span>, <span class="at">color =</span> <span class="st">&#39;&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="filtering.html#cb38-1" tabindex="-1"></a>fs <span class="ot">&lt;-</span> <span class="dv">1000</span>  <span class="co"># 1 kHz sampling rate</span></span>
+<span id="cb38-2"><a href="filtering.html#cb38-2" tabindex="-1"></a>f_nyq <span class="ot">&lt;-</span> fs <span class="sc">/</span> <span class="dv">2</span>  <span class="co"># Nyquist frequency</span></span>
+<span id="cb38-3"><a href="filtering.html#cb38-3" tabindex="-1"></a>f_cutoff <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>  <span class="co"># 2s period</span></span>
+<span id="cb38-4"><a href="filtering.html#cb38-4" tabindex="-1"></a></span>
+<span id="cb38-5"><a href="filtering.html#cb38-5" tabindex="-1"></a><span class="co"># Create Butterworth filter</span></span>
+<span id="cb38-6"><a href="filtering.html#cb38-6" tabindex="-1"></a>butter_low <span class="ot">&lt;-</span> <span class="fu">butter</span>(<span class="dv">2</span>, f_cutoff <span class="sc">/</span> f_nyq, <span class="at">type =</span> <span class="st">&quot;low&quot;</span>)</span>
+<span id="cb38-7"><a href="filtering.html#cb38-7" tabindex="-1"></a></span>
+<span id="cb38-8"><a href="filtering.html#cb38-8" tabindex="-1"></a><span class="co"># Apply filter</span></span>
+<span id="cb38-9"><a href="filtering.html#cb38-9" tabindex="-1"></a>lp <span class="ot">&lt;-</span> <span class="fu">filtfilt</span>(butter_low, <span class="fu">coredata</span>(ts_interp))</span>
+<span id="cb38-10"><a href="filtering.html#cb38-10" tabindex="-1"></a></span>
+<span id="cb38-11"><a href="filtering.html#cb38-11" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb38-12"><a href="filtering.html#cb38-12" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">time =</span> <span class="fu">index</span>(ts_interp), <span class="at">ground_motion =</span> <span class="fu">coredata</span>(ts_interp)), </span>
+<span id="cb38-13"><a href="filtering.html#cb38-13" tabindex="-1"></a>           <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> ground_motion, <span class="at">color =</span> <span class="st">&#39;original&#39;</span>)) <span class="sc">+</span></span>
+<span id="cb38-14"><a href="filtering.html#cb38-14" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">time =</span> <span class="fu">index</span>(ts_interp), <span class="at">ground_motion =</span> lp), </span>
+<span id="cb38-15"><a href="filtering.html#cb38-15" tabindex="-1"></a>           <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> ground_motion, <span class="at">color =</span> <span class="st">&#39;low-pass&#39;</span>)) <span class="sc">+</span></span>
+<span id="cb38-16"><a href="filtering.html#cb38-16" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;time [s]&#39;</span>, <span class="at">y =</span> <span class="st">&#39;amplitude (m)&#39;</span>, <span class="at">color =</span> <span class="st">&#39;&#39;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 </div>
 <div id="high-pass-filter" class="section level4 hasAnchor" number="3.2.1.2">
 <h4><span class="header-section-number">3.2.1.2</span> High-pass filter<a href="filtering.html#high-pass-filter" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>The opposite operation is a <strong>high-pass</strong> filter, which keeps only frequencies higher than a given cutoff. To generate a high-pass filter, you can simply subtract the low-pass filtered version from the original:</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="filtering.html#cb40-1" tabindex="-1"></a>hp <span class="ot">&lt;-</span> <span class="fu">coredata</span>(ts_interp) <span class="sc">-</span> lp</span>
-<span id="cb40-2"><a href="filtering.html#cb40-2" tabindex="-1"></a></span>
-<span id="cb40-3"><a href="filtering.html#cb40-3" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb40-4"><a href="filtering.html#cb40-4" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">time =</span> <span class="fu">index</span>(ts_interp), <span class="at">ground_motion =</span> <span class="fu">coredata</span>(ts_interp)), </span>
-<span id="cb40-5"><a href="filtering.html#cb40-5" tabindex="-1"></a>           <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> ground_motion, <span class="at">color =</span> <span class="st">&#39;original&#39;</span>)) <span class="sc">+</span></span>
-<span id="cb40-6"><a href="filtering.html#cb40-6" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">time =</span> <span class="fu">index</span>(ts_interp), <span class="at">ground_motion =</span> hp), </span>
-<span id="cb40-7"><a href="filtering.html#cb40-7" tabindex="-1"></a>           <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> ground_motion, <span class="at">color =</span> <span class="st">&#39;high-pass&#39;</span>), <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb40-8"><a href="filtering.html#cb40-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;time [s]&#39;</span>, <span class="at">y =</span> <span class="st">&#39;amplitude (m)&#39;</span>, <span class="at">color =</span> <span class="st">&#39;&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="filtering.html#cb39-1" tabindex="-1"></a>hp <span class="ot">&lt;-</span> <span class="fu">coredata</span>(ts_interp) <span class="sc">-</span> lp</span>
+<span id="cb39-2"><a href="filtering.html#cb39-2" tabindex="-1"></a></span>
+<span id="cb39-3"><a href="filtering.html#cb39-3" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb39-4"><a href="filtering.html#cb39-4" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">time =</span> <span class="fu">index</span>(ts_interp), <span class="at">ground_motion =</span> <span class="fu">coredata</span>(ts_interp)), </span>
+<span id="cb39-5"><a href="filtering.html#cb39-5" tabindex="-1"></a>           <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> ground_motion, <span class="at">color =</span> <span class="st">&#39;original&#39;</span>)) <span class="sc">+</span></span>
+<span id="cb39-6"><a href="filtering.html#cb39-6" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">time =</span> <span class="fu">index</span>(ts_interp), <span class="at">ground_motion =</span> hp), </span>
+<span id="cb39-7"><a href="filtering.html#cb39-7" tabindex="-1"></a>           <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> ground_motion, <span class="at">color =</span> <span class="st">&#39;high-pass&#39;</span>), <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb39-8"><a href="filtering.html#cb39-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;time [s]&#39;</span>, <span class="at">y =</span> <span class="st">&#39;amplitude (m)&#39;</span>, <span class="at">color =</span> <span class="st">&#39;&#39;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
 </div>
 <div id="band-pass-filter" class="section level4 hasAnchor" number="3.2.1.3">
 <h4><span class="header-section-number">3.2.1.3</span> Band-pass filter<a href="filtering.html#band-pass-filter" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>If you want to isolate variability in a band of frequencies (say 1-2s), you can create a band-pass filter:</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="filtering.html#cb41-1" tabindex="-1"></a>f_low <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>  <span class="co"># 2s period</span></span>
-<span id="cb41-2"><a href="filtering.html#cb41-2" tabindex="-1"></a>f_high <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">1</span>  <span class="co"># 1s period</span></span>
-<span id="cb41-3"><a href="filtering.html#cb41-3" tabindex="-1"></a></span>
-<span id="cb41-4"><a href="filtering.html#cb41-4" tabindex="-1"></a>butter_band <span class="ot">&lt;-</span> <span class="fu">butter</span>(<span class="dv">2</span>, <span class="fu">c</span>(f_low, f_high) <span class="sc">/</span> f_nyq, <span class="at">type =</span> <span class="st">&quot;pass&quot;</span>)</span>
-<span id="cb41-5"><a href="filtering.html#cb41-5" tabindex="-1"></a>bp <span class="ot">&lt;-</span> <span class="fu">filtfilt</span>(butter_band, <span class="fu">coredata</span>(ts_interp))</span>
-<span id="cb41-6"><a href="filtering.html#cb41-6" tabindex="-1"></a></span>
-<span id="cb41-7"><a href="filtering.html#cb41-7" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb41-8"><a href="filtering.html#cb41-8" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">time =</span> <span class="fu">index</span>(ts_interp), <span class="at">ground_motion =</span> <span class="fu">coredata</span>(ts_interp)), </span>
-<span id="cb41-9"><a href="filtering.html#cb41-9" tabindex="-1"></a>           <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> ground_motion, <span class="at">color =</span> <span class="st">&#39;original&#39;</span>)) <span class="sc">+</span></span>
-<span id="cb41-10"><a href="filtering.html#cb41-10" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">time =</span> <span class="fu">index</span>(ts_interp), <span class="at">ground_motion =</span> bp), </span>
-<span id="cb41-11"><a href="filtering.html#cb41-11" tabindex="-1"></a>           <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> ground_motion, <span class="at">color =</span> <span class="st">&#39;1-2s band-pass&#39;</span>), <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb41-12"><a href="filtering.html#cb41-12" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;time [s]&#39;</span>, <span class="at">y =</span> <span class="st">&#39;amplitude (m)&#39;</span>, <span class="at">color =</span> <span class="st">&#39;&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="filtering.html#cb40-1" tabindex="-1"></a>f_low <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>  <span class="co"># 2s period</span></span>
+<span id="cb40-2"><a href="filtering.html#cb40-2" tabindex="-1"></a>f_high <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">1</span>  <span class="co"># 1s period</span></span>
+<span id="cb40-3"><a href="filtering.html#cb40-3" tabindex="-1"></a></span>
+<span id="cb40-4"><a href="filtering.html#cb40-4" tabindex="-1"></a>butter_band <span class="ot">&lt;-</span> <span class="fu">butter</span>(<span class="dv">2</span>, <span class="fu">c</span>(f_low, f_high) <span class="sc">/</span> f_nyq, <span class="at">type =</span> <span class="st">&quot;pass&quot;</span>)</span>
+<span id="cb40-5"><a href="filtering.html#cb40-5" tabindex="-1"></a>bp <span class="ot">&lt;-</span> <span class="fu">filtfilt</span>(butter_band, <span class="fu">coredata</span>(ts_interp))</span>
+<span id="cb40-6"><a href="filtering.html#cb40-6" tabindex="-1"></a></span>
+<span id="cb40-7"><a href="filtering.html#cb40-7" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb40-8"><a href="filtering.html#cb40-8" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">time =</span> <span class="fu">index</span>(ts_interp), <span class="at">ground_motion =</span> <span class="fu">coredata</span>(ts_interp)), </span>
+<span id="cb40-9"><a href="filtering.html#cb40-9" tabindex="-1"></a>           <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> ground_motion, <span class="at">color =</span> <span class="st">&#39;original&#39;</span>)) <span class="sc">+</span></span>
+<span id="cb40-10"><a href="filtering.html#cb40-10" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">time =</span> <span class="fu">index</span>(ts_interp), <span class="at">ground_motion =</span> bp), </span>
+<span id="cb40-11"><a href="filtering.html#cb40-11" tabindex="-1"></a>           <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> ground_motion, <span class="at">color =</span> <span class="st">&#39;1-2s band-pass&#39;</span>), <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb40-12"><a href="filtering.html#cb40-12" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;time [s]&#39;</span>, <span class="at">y =</span> <span class="st">&#39;amplitude (m)&#39;</span>, <span class="at">color =</span> <span class="st">&#39;&#39;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
 </div>
 <div id="notch-filter" class="section level4 hasAnchor" number="3.2.1.4">
 <h4><span class="header-section-number">3.2.1.4</span> Notch filter<a href="filtering.html#notch-filter" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p>Conversely, if you wanted to remove all variability between 1-2s (a <strong>notch</strong> in frequency space), you would subtract the bandpass-filtered version.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="filtering.html#cb42-1" tabindex="-1"></a>notch <span class="ot">&lt;-</span> <span class="fu">coredata</span>(ts_interp) <span class="sc">-</span> bp</span>
-<span id="cb42-2"><a href="filtering.html#cb42-2" tabindex="-1"></a></span>
-<span id="cb42-3"><a href="filtering.html#cb42-3" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb42-4"><a href="filtering.html#cb42-4" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">time =</span> <span class="fu">index</span>(ts_interp), <span class="at">ground_motion =</span> <span class="fu">coredata</span>(ts_interp)), </span>
-<span id="cb42-5"><a href="filtering.html#cb42-5" tabindex="-1"></a>           <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> ground_motion, <span class="at">color =</span> <span class="st">&#39;original&#39;</span>)) <span class="sc">+</span></span>
-<span id="cb42-6"><a href="filtering.html#cb42-6" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">time =</span> <span class="fu">index</span>(ts_interp), <span class="at">ground_motion =</span> notch), </span>
-<span id="cb42-7"><a href="filtering.html#cb42-7" tabindex="-1"></a>           <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> ground_motion, <span class="at">color =</span> <span class="st">&#39;1-2s notch&#39;</span>), <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb42-8"><a href="filtering.html#cb42-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;time [s]&#39;</span>, <span class="at">y =</span> <span class="st">&#39;amplitude (m)&#39;</span>, <span class="at">color =</span> <span class="st">&#39;&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="filtering.html#cb41-1" tabindex="-1"></a>notch <span class="ot">&lt;-</span> <span class="fu">coredata</span>(ts_interp) <span class="sc">-</span> bp</span>
+<span id="cb41-2"><a href="filtering.html#cb41-2" tabindex="-1"></a></span>
+<span id="cb41-3"><a href="filtering.html#cb41-3" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb41-4"><a href="filtering.html#cb41-4" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">time =</span> <span class="fu">index</span>(ts_interp), <span class="at">ground_motion =</span> <span class="fu">coredata</span>(ts_interp)), </span>
+<span id="cb41-5"><a href="filtering.html#cb41-5" tabindex="-1"></a>           <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> ground_motion, <span class="at">color =</span> <span class="st">&#39;original&#39;</span>)) <span class="sc">+</span></span>
+<span id="cb41-6"><a href="filtering.html#cb41-6" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">time =</span> <span class="fu">index</span>(ts_interp), <span class="at">ground_motion =</span> notch), </span>
+<span id="cb41-7"><a href="filtering.html#cb41-7" tabindex="-1"></a>           <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> ground_motion, <span class="at">color =</span> <span class="st">&#39;1-2s notch&#39;</span>), <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb41-8"><a href="filtering.html#cb41-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;time [s]&#39;</span>, <span class="at">y =</span> <span class="st">&#39;amplitude (m)&#39;</span>, <span class="at">color =</span> <span class="st">&#39;&#39;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
 </div>
 </div>

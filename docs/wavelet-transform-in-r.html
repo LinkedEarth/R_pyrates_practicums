@@ -4,23 +4,23 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>6 Wavelet Transform in R | Time Series Analysis in R</title>
+  <title>6 Wavelet Transform in R | _main.knit</title>
   <meta name="description" content="This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the PyRATES Timeseries Practicums in python by Julien Emile-Geay" />
   <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="6 Wavelet Transform in R | Time Series Analysis in R" />
+  <meta property="og:title" content="6 Wavelet Transform in R | _main.knit" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the PyRATES Timeseries Practicums in python by Julien Emile-Geay" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="6 Wavelet Transform in R | Time Series Analysis in R" />
+  <meta name="twitter:title" content="6 Wavelet Transform in R | _main.knit" />
   
   <meta name="twitter:description" content="This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the PyRATES Timeseries Practicums in python by Julien Emile-Geay" />
   
 
-<meta name="author" content="David Edge and Nick McKay" />
+<meta name="author" content="David Edge, Nick McKay, and Julien Emile-Geay (with help from Claude.ai)" />
 
 
 <meta name="date" content="2024-06-05" />
@@ -30,7 +30,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="spectral-methods.html"/>
+<link rel="prev" href="takeaways.html"/>
 <link rel="next" href="loading-and-visualizing-the-deltad-series.html"/>
 <script src="assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -136,7 +136,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> </a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Time Series Analysis in R</a></li>
 <li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="background.html"><a href="background.html"><i class="fa fa-check"></i><b>2.1</b> Background</a></li>
@@ -185,14 +185,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="5" data-path="spectral-analysis-in-r.html"><a href="spectral-analysis-in-r.html"><i class="fa fa-check"></i><b>5</b> Spectral Analysis in R</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="data-description.html"><a href="data-description.html"><i class="fa fa-check"></i><b>5.1</b> Data Description</a></li>
-<li class="chapter" data-level="5.2" data-path="demonstration.html"><a href="demonstration.html"><i class="fa fa-check"></i><b>5.2</b> Demonstration</a></li>
-<li class="chapter" data-level="5.3" data-path="spectral-methods.html"><a href="spectral-methods.html"><i class="fa fa-check"></i><b>5.3</b> Spectral methods</a></li>
+<li class="chapter" data-level="5.0.1" data-path="spectral-analysis-in-r.html"><a href="spectral-analysis-in-r.html#packages-1"><i class="fa fa-check"></i><b>5.0.1</b> Packages</a></li>
+<li class="chapter" data-level="5.0.2" data-path="spectral-analysis-in-r.html"><a href="spectral-analysis-in-r.html#dataset"><i class="fa fa-check"></i><b>5.0.2</b> Dataset</a></li>
+<li class="chapter" data-level="5.1" data-path="aggregate-to-monthly.html"><a href="aggregate-to-monthly.html"><i class="fa fa-check"></i><b>5.1</b> Aggregate to monthly</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="aggregate-to-monthly.html"><a href="aggregate-to-monthly.html#even-sampling"><i class="fa fa-check"></i><b>5.1.1</b> Even sampling</a></li>
+<li class="chapter" data-level="5.1.2" data-path="aggregate-to-monthly.html"><a href="aggregate-to-monthly.html#multi-taper"><i class="fa fa-check"></i><b>5.1.2</b> multi-taper</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="stl.html"><a href="stl.html"><i class="fa fa-check"></i><b>5.2</b> STL</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="stl.html"><a href="stl.html#gaussianize"><i class="fa fa-check"></i><b>5.2.1</b> Gaussianize</a></li>
+<li class="chapter" data-level="5.2.2" data-path="stl.html"><a href="stl.html#mtm-again"><i class="fa fa-check"></i><b>5.2.2</b> MTM, again</a></li>
+<li class="chapter" data-level="5.2.3" data-path="stl.html"><a href="stl.html#applying-stl"><i class="fa fa-check"></i><b>5.2.3</b> Applying STL</a></li>
+<li class="chapter" data-level="5.2.4" data-path="stl.html"><a href="stl.html#the-trend"><i class="fa fa-check"></i><b>5.2.4</b> The trend</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="estimation-of-scaling-behavior.html"><a href="estimation-of-scaling-behavior.html"><i class="fa fa-check"></i><b>5.3</b> Estimation of scaling behavior</a></li>
+<li class="chapter" data-level="5.4" data-path="gap-tolerant-spectral-analysis.html"><a href="gap-tolerant-spectral-analysis.html"><i class="fa fa-check"></i><b>5.4</b> Gap-tolerant spectral analysis</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="gap-tolerant-spectral-analysis.html"><a href="gap-tolerant-spectral-analysis.html#lomb-scargle"><i class="fa fa-check"></i><b>5.4.1</b> Lomb-Scargle</a></li>
+<li class="chapter" data-level="5.4.2" data-path="gap-tolerant-spectral-analysis.html"><a href="gap-tolerant-spectral-analysis.html#wavelet"><i class="fa fa-check"></i><b>5.4.2</b> Wavelet</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="takeaways.html"><a href="takeaways.html"><i class="fa fa-check"></i><b>5.5</b> Takeaways</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="wavelet-transform-in-r.html"><a href="wavelet-transform-in-r.html"><i class="fa fa-check"></i><b>6</b> Wavelet Transform in R</a>
 <ul>
-<li class="chapter" data-level="6.0.1" data-path="wavelet-transform-in-r.html"><a href="wavelet-transform-in-r.html#packages-1"><i class="fa fa-check"></i><b>6.0.1</b> Packages</a></li>
-<li class="chapter" data-level="6.0.2" data-path="wavelet-transform-in-r.html"><a href="wavelet-transform-in-r.html#data-description-1"><i class="fa fa-check"></i><b>6.0.2</b> Data description</a></li>
+<li class="chapter" data-level="6.0.1" data-path="wavelet-transform-in-r.html"><a href="wavelet-transform-in-r.html#packages-2"><i class="fa fa-check"></i><b>6.0.1</b> Packages</a></li>
+<li class="chapter" data-level="6.0.2" data-path="wavelet-transform-in-r.html"><a href="wavelet-transform-in-r.html#data-description"><i class="fa fa-check"></i><b>6.0.2</b> Data description</a></li>
 <li class="chapter" data-level="6.1" data-path="loading-and-visualizing-the-deltad-series.html"><a href="loading-and-visualizing-the-deltad-series.html"><i class="fa fa-check"></i><b>6.1</b> Loading and visualizing the <span class="math inline">\(\delta\)</span>D series</a></li>
 <li class="chapter" data-level="6.2" data-path="sampling-interval.html"><a href="sampling-interval.html"><i class="fa fa-check"></i><b>6.2</b> Sampling interval</a></li>
 <li class="chapter" data-level="6.3" data-path="wavelet-analysis.html"><a href="wavelet-analysis.html"><i class="fa fa-check"></i><b>6.3</b> Wavelet Analysis</a>
@@ -217,7 +235,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Time Series Analysis in R</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"></a>
           </h1>
         </div>
 
@@ -228,13 +246,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="wavelet-transform-in-r" class="section level1 hasAnchor" number="6">
 <h1><span class="header-section-number">6</span> Wavelet Transform in R<a href="wavelet-transform-in-r.html#wavelet-transform-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Wavelet analysis is one of the most misused tools in climate timeseries analysis, partially due to the popularity of <a href="https://atoc.colorado.edu/research/wavelets/">this webpage</a>, which used to feature an interactive plotter. Wavelets are a very broad topic in applied mathematics, which we won’t attempt to summarize here. In the paleoclimate context, the term nearly always refers to the Continuous Wavelet Transform, and 99% of the time this uses the Morlet wavelet, which is a generalization of Fourier bases to endow them with localization in time and scale. Accordingly, this demo focuses on how to obtain wavelet spectra from the iconic EPICA Dome C record by <a href="https://doi.org/10.1126/science.1141038">Jouzel et al. (2007)</a>, and how to establish its coherency with a record of atmospheric CO2.</p>
-<div id="packages-1" class="section level3 hasAnchor" number="6.0.1">
-<h3><span class="header-section-number">6.0.1</span> Packages<a href="wavelet-transform-in-r.html#packages-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="packages-2" class="section level3 hasAnchor" number="6.0.1">
+<h3><span class="header-section-number">6.0.1</span> Packages<a href="wavelet-transform-in-r.html#packages-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>dplyr, ggplot2, tidyr, biwavelet</p>
 <p>Let’s load these:</p>
 </div>
-<div id="data-description-1" class="section level3 hasAnchor" number="6.0.2">
-<h3><span class="header-section-number">6.0.2</span> Data description<a href="wavelet-transform-in-r.html#data-description-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="data-description" class="section level3 hasAnchor" number="6.0.2">
+<h3><span class="header-section-number">6.0.2</span> Data description<a href="wavelet-transform-in-r.html#data-description" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>ice phase deuterium data (<span class="math inline">\(\delta\)</span>D) from Jouzel et al. (2007). <span class="math inline">\(\delta\)</span>D is a proxy for the temperature of snow formation above the site, taken to be representative of Antartic temperature over such timescales.</p>
 <p>gas phase CO2 measurements from Luthi et al (2008), corrected by Bereiter et al. (2015).</p>
 </div>
@@ -244,7 +262,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="spectral-methods.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="takeaways.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="loading-and-visualizing-the-deltad-series.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>

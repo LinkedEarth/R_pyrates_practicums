@@ -4,23 +4,23 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2.3 Data Wrangling | Time Series Analysis in R</title>
+  <title>2.3 Data Wrangling | _main.knit</title>
   <meta name="description" content="This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the PyRATES Timeseries Practicums in python by Julien Emile-Geay" />
   <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="2.3 Data Wrangling | Time Series Analysis in R" />
+  <meta property="og:title" content="2.3 Data Wrangling | _main.knit" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the PyRATES Timeseries Practicums in python by Julien Emile-Geay" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2.3 Data Wrangling | Time Series Analysis in R" />
+  <meta name="twitter:title" content="2.3 Data Wrangling | _main.knit" />
   
   <meta name="twitter:description" content="This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the PyRATES Timeseries Practicums in python by Julien Emile-Geay" />
   
 
-<meta name="author" content="David Edge and Nick McKay" />
+<meta name="author" content="David Edge, Nick McKay, and Julien Emile-Geay (with help from Claude.ai)" />
 
 
 <meta name="date" content="2024-06-05" />
@@ -136,7 +136,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> </a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Time Series Analysis in R</a></li>
 <li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="background.html"><a href="background.html"><i class="fa fa-check"></i><b>2.1</b> Background</a></li>
@@ -185,14 +185,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="5" data-path="spectral-analysis-in-r.html"><a href="spectral-analysis-in-r.html"><i class="fa fa-check"></i><b>5</b> Spectral Analysis in R</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="data-description.html"><a href="data-description.html"><i class="fa fa-check"></i><b>5.1</b> Data Description</a></li>
-<li class="chapter" data-level="5.2" data-path="demonstration.html"><a href="demonstration.html"><i class="fa fa-check"></i><b>5.2</b> Demonstration</a></li>
-<li class="chapter" data-level="5.3" data-path="spectral-methods.html"><a href="spectral-methods.html"><i class="fa fa-check"></i><b>5.3</b> Spectral methods</a></li>
+<li class="chapter" data-level="5.0.1" data-path="spectral-analysis-in-r.html"><a href="spectral-analysis-in-r.html#packages-1"><i class="fa fa-check"></i><b>5.0.1</b> Packages</a></li>
+<li class="chapter" data-level="5.0.2" data-path="spectral-analysis-in-r.html"><a href="spectral-analysis-in-r.html#dataset"><i class="fa fa-check"></i><b>5.0.2</b> Dataset</a></li>
+<li class="chapter" data-level="5.1" data-path="aggregate-to-monthly.html"><a href="aggregate-to-monthly.html"><i class="fa fa-check"></i><b>5.1</b> Aggregate to monthly</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="aggregate-to-monthly.html"><a href="aggregate-to-monthly.html#even-sampling"><i class="fa fa-check"></i><b>5.1.1</b> Even sampling</a></li>
+<li class="chapter" data-level="5.1.2" data-path="aggregate-to-monthly.html"><a href="aggregate-to-monthly.html#multi-taper"><i class="fa fa-check"></i><b>5.1.2</b> multi-taper</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="stl.html"><a href="stl.html"><i class="fa fa-check"></i><b>5.2</b> STL</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="stl.html"><a href="stl.html#gaussianize"><i class="fa fa-check"></i><b>5.2.1</b> Gaussianize</a></li>
+<li class="chapter" data-level="5.2.2" data-path="stl.html"><a href="stl.html#mtm-again"><i class="fa fa-check"></i><b>5.2.2</b> MTM, again</a></li>
+<li class="chapter" data-level="5.2.3" data-path="stl.html"><a href="stl.html#applying-stl"><i class="fa fa-check"></i><b>5.2.3</b> Applying STL</a></li>
+<li class="chapter" data-level="5.2.4" data-path="stl.html"><a href="stl.html#the-trend"><i class="fa fa-check"></i><b>5.2.4</b> The trend</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="estimation-of-scaling-behavior.html"><a href="estimation-of-scaling-behavior.html"><i class="fa fa-check"></i><b>5.3</b> Estimation of scaling behavior</a></li>
+<li class="chapter" data-level="5.4" data-path="gap-tolerant-spectral-analysis.html"><a href="gap-tolerant-spectral-analysis.html"><i class="fa fa-check"></i><b>5.4</b> Gap-tolerant spectral analysis</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="gap-tolerant-spectral-analysis.html"><a href="gap-tolerant-spectral-analysis.html#lomb-scargle"><i class="fa fa-check"></i><b>5.4.1</b> Lomb-Scargle</a></li>
+<li class="chapter" data-level="5.4.2" data-path="gap-tolerant-spectral-analysis.html"><a href="gap-tolerant-spectral-analysis.html#wavelet"><i class="fa fa-check"></i><b>5.4.2</b> Wavelet</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="takeaways.html"><a href="takeaways.html"><i class="fa fa-check"></i><b>5.5</b> Takeaways</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="wavelet-transform-in-r.html"><a href="wavelet-transform-in-r.html"><i class="fa fa-check"></i><b>6</b> Wavelet Transform in R</a>
 <ul>
-<li class="chapter" data-level="6.0.1" data-path="wavelet-transform-in-r.html"><a href="wavelet-transform-in-r.html#packages-1"><i class="fa fa-check"></i><b>6.0.1</b> Packages</a></li>
-<li class="chapter" data-level="6.0.2" data-path="wavelet-transform-in-r.html"><a href="wavelet-transform-in-r.html#data-description-1"><i class="fa fa-check"></i><b>6.0.2</b> Data description</a></li>
+<li class="chapter" data-level="6.0.1" data-path="wavelet-transform-in-r.html"><a href="wavelet-transform-in-r.html#packages-2"><i class="fa fa-check"></i><b>6.0.1</b> Packages</a></li>
+<li class="chapter" data-level="6.0.2" data-path="wavelet-transform-in-r.html"><a href="wavelet-transform-in-r.html#data-description"><i class="fa fa-check"></i><b>6.0.2</b> Data description</a></li>
 <li class="chapter" data-level="6.1" data-path="loading-and-visualizing-the-deltad-series.html"><a href="loading-and-visualizing-the-deltad-series.html"><i class="fa fa-check"></i><b>6.1</b> Loading and visualizing the <span class="math inline">\(\delta\)</span>D series</a></li>
 <li class="chapter" data-level="6.2" data-path="sampling-interval.html"><a href="sampling-interval.html"><i class="fa fa-check"></i><b>6.2</b> Sampling interval</a></li>
 <li class="chapter" data-level="6.3" data-path="wavelet-analysis.html"><a href="wavelet-analysis.html"><i class="fa fa-check"></i><b>6.3</b> Wavelet Analysis</a>
@@ -217,7 +235,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Time Series Analysis in R</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"></a>
           </h1>
         </div>
 
@@ -253,20 +271,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Okay, not the data looks right. Lets add the column names.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="data-wrangling.html#cb6-1" tabindex="-1"></a><span class="fu">names</span>(df1) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;Yr&#39;</span>,<span class="st">&#39;Mn&#39;</span>,<span class="st">&#39;XLDate&#39;</span>,<span class="st">&#39;Date&#39;</span>,<span class="st">&#39;CO2&#39;</span>,<span class="st">&#39;seasonally adjusted&#39;</span>,<span class="st">&#39;fit&#39;</span>,<span class="st">&#39;seasonally adjusted fit&#39;</span>,<span class="st">&#39;CO2 filled&#39;</span>,<span class="st">&#39;seasonally adjusted filled&#39;</span>,<span class="st">&#39;Sta&#39;</span>)</span>
 <span id="cb6-2"><a href="data-wrangling.html#cb6-2" tabindex="-1"></a><span class="fu">head</span>(df1)</span></code></pre></div>
-<pre><code>##     Yr Mn XLDate     Date    CO2 seasonally adjusted    fit
-## 1 1958  1  21200 1958.041 -99.99              -99.99 -99.99
-## 2 1958  2  21231 1958.126 -99.99              -99.99 -99.99
-## 3 1958  3  21259 1958.203 315.71              314.44 316.20
-## 4 1958  4  21290 1958.288 317.45              315.16 317.30
-## 5 1958  5  21320 1958.370 317.51              314.69 317.89
-## 6 1958  6  21351 1958.455 -99.99              -99.99 317.27
-##   seasonally adjusted fit CO2 filled seasonally adjusted filled  Sta
-## 1                  -99.99     -99.99                     -99.99  MLO
-## 2                  -99.99     -99.99                     -99.99  MLO
-## 3                  314.91     315.71                     314.44  MLO
-## 4                  314.99     317.45                     315.16  MLO
-## 5                  315.07     317.51                     314.69  MLO
-## 6                  315.15     317.27                     315.15  MLO</code></pre>
+<pre><code>##     Yr Mn XLDate     Date    CO2 seasonally adjusted    fit seasonally adjusted fit
+## 1 1958  1  21200 1958.041 -99.99              -99.99 -99.99                  -99.99
+## 2 1958  2  21231 1958.126 -99.99              -99.99 -99.99                  -99.99
+## 3 1958  3  21259 1958.203 315.71              314.44 316.20                  314.91
+## 4 1958  4  21290 1958.288 317.45              315.16 317.30                  314.99
+## 5 1958  5  21320 1958.370 317.51              314.69 317.89                  315.07
+## 6 1958  6  21351 1958.455 -99.99              -99.99 317.27                  315.15
+##   CO2 filled seasonally adjusted filled  Sta
+## 1     -99.99                     -99.99  MLO
+## 2     -99.99                     -99.99  MLO
+## 3     315.71                     314.44  MLO
+## 4     317.45                     315.16  MLO
+## 5     317.51                     314.69  MLO
+## 6     317.27                     315.15  MLO</code></pre>
 <p>The missing value default here is -99.99, let’s change that to <code>NA</code>, R’s standard.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="data-wrangling.html#cb8-1" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> df1 <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">everything</span>(), <span class="sc">~</span><span class="fu">replace</span>(., . <span class="sc">==</span>  <span class="sc">-</span><span class="fl">99.99</span> , <span class="cn">NA</span>)))</span></code></pre></div>
 <p>Okay, we’re ready for an initial plot</p>
@@ -274,8 +292,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb9-2"><a href="data-wrangling.html#cb9-2" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
 <span id="cb9-3"><a href="data-wrangling.html#cb9-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Mauna Loa Dataset (latest)&quot;</span>,</span>
 <span id="cb9-4"><a href="data-wrangling.html#cb9-4" tabindex="-1"></a>       <span class="at">y=</span><span class="st">&quot;CO2 (ppm)&quot;</span>)</span></code></pre></div>
-<pre><code>## Warning: Removed 11 rows containing missing values or values outside the scale range
-## (`geom_line()`).</code></pre>
 <p><img src="_main_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <p>Great, that looks right.</p>
 </div>

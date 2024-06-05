@@ -14,6 +14,7 @@ library(scales)
 ```
 
 ### Dataset    
+
 We will be looking at the daily discharge of the Rio Grande, which has been measured at Embudo, NM since 1889. The data and their associated metadata may be retrieved from the [USGS website](https://waterdata.usgs.gov/nwis/dv?cb_00060=on&format=rdb&site_no=08279500&legacy=&referred_module=sw&period=&begin_date=1889-01-01&end_date=2024-05-20). Let's load them and have a look:
 
 ```{r}
@@ -37,8 +38,7 @@ ggplot(df, aes(x = datetime, y = `discharge (cf/s)`)) +
   labs(x = "Time", y = "Discharge (cf/s)")
 ```
 
-
-
+## Aggregate to monthly
 
 ```{r}
 discharge_monthly <- df |> 
@@ -56,19 +56,21 @@ ggplot(discharge_monthly, aes(x=Date, y=discharge)) +
 
 ```
 
+### Even sampling
+
 ```{r}
 missing_vals <- discharge_monthly$Date[which(is.na(discharge_monthly$discharge))]
 missing_vals
 
 df3 <- discharge_monthly |> 
-  filter(Date > max(missing_vals))
+  dplyr::filter(Date > max(missing_vals))
 
 hist(as.numeric(diff(df3$Date)),main = "Distribution of Time Steps", xlab = "Days")
 
 df4 <- df3 |> 
   mutate(Date = decimal_date(Date)) |> 
   astrochron::linterp(dt=(1/12),genplot = F) |> 
-  filter(Date > max(missing_vals))
+  dplyr::filter(Date > max(missing_vals))
 
 ggplot(df4, aes(x=Date, y=discharge)) +
   labs(title = "Rio Grande at Embudo, NM (30.4375-day period)",
@@ -77,6 +79,8 @@ ggplot(df4, aes(x=Date, y=discharge)) +
   geom_line() +
   theme_light()
 ```
+
+### multi-taper
 
 ```{r}
 mtm1 <- mtm(df4,output = 1,verbose = F) |> 
@@ -105,7 +109,11 @@ The prominent feature is a strong annual cycle and higher-order harmonics, super
 
 In addition, we may be interested in interannual (year-to-year) to interdecadal (decade-to-decade) variations in streamflow. We would like to know whether the peak observed around 3-4 years in the plot above is *significant* with respect to a reasonable null.
 
+## STL
+
 To do both of these things it would make sense to remove the annual cycle. We'll use STL decomposition for this.
+
+### Gaussianize
 
 Now, because of the positive skew mentioned above, it turns out that the STL decomposition has trouble with this dataset. Instead, we can use the gaussianize() to map this dataset to a standard normal. There are applications for which this would be undesirable, but for this purpose it is good:
 
@@ -131,6 +139,7 @@ gaussianize <- function(X) {
 
 ```
 
+### MTM, again
 
 Let's take a look at how this affects the spectrum:
 
@@ -155,14 +164,17 @@ ggplot(mtm2, aes(x=Period, y=Power)) +
   theme_light()
 ```
 
-We see that the spectrum is nearly unchanged, but now we can apply STL:
+### Applying STL
 
+We see that the spectrum is nearly unchanged, but now we can apply STL:
 
 ```{r}
 dis <- ts(as.numeric(df5$discharge), start = c(1889, 1), frequency = 12)
 stl_res <- stl(dis, s.window = "periodic")
 plot(stl_res)
 ```
+
+### The trend
 
 Now let's apply spectral analysis to the trend component:
 
@@ -195,11 +207,12 @@ Indeed this removed the annual cycle and its harmonics (for the most part). It's
 We see that the broadband peak in the 2-10y range is above the AR(1) spectrum, so these frequencies could be considered significant.
 
 ## Estimation of scaling behavior
+
 In this last example, we fit a single scaling exponent to the timeseries, spanning the entire range of frequencies (periods). Under the hood, all we are doing is fitting a straight line to the spectrum:
 
 ```{r}
 # Log-transform both axes
-toScale <- filter(mtm3, between(Period,0.2,100))
+toScale <- dplyr::filter(mtm3, between(Period,0.2,100))
 log_period <- log10(toScale$Period)
 log_spec <- log10(toScale$Power)
 
@@ -218,7 +231,7 @@ This results in a fairly steep exponent near `r round(coef(fit)[2], 2)`. If we w
 
 ```{r}
 # Log-transform both axes
-toScale <- filter(mtm3, between(Period,2,100))
+toScale <- dplyr::filter(mtm3, between(Period,2,100))
 log_period <- log10(toScale$Period)
 log_spec <- log10(toScale$Power)
 
@@ -236,6 +249,8 @@ We see that this results in a much flatter line, i.e. a smaller scaling exponent
 
 ## Gap-tolerant spectral analysis
 
+### Lomb-Scargle
+
 We return to the original series and apply a technique to obtain the spectrum, keeping gaps in the series, known as the Lomb-Scargle periodogram:
 ```{r}
 #Let's average (or bin) the data into monthly intervals
@@ -245,7 +260,7 @@ dfBinned <- df |>
   group_by(year,month) |> 
   summarize(discharge = mean(`discharge (cf/s)`,na.rm = TRUE)) |> 
   mutate(yearDecimal = year + month/12 - 1/24) |> 
-  filter(is.finite(discharge))
+  dplyr::filter(is.finite(discharge))
 
 # Compute Lomb-Scargle periodogram
 lomb <- lomb::lsp(x = dfBinned$discharge, 
@@ -285,6 +300,22 @@ comboPlotData <- bind_rows(mutate(mtm1,method = "mtm"),
 
 ```
 It is often useful to be able to compare methods and/or parameter choices, to see if the results are robust. We see that some choices lump peaks into broad bands, others tend to slice them up.
+
+### Wavelet
+
+Wavelet analysis using the Morlet wavelet:
+
+```{r}
+# Convert to matrix format required by biwavelet
+dat <- cbind(time_vec, dis_vec)
+dat <- dat[1:1880,]
+
+# Compute wavelet transform
+wav <- biwavelet::wt(dat)
+
+# Plot wavelet power spectrum
+biwavelet::plot.biwavelet(wav, plot.phase = FALSE, type = "power.norm")
+```
 
 
 We'll explore wavelets more in the next chapter.

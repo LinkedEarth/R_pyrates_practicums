@@ -4,23 +4,23 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4.2 Spurious Correlations | Time Series Analysis in R</title>
+  <title>4.2 Spurious Correlations | _main.knit</title>
   <meta name="description" content="This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the PyRATES Timeseries Practicums in python by Julien Emile-Geay" />
   <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4.2 Spurious Correlations | Time Series Analysis in R" />
+  <meta property="og:title" content="4.2 Spurious Correlations | _main.knit" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the PyRATES Timeseries Practicums in python by Julien Emile-Geay" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4.2 Spurious Correlations | Time Series Analysis in R" />
+  <meta name="twitter:title" content="4.2 Spurious Correlations | _main.knit" />
   
   <meta name="twitter:description" content="This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the PyRATES Timeseries Practicums in python by Julien Emile-Geay" />
   
 
-<meta name="author" content="David Edge and Nick McKay" />
+<meta name="author" content="David Edge, Nick McKay, and Julien Emile-Geay (with help from Claude.ai)" />
 
 
 <meta name="date" content="2024-06-05" />
@@ -136,7 +136,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> </a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Time Series Analysis in R</a></li>
 <li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="background.html"><a href="background.html"><i class="fa fa-check"></i><b>2.1</b> Background</a></li>
@@ -185,14 +185,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="5" data-path="spectral-analysis-in-r.html"><a href="spectral-analysis-in-r.html"><i class="fa fa-check"></i><b>5</b> Spectral Analysis in R</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="data-description.html"><a href="data-description.html"><i class="fa fa-check"></i><b>5.1</b> Data Description</a></li>
-<li class="chapter" data-level="5.2" data-path="demonstration.html"><a href="demonstration.html"><i class="fa fa-check"></i><b>5.2</b> Demonstration</a></li>
-<li class="chapter" data-level="5.3" data-path="spectral-methods.html"><a href="spectral-methods.html"><i class="fa fa-check"></i><b>5.3</b> Spectral methods</a></li>
+<li class="chapter" data-level="5.0.1" data-path="spectral-analysis-in-r.html"><a href="spectral-analysis-in-r.html#packages-1"><i class="fa fa-check"></i><b>5.0.1</b> Packages</a></li>
+<li class="chapter" data-level="5.0.2" data-path="spectral-analysis-in-r.html"><a href="spectral-analysis-in-r.html#dataset"><i class="fa fa-check"></i><b>5.0.2</b> Dataset</a></li>
+<li class="chapter" data-level="5.1" data-path="aggregate-to-monthly.html"><a href="aggregate-to-monthly.html"><i class="fa fa-check"></i><b>5.1</b> Aggregate to monthly</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="aggregate-to-monthly.html"><a href="aggregate-to-monthly.html#even-sampling"><i class="fa fa-check"></i><b>5.1.1</b> Even sampling</a></li>
+<li class="chapter" data-level="5.1.2" data-path="aggregate-to-monthly.html"><a href="aggregate-to-monthly.html#multi-taper"><i class="fa fa-check"></i><b>5.1.2</b> multi-taper</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="stl.html"><a href="stl.html"><i class="fa fa-check"></i><b>5.2</b> STL</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="stl.html"><a href="stl.html#gaussianize"><i class="fa fa-check"></i><b>5.2.1</b> Gaussianize</a></li>
+<li class="chapter" data-level="5.2.2" data-path="stl.html"><a href="stl.html#mtm-again"><i class="fa fa-check"></i><b>5.2.2</b> MTM, again</a></li>
+<li class="chapter" data-level="5.2.3" data-path="stl.html"><a href="stl.html#applying-stl"><i class="fa fa-check"></i><b>5.2.3</b> Applying STL</a></li>
+<li class="chapter" data-level="5.2.4" data-path="stl.html"><a href="stl.html#the-trend"><i class="fa fa-check"></i><b>5.2.4</b> The trend</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="estimation-of-scaling-behavior.html"><a href="estimation-of-scaling-behavior.html"><i class="fa fa-check"></i><b>5.3</b> Estimation of scaling behavior</a></li>
+<li class="chapter" data-level="5.4" data-path="gap-tolerant-spectral-analysis.html"><a href="gap-tolerant-spectral-analysis.html"><i class="fa fa-check"></i><b>5.4</b> Gap-tolerant spectral analysis</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="gap-tolerant-spectral-analysis.html"><a href="gap-tolerant-spectral-analysis.html#lomb-scargle"><i class="fa fa-check"></i><b>5.4.1</b> Lomb-Scargle</a></li>
+<li class="chapter" data-level="5.4.2" data-path="gap-tolerant-spectral-analysis.html"><a href="gap-tolerant-spectral-analysis.html#wavelet"><i class="fa fa-check"></i><b>5.4.2</b> Wavelet</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="takeaways.html"><a href="takeaways.html"><i class="fa fa-check"></i><b>5.5</b> Takeaways</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="wavelet-transform-in-r.html"><a href="wavelet-transform-in-r.html"><i class="fa fa-check"></i><b>6</b> Wavelet Transform in R</a>
 <ul>
-<li class="chapter" data-level="6.0.1" data-path="wavelet-transform-in-r.html"><a href="wavelet-transform-in-r.html#packages-1"><i class="fa fa-check"></i><b>6.0.1</b> Packages</a></li>
-<li class="chapter" data-level="6.0.2" data-path="wavelet-transform-in-r.html"><a href="wavelet-transform-in-r.html#data-description-1"><i class="fa fa-check"></i><b>6.0.2</b> Data description</a></li>
+<li class="chapter" data-level="6.0.1" data-path="wavelet-transform-in-r.html"><a href="wavelet-transform-in-r.html#packages-2"><i class="fa fa-check"></i><b>6.0.1</b> Packages</a></li>
+<li class="chapter" data-level="6.0.2" data-path="wavelet-transform-in-r.html"><a href="wavelet-transform-in-r.html#data-description"><i class="fa fa-check"></i><b>6.0.2</b> Data description</a></li>
 <li class="chapter" data-level="6.1" data-path="loading-and-visualizing-the-deltad-series.html"><a href="loading-and-visualizing-the-deltad-series.html"><i class="fa fa-check"></i><b>6.1</b> Loading and visualizing the <span class="math inline">\(\delta\)</span>D series</a></li>
 <li class="chapter" data-level="6.2" data-path="sampling-interval.html"><a href="sampling-interval.html"><i class="fa fa-check"></i><b>6.2</b> Sampling interval</a></li>
 <li class="chapter" data-level="6.3" data-path="wavelet-analysis.html"><a href="wavelet-analysis.html"><i class="fa fa-check"></i><b>6.3</b> Wavelet Analysis</a>
@@ -217,7 +235,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Time Series Analysis in R</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"></a>
           </h1>
         </div>
 
@@ -234,14 +252,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>common trends</li>
 <li>Smoothing-enhanced correlations</li>
 </ul>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="spurious-correlations.html#cb77-1" tabindex="-1"></a>dfAll<span class="sc">$</span>lowpassNAO <span class="ot">&lt;-</span> <span class="fu">smooth.spline</span>(<span class="at">x =</span> dfAll<span class="sc">$</span>datetime, <span class="at">y=</span>dfAll<span class="sc">$</span>NAO, <span class="at">spar =</span> <span class="fl">0.2</span>)<span class="sc">$</span>y</span>
-<span id="cb77-2"><a href="spurious-correlations.html#cb77-2" tabindex="-1"></a>dfAll<span class="sc">$</span>lowpassSOI <span class="ot">&lt;-</span> <span class="fu">smooth.spline</span>(<span class="at">x =</span> dfAll<span class="sc">$</span>datetime, <span class="at">y=</span>dfAll<span class="sc">$</span>SOI, <span class="at">spar =</span> <span class="fl">0.2</span>)<span class="sc">$</span>y</span></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="spurious-correlations.html#cb74-1" tabindex="-1"></a>dfAll<span class="sc">$</span>lowpassNAO <span class="ot">&lt;-</span> <span class="fu">smooth.spline</span>(<span class="at">x =</span> dfAll<span class="sc">$</span>datetime, <span class="at">y=</span>dfAll<span class="sc">$</span>NAO, <span class="at">spar =</span> <span class="fl">0.2</span>)<span class="sc">$</span>y</span>
+<span id="cb74-2"><a href="spurious-correlations.html#cb74-2" tabindex="-1"></a>dfAll<span class="sc">$</span>lowpassSOI <span class="ot">&lt;-</span> <span class="fu">smooth.spline</span>(<span class="at">x =</span> dfAll<span class="sc">$</span>datetime, <span class="at">y=</span>dfAll<span class="sc">$</span>SOI, <span class="at">spar =</span> <span class="fl">0.2</span>)<span class="sc">$</span>y</span></code></pre></div>
 <p>Let’s reformat and plot the smoothed series</p>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="spurious-correlations.html#cb78-1" tabindex="-1"></a>allLong2 <span class="ot">&lt;-</span> <span class="fu">melt</span>(dfAll,<span class="at">id.vars =</span> <span class="st">&quot;datetime&quot;</span>)</span>
-<span id="cb78-2"><a href="spurious-correlations.html#cb78-2" tabindex="-1"></a>allLong2 <span class="ot">&lt;-</span> allLong2 <span class="sc">%&gt;%</span></span>
-<span id="cb78-3"><a href="spurious-correlations.html#cb78-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">group =</span> <span class="fu">ifelse</span>(<span class="fu">grepl</span>(<span class="st">&quot;SOI&quot;</span>, variable), <span class="st">&quot;SOI&quot;</span>, <span class="st">&quot;NAO&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb78-4"><a href="spurious-correlations.html#cb78-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">type =</span> <span class="fu">ifelse</span>(<span class="fu">grepl</span>(<span class="st">&quot;lowpass&quot;</span>, variable), <span class="st">&quot;filtered&quot;</span>, <span class="st">&quot;original&quot;</span>))</span>
-<span id="cb78-5"><a href="spurious-correlations.html#cb78-5" tabindex="-1"></a><span class="fu">head</span>(allLong2)</span></code></pre></div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="spurious-correlations.html#cb75-1" tabindex="-1"></a>allLong2 <span class="ot">&lt;-</span> <span class="fu">melt</span>(dfAll,<span class="at">id.vars =</span> <span class="st">&quot;datetime&quot;</span>)</span>
+<span id="cb75-2"><a href="spurious-correlations.html#cb75-2" tabindex="-1"></a>allLong2 <span class="ot">&lt;-</span> allLong2 <span class="sc">%&gt;%</span></span>
+<span id="cb75-3"><a href="spurious-correlations.html#cb75-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">group =</span> <span class="fu">ifelse</span>(<span class="fu">grepl</span>(<span class="st">&quot;SOI&quot;</span>, variable), <span class="st">&quot;SOI&quot;</span>, <span class="st">&quot;NAO&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb75-4"><a href="spurious-correlations.html#cb75-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">type =</span> <span class="fu">ifelse</span>(<span class="fu">grepl</span>(<span class="st">&quot;lowpass&quot;</span>, variable), <span class="st">&quot;filtered&quot;</span>, <span class="st">&quot;original&quot;</span>))</span>
+<span id="cb75-5"><a href="spurious-correlations.html#cb75-5" tabindex="-1"></a><span class="fu">head</span>(allLong2)</span></code></pre></div>
 <pre><code>##     datetime variable value group     type
 ## 1 1951-01-31      SOI   0.9   SOI original
 ## 2 1951-03-02      SOI  -0.1   SOI original
@@ -249,17 +267,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4 1951-05-02      SOI  -0.7   SOI original
 ## 5 1951-06-02      SOI   0.2   SOI original
 ## 6 1951-07-02      SOI  -1.0   SOI original</code></pre>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="spurious-correlations.html#cb80-1" tabindex="-1"></a><span class="fu">ggplot</span>(allLong2, <span class="fu">aes</span>(<span class="at">x=</span>datetime, <span class="at">y=</span>value, <span class="at">group=</span>group, <span class="at">color=</span>type)) <span class="sc">+</span></span>
-<span id="cb80-2"><a href="spurious-correlations.html#cb80-2" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb80-3"><a href="spurious-correlations.html#cb80-3" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>group, <span class="at">ncol=</span><span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb80-4"><a href="spurious-correlations.html#cb80-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;NAO vs SOI&quot;</span>,</span>
-<span id="cb80-5"><a href="spurious-correlations.html#cb80-5" tabindex="-1"></a>       <span class="at">y=</span><span class="st">&quot;Index&quot;</span>,</span>
-<span id="cb80-6"><a href="spurious-correlations.html#cb80-6" tabindex="-1"></a>       <span class="at">x=</span><span class="st">&quot;Year&quot;</span>) <span class="sc">+</span></span>
-<span id="cb80-7"><a href="spurious-correlations.html#cb80-7" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="spurious-correlations.html#cb77-1" tabindex="-1"></a><span class="fu">ggplot</span>(allLong2, <span class="fu">aes</span>(<span class="at">x=</span>datetime, <span class="at">y=</span>value, <span class="at">group=</span>group, <span class="at">color=</span>type)) <span class="sc">+</span></span>
+<span id="cb77-2"><a href="spurious-correlations.html#cb77-2" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb77-3"><a href="spurious-correlations.html#cb77-3" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>group, <span class="at">ncol=</span><span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb77-4"><a href="spurious-correlations.html#cb77-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;NAO vs SOI&quot;</span>,</span>
+<span id="cb77-5"><a href="spurious-correlations.html#cb77-5" tabindex="-1"></a>       <span class="at">y=</span><span class="st">&quot;Index&quot;</span>,</span>
+<span id="cb77-6"><a href="spurious-correlations.html#cb77-6" tabindex="-1"></a>       <span class="at">x=</span><span class="st">&quot;Year&quot;</span>) <span class="sc">+</span></span>
+<span id="cb77-7"><a href="spurious-correlations.html#cb77-7" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-41-1.png" width="672" /></p>
 <p>Perhaps the smoothed series will show the cryptic relationship</p>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="spurious-correlations.html#cb81-1" tabindex="-1"></a><span class="fu">lapply</span>(<span class="fu">c</span>(<span class="st">&quot;pearson&quot;</span>, <span class="st">&quot;spearman&quot;</span>, <span class="st">&quot;kendall&quot;</span>), </span>
-<span id="cb81-2"><a href="spurious-correlations.html#cb81-2" tabindex="-1"></a>       <span class="cf">function</span>(x) <span class="fu">cor.test</span>(dfAll<span class="sc">$</span>lowpassNAO, dfAll<span class="sc">$</span>lowpassSOI, <span class="at">method =</span> x))</span></code></pre></div>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="spurious-correlations.html#cb78-1" tabindex="-1"></a><span class="fu">lapply</span>(<span class="fu">c</span>(<span class="st">&quot;pearson&quot;</span>, <span class="st">&quot;spearman&quot;</span>, <span class="st">&quot;kendall&quot;</span>), </span>
+<span id="cb78-2"><a href="spurious-correlations.html#cb78-2" tabindex="-1"></a>       <span class="cf">function</span>(x) <span class="fu">cor.test</span>(dfAll<span class="sc">$</span>lowpassNAO, dfAll<span class="sc">$</span>lowpassSOI, <span class="at">method =</span> x))</span></code></pre></div>
 <pre><code>## [[1]]
 ## 
 ##  Pearson&#39;s product-moment correlation
@@ -296,25 +314,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## sample estimates:
 ##        tau 
 ## -0.0569587</code></pre>
-<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="spurious-correlations.html#cb83-1" tabindex="-1"></a><span class="fu">lapply</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), </span>
-<span id="cb83-2"><a href="spurious-correlations.html#cb83-2" tabindex="-1"></a>       <span class="cf">function</span>(x) <span class="fu">surrogateCor</span>(dfAll<span class="sc">$</span>lowpassNAO,</span>
-<span id="cb83-3"><a href="spurious-correlations.html#cb83-3" tabindex="-1"></a>                                dfAll<span class="sc">$</span>lowpassSOI,</span>
-<span id="cb83-4"><a href="spurious-correlations.html#cb83-4" tabindex="-1"></a>                                <span class="at">nsim =</span> <span class="dv">10000</span>,</span>
-<span id="cb83-5"><a href="spurious-correlations.html#cb83-5" tabindex="-1"></a>                                <span class="at">cormethod =</span> x, </span>
-<span id="cb83-6"><a href="spurious-correlations.html#cb83-6" tabindex="-1"></a>                                <span class="at">genplot =</span> F, </span>
-<span id="cb83-7"><a href="spurious-correlations.html#cb83-7" tabindex="-1"></a>                                <span class="at">verbose =</span> F)</span>
-<span id="cb83-8"><a href="spurious-correlations.html#cb83-8" tabindex="-1"></a>       )</span></code></pre></div>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="spurious-correlations.html#cb80-1" tabindex="-1"></a><span class="fu">lapply</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), </span>
+<span id="cb80-2"><a href="spurious-correlations.html#cb80-2" tabindex="-1"></a>       <span class="cf">function</span>(x) <span class="fu">surrogateCor</span>(dfAll<span class="sc">$</span>lowpassNAO,</span>
+<span id="cb80-3"><a href="spurious-correlations.html#cb80-3" tabindex="-1"></a>                                dfAll<span class="sc">$</span>lowpassSOI,</span>
+<span id="cb80-4"><a href="spurious-correlations.html#cb80-4" tabindex="-1"></a>                                <span class="at">nsim =</span> <span class="dv">10000</span>,</span>
+<span id="cb80-5"><a href="spurious-correlations.html#cb80-5" tabindex="-1"></a>                                <span class="at">cormethod =</span> x, </span>
+<span id="cb80-6"><a href="spurious-correlations.html#cb80-6" tabindex="-1"></a>                                <span class="at">genplot =</span> F, </span>
+<span id="cb80-7"><a href="spurious-correlations.html#cb80-7" tabindex="-1"></a>                                <span class="at">verbose =</span> F)</span>
+<span id="cb80-8"><a href="spurious-correlations.html#cb80-8" tabindex="-1"></a>       )</span></code></pre></div>
 <pre><code>## [[1]]
 ##       datcor pvalue
-## 1 -0.1317769 0.2749
+## 1 -0.1317769 0.2782
 ## 
 ## [[2]]
 ##        datcor pvalue
-## 1 -0.08088386 0.4917
+## 1 -0.08088386 0.5048
 ## 
 ## [[3]]
 ##       datcor pvalue
-## 1 -0.0569587 0.4731</code></pre>
+## 1 -0.0569587 0.4744</code></pre>
 <p>Okay, so the simple Pearson correlation comes through significant (p &lt; .05), but this assumes that each value is independent, which we know is not true because we smoothed the series.</p>
 <p>The Ebisuzaki test is very useful here, and we see that the corresponding Pearson p-value does not approach .05.</p>
 <p>Take-home message: common trends can easily create the appearance of correlations (see Tyler Vigen’s excellent <a href="https://www.tylervigen.com/spurious-correlations">website</a>) and really complicate assessments of significance. If the trend is not relevant to your question, we recommend removing it prior to computing correlations, e.g. using <code>lm()</code>.</p>

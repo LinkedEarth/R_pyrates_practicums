@@ -4,23 +4,23 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>5 Spectral Analysis in R | Time Series Analysis in R</title>
+  <title>5 Spectral Analysis in R | _main.knit</title>
   <meta name="description" content="This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the PyRATES Timeseries Practicums in python by Julien Emile-Geay" />
   <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="5 Spectral Analysis in R | Time Series Analysis in R" />
+  <meta property="og:title" content="5 Spectral Analysis in R | _main.knit" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the PyRATES Timeseries Practicums in python by Julien Emile-Geay" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="5 Spectral Analysis in R | Time Series Analysis in R" />
+  <meta name="twitter:title" content="5 Spectral Analysis in R | _main.knit" />
   
   <meta name="twitter:description" content="This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the PyRATES Timeseries Practicums in python by Julien Emile-Geay" />
   
 
-<meta name="author" content="David Edge and Nick McKay" />
+<meta name="author" content="David Edge, Nick McKay, and Julien Emile-Geay (with help from Claude.ai)" />
 
 
 <meta name="date" content="2024-06-05" />
@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="references.html"/>
-<link rel="next" href="data-description.html"/>
+<link rel="next" href="aggregate-to-monthly.html"/>
 <script src="assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -136,7 +136,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> </a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Time Series Analysis in R</a></li>
 <li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="background.html"><a href="background.html"><i class="fa fa-check"></i><b>2.1</b> Background</a></li>
@@ -185,14 +185,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="5" data-path="spectral-analysis-in-r.html"><a href="spectral-analysis-in-r.html"><i class="fa fa-check"></i><b>5</b> Spectral Analysis in R</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="data-description.html"><a href="data-description.html"><i class="fa fa-check"></i><b>5.1</b> Data Description</a></li>
-<li class="chapter" data-level="5.2" data-path="demonstration.html"><a href="demonstration.html"><i class="fa fa-check"></i><b>5.2</b> Demonstration</a></li>
-<li class="chapter" data-level="5.3" data-path="spectral-methods.html"><a href="spectral-methods.html"><i class="fa fa-check"></i><b>5.3</b> Spectral methods</a></li>
+<li class="chapter" data-level="5.0.1" data-path="spectral-analysis-in-r.html"><a href="spectral-analysis-in-r.html#packages-1"><i class="fa fa-check"></i><b>5.0.1</b> Packages</a></li>
+<li class="chapter" data-level="5.0.2" data-path="spectral-analysis-in-r.html"><a href="spectral-analysis-in-r.html#dataset"><i class="fa fa-check"></i><b>5.0.2</b> Dataset</a></li>
+<li class="chapter" data-level="5.1" data-path="aggregate-to-monthly.html"><a href="aggregate-to-monthly.html"><i class="fa fa-check"></i><b>5.1</b> Aggregate to monthly</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="aggregate-to-monthly.html"><a href="aggregate-to-monthly.html#even-sampling"><i class="fa fa-check"></i><b>5.1.1</b> Even sampling</a></li>
+<li class="chapter" data-level="5.1.2" data-path="aggregate-to-monthly.html"><a href="aggregate-to-monthly.html#multi-taper"><i class="fa fa-check"></i><b>5.1.2</b> multi-taper</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="stl.html"><a href="stl.html"><i class="fa fa-check"></i><b>5.2</b> STL</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="stl.html"><a href="stl.html#gaussianize"><i class="fa fa-check"></i><b>5.2.1</b> Gaussianize</a></li>
+<li class="chapter" data-level="5.2.2" data-path="stl.html"><a href="stl.html#mtm-again"><i class="fa fa-check"></i><b>5.2.2</b> MTM, again</a></li>
+<li class="chapter" data-level="5.2.3" data-path="stl.html"><a href="stl.html#applying-stl"><i class="fa fa-check"></i><b>5.2.3</b> Applying STL</a></li>
+<li class="chapter" data-level="5.2.4" data-path="stl.html"><a href="stl.html#the-trend"><i class="fa fa-check"></i><b>5.2.4</b> The trend</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="estimation-of-scaling-behavior.html"><a href="estimation-of-scaling-behavior.html"><i class="fa fa-check"></i><b>5.3</b> Estimation of scaling behavior</a></li>
+<li class="chapter" data-level="5.4" data-path="gap-tolerant-spectral-analysis.html"><a href="gap-tolerant-spectral-analysis.html"><i class="fa fa-check"></i><b>5.4</b> Gap-tolerant spectral analysis</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="gap-tolerant-spectral-analysis.html"><a href="gap-tolerant-spectral-analysis.html#lomb-scargle"><i class="fa fa-check"></i><b>5.4.1</b> Lomb-Scargle</a></li>
+<li class="chapter" data-level="5.4.2" data-path="gap-tolerant-spectral-analysis.html"><a href="gap-tolerant-spectral-analysis.html#wavelet"><i class="fa fa-check"></i><b>5.4.2</b> Wavelet</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="takeaways.html"><a href="takeaways.html"><i class="fa fa-check"></i><b>5.5</b> Takeaways</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="wavelet-transform-in-r.html"><a href="wavelet-transform-in-r.html"><i class="fa fa-check"></i><b>6</b> Wavelet Transform in R</a>
 <ul>
-<li class="chapter" data-level="6.0.1" data-path="wavelet-transform-in-r.html"><a href="wavelet-transform-in-r.html#packages-1"><i class="fa fa-check"></i><b>6.0.1</b> Packages</a></li>
-<li class="chapter" data-level="6.0.2" data-path="wavelet-transform-in-r.html"><a href="wavelet-transform-in-r.html#data-description-1"><i class="fa fa-check"></i><b>6.0.2</b> Data description</a></li>
+<li class="chapter" data-level="6.0.1" data-path="wavelet-transform-in-r.html"><a href="wavelet-transform-in-r.html#packages-2"><i class="fa fa-check"></i><b>6.0.1</b> Packages</a></li>
+<li class="chapter" data-level="6.0.2" data-path="wavelet-transform-in-r.html"><a href="wavelet-transform-in-r.html#data-description"><i class="fa fa-check"></i><b>6.0.2</b> Data description</a></li>
 <li class="chapter" data-level="6.1" data-path="loading-and-visualizing-the-deltad-series.html"><a href="loading-and-visualizing-the-deltad-series.html"><i class="fa fa-check"></i><b>6.1</b> Loading and visualizing the <span class="math inline">\(\delta\)</span>D series</a></li>
 <li class="chapter" data-level="6.2" data-path="sampling-interval.html"><a href="sampling-interval.html"><i class="fa fa-check"></i><b>6.2</b> Sampling interval</a></li>
 <li class="chapter" data-level="6.3" data-path="wavelet-analysis.html"><a href="wavelet-analysis.html"><i class="fa fa-check"></i><b>6.3</b> Wavelet Analysis</a>
@@ -217,7 +235,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Time Series Analysis in R</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"></a>
           </h1>
         </div>
 
@@ -227,6 +245,39 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="spectral-analysis-in-r" class="section level1 hasAnchor" number="5">
 <h1><span class="header-section-number">5</span> Spectral Analysis in R<a href="spectral-analysis-in-r.html#spectral-analysis-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Recall that in spectral analysis we step into a “bizarro world”, switching from the time domain to the frequency domain. There, two essential features are of interest: peaks, and background. In this tutorial, we will perform spectral analysis on Rio Grande streamflow, and see if we can learn anything interesting about it in this way.</p>
+<div id="packages-1" class="section level3 hasAnchor" number="5.0.1">
+<h3><span class="header-section-number">5.0.1</span> Packages<a href="spectral-analysis-in-r.html#packages-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="spectral-analysis-in-r.html#cb82-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb82-2"><a href="spectral-analysis-in-r.html#cb82-2" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
+<span id="cb82-3"><a href="spectral-analysis-in-r.html#cb82-3" tabindex="-1"></a><span class="fu">library</span>(astrochron)</span>
+<span id="cb82-4"><a href="spectral-analysis-in-r.html#cb82-4" tabindex="-1"></a><span class="fu">library</span>(lomb)</span>
+<span id="cb82-5"><a href="spectral-analysis-in-r.html#cb82-5" tabindex="-1"></a><span class="fu">library</span>(biwavelet)</span>
+<span id="cb82-6"><a href="spectral-analysis-in-r.html#cb82-6" tabindex="-1"></a><span class="fu">library</span>(scales)</span></code></pre></div>
+</div>
+<div id="dataset" class="section level3 hasAnchor" number="5.0.2">
+<h3><span class="header-section-number">5.0.2</span> Dataset<a href="spectral-analysis-in-r.html#dataset" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>We will be looking at the daily discharge of the Rio Grande, which has been measured at Embudo, NM since 1889. The data and their associated metadata may be retrieved from the <a href="https://waterdata.usgs.gov/nwis/dv?cb_00060=on&amp;format=rdb&amp;site_no=08279500&amp;legacy=&amp;referred_module=sw&amp;period=&amp;begin_date=1889-01-01&amp;end_date=2024-05-20">USGS website</a>. Let’s load them and have a look:</p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="spectral-analysis-in-r.html#cb83-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&#39;https://waterdata.usgs.gov/nwis/dv?cb_00060=on&amp;format=rdb&amp;site_no=08279500&amp;legacy=&amp;referred_module=sw&amp;period=&amp;begin_date=1889-01-01&amp;end_date=2024-05-20&#39;</span>, <span class="at">skip=</span><span class="dv">35</span>, <span class="at">sep=</span><span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>)</span>
+<span id="cb83-2"><a href="spectral-analysis-in-r.html#cb83-2" tabindex="-1"></a><span class="fu">names</span>(df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&#39;agency&#39;</span>, <span class="st">&#39;site_no&#39;</span>, <span class="st">&#39;datetime&#39;</span>,<span class="st">&#39;discharge (cf/s)&#39;</span>,<span class="st">&#39;code&#39;</span>)</span>
+<span id="cb83-3"><a href="spectral-analysis-in-r.html#cb83-3" tabindex="-1"></a>df<span class="sc">$</span>datetime <span class="ot">&lt;-</span> lubridate<span class="sc">::</span><span class="fu">as_datetime</span>(df<span class="sc">$</span>datetime)</span>
+<span id="cb83-4"><a href="spectral-analysis-in-r.html#cb83-4" tabindex="-1"></a><span class="fu">head</span>(df)</span></code></pre></div>
+<pre><code>##   agency site_no   datetime discharge (cf/s) code
+## 1   USGS 8279500 1889-01-05              413    A
+## 2   USGS 8279500 1889-01-06              408    A
+## 3   USGS 8279500 1889-01-07              410    A
+## 4   USGS 8279500 1889-01-08              405    A
+## 5   USGS 8279500 1889-01-09              379    A
+## 6   USGS 8279500 1889-01-10              418    A</code></pre>
+<p>First, let us inspect the distribution of values:</p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="spectral-analysis-in-r.html#cb85-1" tabindex="-1"></a><span class="fu">hist</span>(df<span class="sc">$</span><span class="st">`</span><span class="at">discharge (cf/s)</span><span class="st">`</span>, <span class="at">main =</span> <span class="st">&quot;Distribution of Rio Grande Discharge&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Discharge (cf/s)&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
+<p>Like many other variables, streamflow is <strong>positively skewed</strong>: the distribution is asymmetric, with most values near zero and few instances of very high streamflow. Now let’s inspect the temporal behavior:</p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="spectral-analysis-in-r.html#cb86-1" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> datetime, <span class="at">y =</span> <span class="st">`</span><span class="at">discharge (cf/s)</span><span class="st">`</span>)) <span class="sc">+</span></span>
+<span id="cb86-2"><a href="spectral-analysis-in-r.html#cb86-2" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb86-3"><a href="spectral-analysis-in-r.html#cb86-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Time&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Discharge (cf/s)&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
+</div>
 </div>
             </section>
 
@@ -234,7 +285,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </div>
       </div>
 <a href="references.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="data-description.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="aggregate-to-monthly.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="assets/gitbook-2.6.7/js/app.min.js"></script>

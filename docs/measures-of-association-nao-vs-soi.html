@@ -4,23 +4,23 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4.1 Measures of association: NAO vs SOI | Time Series Analysis in R</title>
+  <title>4.1 Measures of association: NAO vs SOI | _main.knit</title>
   <meta name="description" content="This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the PyRATES Timeseries Practicums in python by Julien Emile-Geay" />
   <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4.1 Measures of association: NAO vs SOI | Time Series Analysis in R" />
+  <meta property="og:title" content="4.1 Measures of association: NAO vs SOI | _main.knit" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the PyRATES Timeseries Practicums in python by Julien Emile-Geay" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4.1 Measures of association: NAO vs SOI | Time Series Analysis in R" />
+  <meta name="twitter:title" content="4.1 Measures of association: NAO vs SOI | _main.knit" />
   
   <meta name="twitter:description" content="This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the PyRATES Timeseries Practicums in python by Julien Emile-Geay" />
   
 
-<meta name="author" content="David Edge and Nick McKay" />
+<meta name="author" content="David Edge, Nick McKay, and Julien Emile-Geay (with help from Claude.ai)" />
 
 
 <meta name="date" content="2024-06-05" />
@@ -136,7 +136,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> </a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Time Series Analysis in R</a></li>
 <li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="background.html"><a href="background.html"><i class="fa fa-check"></i><b>2.1</b> Background</a></li>
@@ -185,14 +185,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="5" data-path="spectral-analysis-in-r.html"><a href="spectral-analysis-in-r.html"><i class="fa fa-check"></i><b>5</b> Spectral Analysis in R</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="data-description.html"><a href="data-description.html"><i class="fa fa-check"></i><b>5.1</b> Data Description</a></li>
-<li class="chapter" data-level="5.2" data-path="demonstration.html"><a href="demonstration.html"><i class="fa fa-check"></i><b>5.2</b> Demonstration</a></li>
-<li class="chapter" data-level="5.3" data-path="spectral-methods.html"><a href="spectral-methods.html"><i class="fa fa-check"></i><b>5.3</b> Spectral methods</a></li>
+<li class="chapter" data-level="5.0.1" data-path="spectral-analysis-in-r.html"><a href="spectral-analysis-in-r.html#packages-1"><i class="fa fa-check"></i><b>5.0.1</b> Packages</a></li>
+<li class="chapter" data-level="5.0.2" data-path="spectral-analysis-in-r.html"><a href="spectral-analysis-in-r.html#dataset"><i class="fa fa-check"></i><b>5.0.2</b> Dataset</a></li>
+<li class="chapter" data-level="5.1" data-path="aggregate-to-monthly.html"><a href="aggregate-to-monthly.html"><i class="fa fa-check"></i><b>5.1</b> Aggregate to monthly</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="aggregate-to-monthly.html"><a href="aggregate-to-monthly.html#even-sampling"><i class="fa fa-check"></i><b>5.1.1</b> Even sampling</a></li>
+<li class="chapter" data-level="5.1.2" data-path="aggregate-to-monthly.html"><a href="aggregate-to-monthly.html#multi-taper"><i class="fa fa-check"></i><b>5.1.2</b> multi-taper</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="stl.html"><a href="stl.html"><i class="fa fa-check"></i><b>5.2</b> STL</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="stl.html"><a href="stl.html#gaussianize"><i class="fa fa-check"></i><b>5.2.1</b> Gaussianize</a></li>
+<li class="chapter" data-level="5.2.2" data-path="stl.html"><a href="stl.html#mtm-again"><i class="fa fa-check"></i><b>5.2.2</b> MTM, again</a></li>
+<li class="chapter" data-level="5.2.3" data-path="stl.html"><a href="stl.html#applying-stl"><i class="fa fa-check"></i><b>5.2.3</b> Applying STL</a></li>
+<li class="chapter" data-level="5.2.4" data-path="stl.html"><a href="stl.html#the-trend"><i class="fa fa-check"></i><b>5.2.4</b> The trend</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="estimation-of-scaling-behavior.html"><a href="estimation-of-scaling-behavior.html"><i class="fa fa-check"></i><b>5.3</b> Estimation of scaling behavior</a></li>
+<li class="chapter" data-level="5.4" data-path="gap-tolerant-spectral-analysis.html"><a href="gap-tolerant-spectral-analysis.html"><i class="fa fa-check"></i><b>5.4</b> Gap-tolerant spectral analysis</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="gap-tolerant-spectral-analysis.html"><a href="gap-tolerant-spectral-analysis.html#lomb-scargle"><i class="fa fa-check"></i><b>5.4.1</b> Lomb-Scargle</a></li>
+<li class="chapter" data-level="5.4.2" data-path="gap-tolerant-spectral-analysis.html"><a href="gap-tolerant-spectral-analysis.html#wavelet"><i class="fa fa-check"></i><b>5.4.2</b> Wavelet</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="takeaways.html"><a href="takeaways.html"><i class="fa fa-check"></i><b>5.5</b> Takeaways</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="wavelet-transform-in-r.html"><a href="wavelet-transform-in-r.html"><i class="fa fa-check"></i><b>6</b> Wavelet Transform in R</a>
 <ul>
-<li class="chapter" data-level="6.0.1" data-path="wavelet-transform-in-r.html"><a href="wavelet-transform-in-r.html#packages-1"><i class="fa fa-check"></i><b>6.0.1</b> Packages</a></li>
-<li class="chapter" data-level="6.0.2" data-path="wavelet-transform-in-r.html"><a href="wavelet-transform-in-r.html#data-description-1"><i class="fa fa-check"></i><b>6.0.2</b> Data description</a></li>
+<li class="chapter" data-level="6.0.1" data-path="wavelet-transform-in-r.html"><a href="wavelet-transform-in-r.html#packages-2"><i class="fa fa-check"></i><b>6.0.1</b> Packages</a></li>
+<li class="chapter" data-level="6.0.2" data-path="wavelet-transform-in-r.html"><a href="wavelet-transform-in-r.html#data-description"><i class="fa fa-check"></i><b>6.0.2</b> Data description</a></li>
 <li class="chapter" data-level="6.1" data-path="loading-and-visualizing-the-deltad-series.html"><a href="loading-and-visualizing-the-deltad-series.html"><i class="fa fa-check"></i><b>6.1</b> Loading and visualizing the <span class="math inline">\(\delta\)</span>D series</a></li>
 <li class="chapter" data-level="6.2" data-path="sampling-interval.html"><a href="sampling-interval.html"><i class="fa fa-check"></i><b>6.2</b> Sampling interval</a></li>
 <li class="chapter" data-level="6.3" data-path="wavelet-analysis.html"><a href="wavelet-analysis.html"><i class="fa fa-check"></i><b>6.3</b> Wavelet Analysis</a>
@@ -217,7 +235,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Time Series Analysis in R</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"></a>
           </h1>
         </div>
 
@@ -241,9 +259,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>We will also make use of <code>reshape2</code> for data formatting</li>
 <li><code>astrochron</code> will provide a test of correlation significance</li>
 </ul>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="measures-of-association-nao-vs-soi.html#cb50-1" tabindex="-1"></a><span class="fu">library</span>(reshape2)</span>
-<span id="cb50-2"><a href="measures-of-association-nao-vs-soi.html#cb50-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb50-3"><a href="measures-of-association-nao-vs-soi.html#cb50-3" tabindex="-1"></a><span class="fu">library</span>(astrochron)</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="measures-of-association-nao-vs-soi.html#cb49-1" tabindex="-1"></a><span class="fu">library</span>(reshape2)</span>
+<span id="cb49-2"><a href="measures-of-association-nao-vs-soi.html#cb49-2" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb49-3"><a href="measures-of-association-nao-vs-soi.html#cb49-3" tabindex="-1"></a><span class="fu">library</span>(astrochron)</span></code></pre></div>
 </div>
 <div id="data-wrangling-1" class="section level3 hasAnchor" number="4.1.2">
 <h3><span class="header-section-number">4.1.2</span> Data Wrangling<a href="measures-of-association-nao-vs-soi.html#data-wrangling-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -251,9 +269,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>The NAO data are from NCEP</li>
 <li>The SOI data ship with Pyleoclim, which houses a few datasets that make it easy to experiment with real-world geoscientific timeseries. We’ll grab the data directly from the github page.</li>
 </ul>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="measures-of-association-nao-vs-soi.html#cb51-1" tabindex="-1"></a><span class="co">#Load SOI</span></span>
-<span id="cb51-2"><a href="measures-of-association-nao-vs-soi.html#cb51-2" tabindex="-1"></a>SOI <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;https://github.com/LinkedEarth/Pyleoclim_util/raw/master/pyleoclim/data/soi_data.csv&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;,&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">skip =</span> <span class="dv">1</span>)</span>
-<span id="cb51-3"><a href="measures-of-association-nao-vs-soi.html#cb51-3" tabindex="-1"></a><span class="fu">head</span>(SOI)</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="measures-of-association-nao-vs-soi.html#cb50-1" tabindex="-1"></a><span class="co">#Load SOI</span></span>
+<span id="cb50-2"><a href="measures-of-association-nao-vs-soi.html#cb50-2" tabindex="-1"></a>SOI <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;https://github.com/LinkedEarth/Pyleoclim_util/raw/master/pyleoclim/data/soi_data.csv&quot;</span>, <span class="at">sep =</span> <span class="st">&quot;,&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">skip =</span> <span class="dv">1</span>)</span>
+<span id="cb50-3"><a href="measures-of-association-nao-vs-soi.html#cb50-3" tabindex="-1"></a><span class="fu">head</span>(SOI)</span></code></pre></div>
 <pre><code>##     Date     Year Value
 ## 1 195101 1951.000   1.5
 ## 2 195102 1951.083   0.9
@@ -261,24 +279,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4 195104 1951.250  -0.3
 ## 5 195105 1951.333  -0.7
 ## 6 195106 1951.417   0.2</code></pre>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="measures-of-association-nao-vs-soi.html#cb53-1" tabindex="-1"></a><span class="co">#Load NAO</span></span>
-<span id="cb53-2"><a href="measures-of-association-nao-vs-soi.html#cb53-2" tabindex="-1"></a>NAO <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&#39;https://www.cpc.ncep.noaa.gov/products/precip/CWlink/pna/norm.nao.monthly.b5001.current.ascii.table&#39;</span>,<span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">fill=</span><span class="cn">TRUE</span>, <span class="at">row.names =</span> <span class="cn">NULL</span>)</span>
-<span id="cb53-3"><a href="measures-of-association-nao-vs-soi.html#cb53-3" tabindex="-1"></a><span class="fu">head</span>(NAO)</span></code></pre></div>
-<pre><code>##   row.names   Jan   Feb   Mar   Apr   May   Jun   Jul   Aug   Sep   Oct   Nov
-## 1      1950  0.92  0.40 -0.36  0.73 -0.59 -0.06 -1.26 -0.05  0.25  0.85 -1.26
-## 2      1951  0.08  0.70 -1.02 -0.22 -0.59 -1.64  1.37 -0.22 -1.36  1.87 -0.39
-## 3      1952  0.93 -0.83 -1.49  1.01 -1.12 -0.40 -0.09 -0.28 -0.54 -0.73 -1.13
-## 4      1953  0.33 -0.49 -0.04 -1.67 -0.66  1.09  0.40 -0.71 -0.35  1.32  1.04
-## 5      1954  0.37  0.74 -0.83  1.34 -0.09 -0.25 -0.60 -1.90 -0.44  0.60  0.40
-## 6      1955 -1.84 -1.12 -0.53 -0.42 -0.34 -1.10  1.76  1.07  0.32 -1.47 -1.29
-##     Dec
-## 1 -1.02
-## 2  1.32
-## 3 -0.43
-## 4 -0.47
-## 5  0.69
-## 6  0.17</code></pre>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="measures-of-association-nao-vs-soi.html#cb55-1" tabindex="-1"></a><span class="fu">names</span>(NAO)[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="st">&quot;Year&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="measures-of-association-nao-vs-soi.html#cb52-1" tabindex="-1"></a><span class="co">#Load NAO</span></span>
+<span id="cb52-2"><a href="measures-of-association-nao-vs-soi.html#cb52-2" tabindex="-1"></a>NAO <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&#39;https://www.cpc.ncep.noaa.gov/products/precip/CWlink/pna/norm.nao.monthly.b5001.current.ascii.table&#39;</span>,<span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">fill=</span><span class="cn">TRUE</span>, <span class="at">row.names =</span> <span class="cn">NULL</span>)</span>
+<span id="cb52-3"><a href="measures-of-association-nao-vs-soi.html#cb52-3" tabindex="-1"></a><span class="fu">head</span>(NAO)</span></code></pre></div>
+<pre><code>##   row.names   Jan   Feb   Mar   Apr   May   Jun   Jul   Aug   Sep   Oct   Nov   Dec
+## 1      1950  0.92  0.40 -0.36  0.73 -0.59 -0.06 -1.26 -0.05  0.25  0.85 -1.26 -1.02
+## 2      1951  0.08  0.70 -1.02 -0.22 -0.59 -1.64  1.37 -0.22 -1.36  1.87 -0.39  1.32
+## 3      1952  0.93 -0.83 -1.49  1.01 -1.12 -0.40 -0.09 -0.28 -0.54 -0.73 -1.13 -0.43
+## 4      1953  0.33 -0.49 -0.04 -1.67 -0.66  1.09  0.40 -0.71 -0.35  1.32  1.04 -0.47
+## 5      1954  0.37  0.74 -0.83  1.34 -0.09 -0.25 -0.60 -1.90 -0.44  0.60  0.40  0.69
+## 6      1955 -1.84 -1.12 -0.53 -0.42 -0.34 -1.10  1.76  1.07  0.32 -1.47 -1.29  0.17</code></pre>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="measures-of-association-nao-vs-soi.html#cb54-1" tabindex="-1"></a><span class="fu">names</span>(NAO)[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="st">&quot;Year&quot;</span></span></code></pre></div>
 <p>Note the latter arguments to <code>read.table()</code>. <code>fill=TRUE</code> adds <code>NA</code> values where data is missing at the end of the file while <code>row.names=NULL</code> employs the row names of the file as the first column of the data.frame.</p>
 </div>
 <div id="format-and-plot-the-nao-data" class="section level3 hasAnchor" number="4.1.3">
@@ -293,14 +304,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5 1950-05-15 -0.59
 ## 6 1950-06-15 -0.06</code></pre>
 <p>Now we use ggplot to look at the timeseries</p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="measures-of-association-nao-vs-soi.html#cb57-1" tabindex="-1"></a><span class="fu">ggplot</span>(NAO, <span class="fu">aes</span>(<span class="at">x=</span>datetime, <span class="at">y=</span>value)) <span class="sc">+</span></span>
-<span id="cb57-2"><a href="measures-of-association-nao-vs-soi.html#cb57-2" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb57-3"><a href="measures-of-association-nao-vs-soi.html#cb57-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;North Atlantic Oscillation&quot;</span>,</span>
-<span id="cb57-4"><a href="measures-of-association-nao-vs-soi.html#cb57-4" tabindex="-1"></a>       <span class="at">y=</span><span class="st">&quot;Index&quot;</span>,</span>
-<span id="cb57-5"><a href="measures-of-association-nao-vs-soi.html#cb57-5" tabindex="-1"></a>       <span class="at">x=</span><span class="st">&quot;Year&quot;</span>) <span class="sc">+</span></span>
-<span id="cb57-6"><a href="measures-of-association-nao-vs-soi.html#cb57-6" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
-<pre><code>## Warning: Removed 7 rows containing missing values or values outside the scale range
-## (`geom_line()`).</code></pre>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="measures-of-association-nao-vs-soi.html#cb56-1" tabindex="-1"></a><span class="fu">ggplot</span>(NAO, <span class="fu">aes</span>(<span class="at">x=</span>datetime, <span class="at">y=</span>value)) <span class="sc">+</span></span>
+<span id="cb56-2"><a href="measures-of-association-nao-vs-soi.html#cb56-2" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb56-3"><a href="measures-of-association-nao-vs-soi.html#cb56-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;North Atlantic Oscillation&quot;</span>,</span>
+<span id="cb56-4"><a href="measures-of-association-nao-vs-soi.html#cb56-4" tabindex="-1"></a>       <span class="at">y=</span><span class="st">&quot;Index&quot;</span>,</span>
+<span id="cb56-5"><a href="measures-of-association-nao-vs-soi.html#cb56-5" tabindex="-1"></a>       <span class="at">x=</span><span class="st">&quot;Year&quot;</span>) <span class="sc">+</span></span>
+<span id="cb56-6"><a href="measures-of-association-nao-vs-soi.html#cb56-6" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
 </div>
 <div id="merge-the-soi-data-into-the-nao-data.frame" class="section level3 hasAnchor" number="4.1.4">
@@ -308,11 +317,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Again we use <code>lubridate</code> to format the datetime portion.</p>
 <p>Next, we create a new data.frame with evenly space time using <code>seq</code>. Our final data.frame will merge the 3 unique datetime series from NAO, SOI, and the evenly spaced series into a single column.</p>
 <p>Let’s take a look at the top and bottom of the new data.frame</p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="measures-of-association-nao-vs-soi.html#cb59-1" tabindex="-1"></a>SOI <span class="ot">&lt;-</span> SOI <span class="sc">%&gt;%</span></span>
-<span id="cb59-2"><a href="measures-of-association-nao-vs-soi.html#cb59-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">datetime =</span> <span class="fu">as.Date</span>(<span class="fu">format</span>(<span class="fu">date_decimal</span>(Year), <span class="st">&quot;%Y-%m-%d&quot;</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb59-3"><a href="measures-of-association-nao-vs-soi.html#cb59-3" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">SOI =</span> Value) <span class="sc">%&gt;%</span></span>
-<span id="cb59-4"><a href="measures-of-association-nao-vs-soi.html#cb59-4" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(datetime, SOI)</span>
-<span id="cb59-5"><a href="measures-of-association-nao-vs-soi.html#cb59-5" tabindex="-1"></a><span class="fu">head</span>(SOI)</span></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="measures-of-association-nao-vs-soi.html#cb57-1" tabindex="-1"></a>SOI <span class="ot">&lt;-</span> SOI <span class="sc">%&gt;%</span></span>
+<span id="cb57-2"><a href="measures-of-association-nao-vs-soi.html#cb57-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">datetime =</span> <span class="fu">as.Date</span>(<span class="fu">format</span>(<span class="fu">date_decimal</span>(Year), <span class="st">&quot;%Y-%m-%d&quot;</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb57-3"><a href="measures-of-association-nao-vs-soi.html#cb57-3" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">SOI =</span> Value) <span class="sc">%&gt;%</span></span>
+<span id="cb57-4"><a href="measures-of-association-nao-vs-soi.html#cb57-4" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(datetime, SOI)</span>
+<span id="cb57-5"><a href="measures-of-association-nao-vs-soi.html#cb57-5" tabindex="-1"></a><span class="fu">head</span>(SOI)</span></code></pre></div>
 <pre><code>##     datetime  SOI
 ## 1 1951-01-01  1.5
 ## 2 1951-01-31  0.9
@@ -320,16 +329,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4 1951-04-02 -0.3
 ## 5 1951-05-02 -0.7
 ## 6 1951-06-02  0.2</code></pre>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="measures-of-association-nao-vs-soi.html#cb61-1" tabindex="-1"></a>newDateDF <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">datetime =</span> <span class="fu">as.Date</span>(<span class="fu">round</span>(<span class="fu">seq</span>(<span class="fu">as.numeric</span>(<span class="fu">min</span>(SOI<span class="sc">$</span>datetime)),</span>
-<span id="cb61-2"><a href="measures-of-association-nao-vs-soi.html#cb61-2" tabindex="-1"></a>                                                     <span class="fu">as.numeric</span>(<span class="fu">max</span>(SOI<span class="sc">$</span>datetime)), </span>
-<span id="cb61-3"><a href="measures-of-association-nao-vs-soi.html#cb61-3" tabindex="-1"></a>                                                     <span class="at">length.out=</span><span class="dv">69</span><span class="sc">*</span><span class="dv">12</span>),<span class="dv">5</span>)))</span>
-<span id="cb61-4"><a href="measures-of-association-nao-vs-soi.html#cb61-4" tabindex="-1"></a></span>
-<span id="cb61-5"><a href="measures-of-association-nao-vs-soi.html#cb61-5" tabindex="-1"></a>SOInewDate <span class="ot">&lt;-</span> <span class="fu">merge.data.frame</span>(SOI, newDateDF, <span class="at">all =</span> T)</span>
-<span id="cb61-6"><a href="measures-of-association-nao-vs-soi.html#cb61-6" tabindex="-1"></a></span>
-<span id="cb61-7"><a href="measures-of-association-nao-vs-soi.html#cb61-7" tabindex="-1"></a>dfAll <span class="ot">&lt;-</span> <span class="fu">merge.data.frame</span>(NAO, SOInewDate, <span class="at">all =</span> T)</span>
-<span id="cb61-8"><a href="measures-of-association-nao-vs-soi.html#cb61-8" tabindex="-1"></a></span>
-<span id="cb61-9"><a href="measures-of-association-nao-vs-soi.html#cb61-9" tabindex="-1"></a><span class="co">#first 20</span></span>
-<span id="cb61-10"><a href="measures-of-association-nao-vs-soi.html#cb61-10" tabindex="-1"></a><span class="fu">head</span>(dfAll,<span class="at">n =</span> <span class="dv">20</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="measures-of-association-nao-vs-soi.html#cb59-1" tabindex="-1"></a>newDateDF <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">datetime =</span> <span class="fu">as.Date</span>(<span class="fu">round</span>(<span class="fu">seq</span>(<span class="fu">as.numeric</span>(<span class="fu">min</span>(SOI<span class="sc">$</span>datetime)),</span>
+<span id="cb59-2"><a href="measures-of-association-nao-vs-soi.html#cb59-2" tabindex="-1"></a>                                                     <span class="fu">as.numeric</span>(<span class="fu">max</span>(SOI<span class="sc">$</span>datetime)), </span>
+<span id="cb59-3"><a href="measures-of-association-nao-vs-soi.html#cb59-3" tabindex="-1"></a>                                                     <span class="at">length.out=</span><span class="dv">69</span><span class="sc">*</span><span class="dv">12</span>),<span class="dv">5</span>)))</span>
+<span id="cb59-4"><a href="measures-of-association-nao-vs-soi.html#cb59-4" tabindex="-1"></a></span>
+<span id="cb59-5"><a href="measures-of-association-nao-vs-soi.html#cb59-5" tabindex="-1"></a>SOInewDate <span class="ot">&lt;-</span> <span class="fu">merge.data.frame</span>(SOI, newDateDF, <span class="at">all =</span> T)</span>
+<span id="cb59-6"><a href="measures-of-association-nao-vs-soi.html#cb59-6" tabindex="-1"></a></span>
+<span id="cb59-7"><a href="measures-of-association-nao-vs-soi.html#cb59-7" tabindex="-1"></a>dfAll <span class="ot">&lt;-</span> <span class="fu">merge.data.frame</span>(NAO, SOInewDate, <span class="at">all =</span> T)</span>
+<span id="cb59-8"><a href="measures-of-association-nao-vs-soi.html#cb59-8" tabindex="-1"></a></span>
+<span id="cb59-9"><a href="measures-of-association-nao-vs-soi.html#cb59-9" tabindex="-1"></a><span class="co">#first 20</span></span>
+<span id="cb59-10"><a href="measures-of-association-nao-vs-soi.html#cb59-10" tabindex="-1"></a><span class="fu">head</span>(dfAll,<span class="at">n =</span> <span class="dv">20</span>)</span></code></pre></div>
 <pre><code>##      datetime value  SOI
 ## 1  1950-01-15  0.92   NA
 ## 2  1950-02-15  0.40   NA
@@ -351,8 +360,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 18 1951-03-15 -1.02   NA
 ## 19 1951-04-02    NA -0.3
 ## 20 1951-04-15 -0.22   NA</code></pre>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="measures-of-association-nao-vs-soi.html#cb63-1" tabindex="-1"></a><span class="co">#last 20</span></span>
-<span id="cb63-2"><a href="measures-of-association-nao-vs-soi.html#cb63-2" tabindex="-1"></a><span class="fu">tail</span>(dfAll,<span class="at">n =</span> <span class="dv">20</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="measures-of-association-nao-vs-soi.html#cb61-1" tabindex="-1"></a><span class="co">#last 20</span></span>
+<span id="cb61-2"><a href="measures-of-association-nao-vs-soi.html#cb61-2" tabindex="-1"></a><span class="fu">tail</span>(dfAll,<span class="at">n =</span> <span class="dv">20</span>)</span></code></pre></div>
 <pre><code>##        datetime value SOI
 ## 2181 2023-05-15  0.39  NA
 ## 2182 2023-06-15 -0.58  NA
@@ -383,14 +392,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>we perform linear interpolation of each index</li>
 <li>we extract the data for only the interpolated values, creating evenly spaced series</li>
 </ul>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="measures-of-association-nao-vs-soi.html#cb65-1" tabindex="-1"></a>dfAll <span class="ot">&lt;-</span> dfAll <span class="sc">%&gt;%</span></span>
-<span id="cb65-2"><a href="measures-of-association-nao-vs-soi.html#cb65-2" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">13</span><span class="sc">:</span><span class="dv">2505</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb65-3"><a href="measures-of-association-nao-vs-soi.html#cb65-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">NAO =</span> <span class="fu">approx</span>(datetime, value, datetime)<span class="sc">$</span>y) <span class="sc">%&gt;%</span></span>
-<span id="cb65-4"><a href="measures-of-association-nao-vs-soi.html#cb65-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SOI =</span> <span class="fu">approx</span>(datetime, SOI, datetime)<span class="sc">$</span>y) <span class="sc">%&gt;%</span></span>
-<span id="cb65-5"><a href="measures-of-association-nao-vs-soi.html#cb65-5" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>value) <span class="sc">%&gt;%</span></span>
-<span id="cb65-6"><a href="measures-of-association-nao-vs-soi.html#cb65-6" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="fu">which</span>(datetime <span class="sc">%in%</span> newDateDF<span class="sc">$</span>datetime)) <span class="sc">%&gt;%</span></span>
-<span id="cb65-7"><a href="measures-of-association-nao-vs-soi.html#cb65-7" tabindex="-1"></a>  <span class="fu">drop_na</span>()</span>
-<span id="cb65-8"><a href="measures-of-association-nao-vs-soi.html#cb65-8" tabindex="-1"></a><span class="fu">head</span>(dfAll)</span></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="measures-of-association-nao-vs-soi.html#cb63-1" tabindex="-1"></a>dfAll <span class="ot">&lt;-</span> dfAll <span class="sc">%&gt;%</span></span>
+<span id="cb63-2"><a href="measures-of-association-nao-vs-soi.html#cb63-2" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">13</span><span class="sc">:</span><span class="dv">2505</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb63-3"><a href="measures-of-association-nao-vs-soi.html#cb63-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">NAO =</span> <span class="fu">approx</span>(datetime, value, datetime)<span class="sc">$</span>y) <span class="sc">%&gt;%</span></span>
+<span id="cb63-4"><a href="measures-of-association-nao-vs-soi.html#cb63-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">SOI =</span> <span class="fu">approx</span>(datetime, SOI, datetime)<span class="sc">$</span>y) <span class="sc">%&gt;%</span></span>
+<span id="cb63-5"><a href="measures-of-association-nao-vs-soi.html#cb63-5" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>value) <span class="sc">%&gt;%</span></span>
+<span id="cb63-6"><a href="measures-of-association-nao-vs-soi.html#cb63-6" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="fu">which</span>(datetime <span class="sc">%in%</span> newDateDF<span class="sc">$</span>datetime)) <span class="sc">%&gt;%</span></span>
+<span id="cb63-7"><a href="measures-of-association-nao-vs-soi.html#cb63-7" tabindex="-1"></a>  <span class="fu">drop_na</span>()</span>
+<span id="cb63-8"><a href="measures-of-association-nao-vs-soi.html#cb63-8" tabindex="-1"></a><span class="fu">head</span>(dfAll)</span></code></pre></div>
 <pre><code>##     datetime  SOI         NAO
 ## 1 1951-01-31  0.9  0.40000000
 ## 2 1951-03-02 -0.1 -0.22142857
@@ -398,6 +407,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4 1951-05-02 -0.7 -0.42966667
 ## 5 1951-06-02  0.2 -1.19967742
 ## 6 1951-07-02 -1.0  0.06566667</code></pre>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="measures-of-association-nao-vs-soi.html#cb65-1" tabindex="-1"></a>allLong <span class="ot">&lt;-</span> <span class="fu">melt</span>(dfAll,<span class="at">id.vars =</span> <span class="st">&quot;datetime&quot;</span>)</span>
+<span id="cb65-2"><a href="measures-of-association-nao-vs-soi.html#cb65-2" tabindex="-1"></a><span class="fu">head</span>(allLong)</span></code></pre></div>
+<pre><code>##     datetime variable value
+## 1 1951-01-31      SOI   0.9
+## 2 1951-03-02      SOI  -0.1
+## 3 1951-04-02      SOI  -0.3
+## 4 1951-05-02      SOI  -0.7
+## 5 1951-06-02      SOI   0.2
+## 6 1951-07-02      SOI  -1.0</code></pre>
+<p>Now we can convert to a long format for plotting</p>
 <div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="measures-of-association-nao-vs-soi.html#cb67-1" tabindex="-1"></a>allLong <span class="ot">&lt;-</span> <span class="fu">melt</span>(dfAll,<span class="at">id.vars =</span> <span class="st">&quot;datetime&quot;</span>)</span>
 <span id="cb67-2"><a href="measures-of-association-nao-vs-soi.html#cb67-2" tabindex="-1"></a><span class="fu">head</span>(allLong)</span></code></pre></div>
 <pre><code>##     datetime variable value
@@ -407,32 +426,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 4 1951-05-02      SOI  -0.7
 ## 5 1951-06-02      SOI   0.2
 ## 6 1951-07-02      SOI  -1.0</code></pre>
-<p>Now we can convert to a long format for plotting</p>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="measures-of-association-nao-vs-soi.html#cb69-1" tabindex="-1"></a>allLong <span class="ot">&lt;-</span> <span class="fu">melt</span>(dfAll,<span class="at">id.vars =</span> <span class="st">&quot;datetime&quot;</span>)</span>
-<span id="cb69-2"><a href="measures-of-association-nao-vs-soi.html#cb69-2" tabindex="-1"></a><span class="fu">head</span>(allLong)</span></code></pre></div>
-<pre><code>##     datetime variable value
-## 1 1951-01-31      SOI   0.9
-## 2 1951-03-02      SOI  -0.1
-## 3 1951-04-02      SOI  -0.3
-## 4 1951-05-02      SOI  -0.7
-## 5 1951-06-02      SOI   0.2
-## 6 1951-07-02      SOI  -1.0</code></pre>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="measures-of-association-nao-vs-soi.html#cb71-1" tabindex="-1"></a><span class="fu">ggplot</span>(allLong, <span class="fu">aes</span>(<span class="at">x=</span>datetime, <span class="at">y=</span>value, <span class="at">group=</span>variable)) <span class="sc">+</span></span>
-<span id="cb71-2"><a href="measures-of-association-nao-vs-soi.html#cb71-2" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb71-3"><a href="measures-of-association-nao-vs-soi.html#cb71-3" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>variable, <span class="at">ncol=</span><span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb71-4"><a href="measures-of-association-nao-vs-soi.html#cb71-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;NAO vs SOI (Interpolated)&quot;</span>,</span>
-<span id="cb71-5"><a href="measures-of-association-nao-vs-soi.html#cb71-5" tabindex="-1"></a>       <span class="at">y=</span><span class="st">&quot;Index&quot;</span>,</span>
-<span id="cb71-6"><a href="measures-of-association-nao-vs-soi.html#cb71-6" tabindex="-1"></a>       <span class="at">x=</span><span class="st">&quot;Year&quot;</span>) <span class="sc">+</span></span>
-<span id="cb71-7"><a href="measures-of-association-nao-vs-soi.html#cb71-7" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="measures-of-association-nao-vs-soi.html#cb69-1" tabindex="-1"></a><span class="fu">ggplot</span>(allLong, <span class="fu">aes</span>(<span class="at">x=</span>datetime, <span class="at">y=</span>value, <span class="at">group=</span>variable)) <span class="sc">+</span></span>
+<span id="cb69-2"><a href="measures-of-association-nao-vs-soi.html#cb69-2" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb69-3"><a href="measures-of-association-nao-vs-soi.html#cb69-3" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>variable, <span class="at">ncol=</span><span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb69-4"><a href="measures-of-association-nao-vs-soi.html#cb69-4" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;NAO vs SOI (Interpolated)&quot;</span>,</span>
+<span id="cb69-5"><a href="measures-of-association-nao-vs-soi.html#cb69-5" tabindex="-1"></a>       <span class="at">y=</span><span class="st">&quot;Index&quot;</span>,</span>
+<span id="cb69-6"><a href="measures-of-association-nao-vs-soi.html#cb69-6" tabindex="-1"></a>       <span class="at">x=</span><span class="st">&quot;Year&quot;</span>) <span class="sc">+</span></span>
+<span id="cb69-7"><a href="measures-of-association-nao-vs-soi.html#cb69-7" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
 </div>
 <div id="correlation" class="section level3 hasAnchor" number="4.1.6">
 <h3><span class="header-section-number">4.1.6</span> Correlation<a href="measures-of-association-nao-vs-soi.html#correlation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Both calls use lapply to repeat a correlation test 3 times using different methods: “pearson”, “spearman”, and “kendall”</p>
 <p>The second call employs a Monte Carlo simulation from the <code>astrochron</code> package. The method implemented is described in Ebisuzaki (1997).</p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="measures-of-association-nao-vs-soi.html#cb72-1" tabindex="-1"></a><span class="fu">lapply</span>(<span class="fu">c</span>(<span class="st">&quot;pearson&quot;</span>, <span class="st">&quot;spearman&quot;</span>, <span class="st">&quot;kendall&quot;</span>), <span class="cf">function</span>(x) <span class="fu">cor.test</span>(dfAll<span class="sc">$</span>NAO, dfAll<span class="sc">$</span>SOI, <span class="at">method =</span> x))</span></code></pre></div>
-<pre><code>## Warning in cor.test.default(dfAll$NAO, dfAll$SOI, method = x): Cannot compute
-## exact p-value with ties</code></pre>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="measures-of-association-nao-vs-soi.html#cb70-1" tabindex="-1"></a><span class="fu">lapply</span>(<span class="fu">c</span>(<span class="st">&quot;pearson&quot;</span>, <span class="st">&quot;spearman&quot;</span>, <span class="st">&quot;kendall&quot;</span>), <span class="cf">function</span>(x) <span class="fu">cor.test</span>(dfAll<span class="sc">$</span>NAO, dfAll<span class="sc">$</span>SOI, <span class="at">method =</span> x))</span></code></pre></div>
 <pre><code>## [[1]]
 ## 
 ##  Pearson&#39;s product-moment correlation
@@ -469,19 +476,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## sample estimates:
 ##         tau 
 ## -0.04938327</code></pre>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="measures-of-association-nao-vs-soi.html#cb75-1" tabindex="-1"></a><span class="co">#Methods: 1-pearson, 2-spearman, 3-kendall</span></span>
-<span id="cb75-2"><a href="measures-of-association-nao-vs-soi.html#cb75-2" tabindex="-1"></a><span class="fu">lapply</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="cf">function</span>(x) <span class="fu">surrogateCor</span>(dfAll<span class="sc">$</span>NAO,dfAll<span class="sc">$</span>SOI,<span class="at">nsim =</span> <span class="dv">10000</span>,<span class="at">cormethod =</span> x, <span class="at">genplot =</span> F, <span class="at">verbose =</span> F))</span></code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="measures-of-association-nao-vs-soi.html#cb72-1" tabindex="-1"></a><span class="co">#Methods: 1-pearson, 2-spearman, 3-kendall</span></span>
+<span id="cb72-2"><a href="measures-of-association-nao-vs-soi.html#cb72-2" tabindex="-1"></a><span class="fu">lapply</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>), <span class="cf">function</span>(x) <span class="fu">surrogateCor</span>(dfAll<span class="sc">$</span>NAO,dfAll<span class="sc">$</span>SOI,<span class="at">nsim =</span> <span class="dv">10000</span>,<span class="at">cormethod =</span> x, <span class="at">genplot =</span> F, <span class="at">verbose =</span> F))</span></code></pre></div>
 <pre><code>## [[1]]
 ##        datcor pvalue
-## 1 -0.06264618 0.3093
+## 1 -0.06264618 0.3202
 ## 
 ## [[2]]
 ##        datcor pvalue
-## 1 -0.07346052 0.2318
+## 1 -0.07346052 0.2314
 ## 
 ## [[3]]
 ##        datcor pvalue
-## 1 -0.04938327 0.2351</code></pre>
+## 1 -0.04938327 0.2337</code></pre>
 <p>All the methods tested show similarly weak evidence for significant correlations.</p>
 </div>
 </div>

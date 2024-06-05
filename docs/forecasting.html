@@ -4,23 +4,23 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2.5 Forecasting | Time Series Analysis in R</title>
+  <title>2.5 Forecasting | _main.knit</title>
   <meta name="description" content="This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the PyRATES Timeseries Practicums in python by Julien Emile-Geay" />
   <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="2.5 Forecasting | Time Series Analysis in R" />
+  <meta property="og:title" content="2.5 Forecasting | _main.knit" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the PyRATES Timeseries Practicums in python by Julien Emile-Geay" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2.5 Forecasting | Time Series Analysis in R" />
+  <meta name="twitter:title" content="2.5 Forecasting | _main.knit" />
   
   <meta name="twitter:description" content="This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the PyRATES Timeseries Practicums in python by Julien Emile-Geay" />
   
 
-<meta name="author" content="David Edge and Nick McKay" />
+<meta name="author" content="David Edge, Nick McKay, and Julien Emile-Geay (with help from Claude.ai)" />
 
 
 <meta name="date" content="2024-06-05" />
@@ -136,7 +136,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> </a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Time Series Analysis in R</a></li>
 <li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="background.html"><a href="background.html"><i class="fa fa-check"></i><b>2.1</b> Background</a></li>
@@ -185,14 +185,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="5" data-path="spectral-analysis-in-r.html"><a href="spectral-analysis-in-r.html"><i class="fa fa-check"></i><b>5</b> Spectral Analysis in R</a>
 <ul>
-<li class="chapter" data-level="5.1" data-path="data-description.html"><a href="data-description.html"><i class="fa fa-check"></i><b>5.1</b> Data Description</a></li>
-<li class="chapter" data-level="5.2" data-path="demonstration.html"><a href="demonstration.html"><i class="fa fa-check"></i><b>5.2</b> Demonstration</a></li>
-<li class="chapter" data-level="5.3" data-path="spectral-methods.html"><a href="spectral-methods.html"><i class="fa fa-check"></i><b>5.3</b> Spectral methods</a></li>
+<li class="chapter" data-level="5.0.1" data-path="spectral-analysis-in-r.html"><a href="spectral-analysis-in-r.html#packages-1"><i class="fa fa-check"></i><b>5.0.1</b> Packages</a></li>
+<li class="chapter" data-level="5.0.2" data-path="spectral-analysis-in-r.html"><a href="spectral-analysis-in-r.html#dataset"><i class="fa fa-check"></i><b>5.0.2</b> Dataset</a></li>
+<li class="chapter" data-level="5.1" data-path="aggregate-to-monthly.html"><a href="aggregate-to-monthly.html"><i class="fa fa-check"></i><b>5.1</b> Aggregate to monthly</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="aggregate-to-monthly.html"><a href="aggregate-to-monthly.html#even-sampling"><i class="fa fa-check"></i><b>5.1.1</b> Even sampling</a></li>
+<li class="chapter" data-level="5.1.2" data-path="aggregate-to-monthly.html"><a href="aggregate-to-monthly.html#multi-taper"><i class="fa fa-check"></i><b>5.1.2</b> multi-taper</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="stl.html"><a href="stl.html"><i class="fa fa-check"></i><b>5.2</b> STL</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="stl.html"><a href="stl.html#gaussianize"><i class="fa fa-check"></i><b>5.2.1</b> Gaussianize</a></li>
+<li class="chapter" data-level="5.2.2" data-path="stl.html"><a href="stl.html#mtm-again"><i class="fa fa-check"></i><b>5.2.2</b> MTM, again</a></li>
+<li class="chapter" data-level="5.2.3" data-path="stl.html"><a href="stl.html#applying-stl"><i class="fa fa-check"></i><b>5.2.3</b> Applying STL</a></li>
+<li class="chapter" data-level="5.2.4" data-path="stl.html"><a href="stl.html#the-trend"><i class="fa fa-check"></i><b>5.2.4</b> The trend</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="estimation-of-scaling-behavior.html"><a href="estimation-of-scaling-behavior.html"><i class="fa fa-check"></i><b>5.3</b> Estimation of scaling behavior</a></li>
+<li class="chapter" data-level="5.4" data-path="gap-tolerant-spectral-analysis.html"><a href="gap-tolerant-spectral-analysis.html"><i class="fa fa-check"></i><b>5.4</b> Gap-tolerant spectral analysis</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="gap-tolerant-spectral-analysis.html"><a href="gap-tolerant-spectral-analysis.html#lomb-scargle"><i class="fa fa-check"></i><b>5.4.1</b> Lomb-Scargle</a></li>
+<li class="chapter" data-level="5.4.2" data-path="gap-tolerant-spectral-analysis.html"><a href="gap-tolerant-spectral-analysis.html#wavelet"><i class="fa fa-check"></i><b>5.4.2</b> Wavelet</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="takeaways.html"><a href="takeaways.html"><i class="fa fa-check"></i><b>5.5</b> Takeaways</a></li>
 </ul></li>
 <li class="chapter" data-level="6" data-path="wavelet-transform-in-r.html"><a href="wavelet-transform-in-r.html"><i class="fa fa-check"></i><b>6</b> Wavelet Transform in R</a>
 <ul>
-<li class="chapter" data-level="6.0.1" data-path="wavelet-transform-in-r.html"><a href="wavelet-transform-in-r.html#packages-1"><i class="fa fa-check"></i><b>6.0.1</b> Packages</a></li>
-<li class="chapter" data-level="6.0.2" data-path="wavelet-transform-in-r.html"><a href="wavelet-transform-in-r.html#data-description-1"><i class="fa fa-check"></i><b>6.0.2</b> Data description</a></li>
+<li class="chapter" data-level="6.0.1" data-path="wavelet-transform-in-r.html"><a href="wavelet-transform-in-r.html#packages-2"><i class="fa fa-check"></i><b>6.0.1</b> Packages</a></li>
+<li class="chapter" data-level="6.0.2" data-path="wavelet-transform-in-r.html"><a href="wavelet-transform-in-r.html#data-description"><i class="fa fa-check"></i><b>6.0.2</b> Data description</a></li>
 <li class="chapter" data-level="6.1" data-path="loading-and-visualizing-the-deltad-series.html"><a href="loading-and-visualizing-the-deltad-series.html"><i class="fa fa-check"></i><b>6.1</b> Loading and visualizing the <span class="math inline">\(\delta\)</span>D series</a></li>
 <li class="chapter" data-level="6.2" data-path="sampling-interval.html"><a href="sampling-interval.html"><i class="fa fa-check"></i><b>6.2</b> Sampling interval</a></li>
 <li class="chapter" data-level="6.3" data-path="wavelet-analysis.html"><a href="wavelet-analysis.html"><i class="fa fa-check"></i><b>6.3</b> Wavelet Analysis</a>
@@ -217,7 +235,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Time Series Analysis in R</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"></a>
           </h1>
         </div>
 
@@ -228,22 +246,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="forecasting" class="section level2 hasAnchor" number="2.5">
 <h2><span class="header-section-number">2.5</span> Forecasting<a href="forecasting.html#forecasting" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Let us return to our parametric model of atmospheric CO2 (quadractic trend + seasonal harmonics), which we may use to forecast future observations. Let’s extend our time axis to 2050 and see what CO2 may look like then if we don’t curb emissions or fail to remove it from the atmosphere:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="forecasting.html#cb34-1" tabindex="-1"></a>Date_ext <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">max</span>(df1<span class="sc">$</span>Date), <span class="at">length.out=</span><span class="fu">length</span>(df1<span class="sc">$</span>Date), <span class="at">by=</span><span class="dv">1</span><span class="sc">/</span><span class="dv">12</span>)</span>
-<span id="cb34-2"><a href="forecasting.html#cb34-2" tabindex="-1"></a></span>
-<span id="cb34-3"><a href="forecasting.html#cb34-3" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> df1</span>
-<span id="cb34-4"><a href="forecasting.html#cb34-4" tabindex="-1"></a></span>
-<span id="cb34-5"><a href="forecasting.html#cb34-5" tabindex="-1"></a>df2[,<span class="dv">4</span>] <span class="ot">&lt;-</span> Date_ext</span>
-<span id="cb34-6"><a href="forecasting.html#cb34-6" tabindex="-1"></a></span>
-<span id="cb34-7"><a href="forecasting.html#cb34-7" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> df2 <span class="sc">%&gt;%</span></span>
-<span id="cb34-8"><a href="forecasting.html#cb34-8" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">CO2_predicted =</span> <span class="fu">predict</span>(fit.lm, <span class="at">newdata =</span> df2)) <span class="sc">%&gt;%</span></span>
-<span id="cb34-9"><a href="forecasting.html#cb34-9" tabindex="-1"></a>  <span class="fu">select</span>(Date, CO2_predicted)</span>
-<span id="cb34-10"><a href="forecasting.html#cb34-10" tabindex="-1"></a></span>
-<span id="cb34-11"><a href="forecasting.html#cb34-11" tabindex="-1"></a></span>
-<span id="cb34-12"><a href="forecasting.html#cb34-12" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>df1, <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Date, <span class="at">y=</span>CO2)) <span class="sc">+</span> </span>
-<span id="cb34-13"><a href="forecasting.html#cb34-13" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb34-14"><a href="forecasting.html#cb34-14" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>df2, <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Date, <span class="at">y=</span>CO2_predicted), <span class="at">inherit.aes =</span> F, <span class="at">color=</span><span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
-<span id="cb34-15"><a href="forecasting.html#cb34-15" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Mauna Loa CO2 forecast&quot;</span>,</span>
-<span id="cb34-16"><a href="forecasting.html#cb34-16" tabindex="-1"></a>       <span class="at">y=</span><span class="st">&quot;CO2 (ppm)&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="forecasting.html#cb33-1" tabindex="-1"></a>Date_ext <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">max</span>(df1<span class="sc">$</span>Date), <span class="at">length.out=</span><span class="fu">length</span>(df1<span class="sc">$</span>Date), <span class="at">by=</span><span class="dv">1</span><span class="sc">/</span><span class="dv">12</span>)</span>
+<span id="cb33-2"><a href="forecasting.html#cb33-2" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="forecasting.html#cb33-3" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> df1</span>
+<span id="cb33-4"><a href="forecasting.html#cb33-4" tabindex="-1"></a></span>
+<span id="cb33-5"><a href="forecasting.html#cb33-5" tabindex="-1"></a>df2[,<span class="dv">4</span>] <span class="ot">&lt;-</span> Date_ext</span>
+<span id="cb33-6"><a href="forecasting.html#cb33-6" tabindex="-1"></a></span>
+<span id="cb33-7"><a href="forecasting.html#cb33-7" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> df2 <span class="sc">%&gt;%</span></span>
+<span id="cb33-8"><a href="forecasting.html#cb33-8" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">CO2_predicted =</span> <span class="fu">predict</span>(fit.lm, <span class="at">newdata =</span> df2)) <span class="sc">%&gt;%</span></span>
+<span id="cb33-9"><a href="forecasting.html#cb33-9" tabindex="-1"></a>  <span class="fu">select</span>(Date, CO2_predicted)</span>
+<span id="cb33-10"><a href="forecasting.html#cb33-10" tabindex="-1"></a></span>
+<span id="cb33-11"><a href="forecasting.html#cb33-11" tabindex="-1"></a></span>
+<span id="cb33-12"><a href="forecasting.html#cb33-12" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>df1, <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Date, <span class="at">y=</span>CO2)) <span class="sc">+</span> </span>
+<span id="cb33-13"><a href="forecasting.html#cb33-13" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb33-14"><a href="forecasting.html#cb33-14" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>df2, <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Date, <span class="at">y=</span>CO2_predicted), <span class="at">inherit.aes =</span> F, <span class="at">color=</span><span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb33-15"><a href="forecasting.html#cb33-15" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Mauna Loa CO2 forecast&quot;</span>,</span>
+<span id="cb33-16"><a href="forecasting.html#cb33-16" tabindex="-1"></a>       <span class="at">y=</span><span class="st">&quot;CO2 (ppm)&quot;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 
 </div>
