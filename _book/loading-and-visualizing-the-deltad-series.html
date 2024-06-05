@@ -228,13 +228,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="loading-and-visualizing-the-deltad-series" class="section level2 hasAnchor" number="6.1">
 <h2><span class="header-section-number">6.1</span> Loading and visualizing the <span class="math inline">\(\delta\)</span>D series<a href="loading-and-visualizing-the-deltad-series.html#loading-and-visualizing-the-deltad-series" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We’ll also start by formatting Age in kyr.</p>
-<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="loading-and-visualizing-the-deltad-series.html#cb89-1" tabindex="-1"></a>dDdf <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;https://github.com/LinkedEarth/Pyleoclim_util/raw/master/pyleoclim/data/edc3deuttemp2007.csv&quot;</span>)</span>
-<span id="cb89-2"><a href="loading-and-visualizing-the-deltad-series.html#cb89-2" tabindex="-1"></a></span>
-<span id="cb89-3"><a href="loading-and-visualizing-the-deltad-series.html#cb89-3" tabindex="-1"></a>dDdf <span class="ot">&lt;-</span> dDdf <span class="sc">%&gt;%</span></span>
-<span id="cb89-4"><a href="loading-and-visualizing-the-deltad-series.html#cb89-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">AgeKy =</span> Age<span class="sc">/</span><span class="dv">1000</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb89-5"><a href="loading-and-visualizing-the-deltad-series.html#cb89-5" tabindex="-1"></a>  <span class="fu">select</span>(AgeKy, Deuterium, Temperature)</span>
-<span id="cb89-6"><a href="loading-and-visualizing-the-deltad-series.html#cb89-6" tabindex="-1"></a></span>
-<span id="cb89-7"><a href="loading-and-visualizing-the-deltad-series.html#cb89-7" tabindex="-1"></a><span class="fu">head</span>(dDdf)</span></code></pre></div>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="loading-and-visualizing-the-deltad-series.html#cb100-1" tabindex="-1"></a>dDdf <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;https://github.com/LinkedEarth/Pyleoclim_util/raw/master/pyleoclim/data/edc3deuttemp2007.csv&quot;</span>)</span>
+<span id="cb100-2"><a href="loading-and-visualizing-the-deltad-series.html#cb100-2" tabindex="-1"></a></span>
+<span id="cb100-3"><a href="loading-and-visualizing-the-deltad-series.html#cb100-3" tabindex="-1"></a>dDdf <span class="ot">&lt;-</span> dDdf <span class="sc">%&gt;%</span></span>
+<span id="cb100-4"><a href="loading-and-visualizing-the-deltad-series.html#cb100-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">AgeKy =</span> Age<span class="sc">/</span><span class="dv">1000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb100-5"><a href="loading-and-visualizing-the-deltad-series.html#cb100-5" tabindex="-1"></a>  <span class="fu">select</span>(AgeKy, Deuterium, Temperature)</span>
+<span id="cb100-6"><a href="loading-and-visualizing-the-deltad-series.html#cb100-6" tabindex="-1"></a></span>
+<span id="cb100-7"><a href="loading-and-visualizing-the-deltad-series.html#cb100-7" tabindex="-1"></a><span class="fu">head</span>(dDdf)</span></code></pre></div>
 <pre><code>##        AgeKy Deuterium Temperature
 ## 1 0.03837379    -390.9        0.88
 ## 2 0.04681203    -385.1        1.84
@@ -243,12 +243,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5 0.07315077    -398.7       -0.42
 ## 6 0.08193244    -395.9        0.05</code></pre>
 <p>Let’s see a simple plot</p>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="loading-and-visualizing-the-deltad-series.html#cb91-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>dDdf, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x=</span>AgeKy, <span class="at">y=</span>Deuterium)) <span class="sc">+</span> </span>
-<span id="cb91-2"><a href="loading-and-visualizing-the-deltad-series.html#cb91-2" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb91-3"><a href="loading-and-visualizing-the-deltad-series.html#cb91-3" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;\u03B4D (\u2030)&quot;</span>) <span class="sc">+</span></span>
-<span id="cb91-4"><a href="loading-and-visualizing-the-deltad-series.html#cb91-4" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Age_(ky_BP)&quot;</span>) <span class="sc">+</span></span>
-<span id="cb91-5"><a href="loading-and-visualizing-the-deltad-series.html#cb91-5" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;EPICA Dome C Deuterium&quot;</span>) <span class="sc">+</span></span>
-<span id="cb91-6"><a href="loading-and-visualizing-the-deltad-series.html#cb91-6" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="loading-and-visualizing-the-deltad-series.html#cb102-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>dDdf, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x=</span>AgeKy, <span class="at">y=</span>Deuterium)) <span class="sc">+</span> </span>
+<span id="cb102-2"><a href="loading-and-visualizing-the-deltad-series.html#cb102-2" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb102-3"><a href="loading-and-visualizing-the-deltad-series.html#cb102-3" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;\u03B4D (\u2030)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb102-4"><a href="loading-and-visualizing-the-deltad-series.html#cb102-4" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Age_(ky_BP)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb102-5"><a href="loading-and-visualizing-the-deltad-series.html#cb102-5" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;EPICA Dome C Deuterium&quot;</span>) <span class="sc">+</span></span>
+<span id="cb102-6"><a href="loading-and-visualizing-the-deltad-series.html#cb102-6" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-48-1.png" width="672" /></p>
 </div>
             </section>

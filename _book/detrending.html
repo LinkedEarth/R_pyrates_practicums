@@ -228,99 +228,99 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="detrending" class="section level2 hasAnchor" number="3.3">
 <h2><span class="header-section-number">3.3</span> Detrending<a href="detrending.html#detrending" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Now let’s move on to detrending. We’ll use the HadCRUT5 global mean surface temperature dataset.</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="detrending.html#cb43-1" tabindex="-1"></a>gmst <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://github.com/LinkedEarth/Pyleoclim_util/raw/master/pyleoclim/data/HadCRUT.5.0.1.0.analysis.summary_series.global.annual.csv&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb43-2"><a href="detrending.html#cb43-2" tabindex="-1"></a>  <span class="fu">select</span>(<span class="at">time =</span> Time,<span class="at">temp =</span> <span class="st">`</span><span class="at">Anomaly (deg C)</span><span class="st">`</span>)</span>
-<span id="cb43-3"><a href="detrending.html#cb43-3" tabindex="-1"></a></span>
-<span id="cb43-4"><a href="detrending.html#cb43-4" tabindex="-1"></a><span class="fu">ggplot</span>(gmst, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> temp)) <span class="sc">+</span></span>
-<span id="cb43-5"><a href="detrending.html#cb43-5" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb43-6"><a href="detrending.html#cb43-6" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;Time [year C.E.]&#39;</span>, <span class="at">y =</span> <span class="st">&#39;GMST [°C]&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="detrending.html#cb48-1" tabindex="-1"></a>gmst <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;https://github.com/LinkedEarth/Pyleoclim_util/raw/master/pyleoclim/data/HadCRUT.5.0.1.0.analysis.summary_series.global.annual.csv&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb48-2"><a href="detrending.html#cb48-2" tabindex="-1"></a>  <span class="fu">select</span>(<span class="at">time =</span> Time,<span class="at">temp =</span> <span class="st">`</span><span class="at">Anomaly (deg C)</span><span class="st">`</span>)</span>
+<span id="cb48-3"><a href="detrending.html#cb48-3" tabindex="-1"></a></span>
+<span id="cb48-4"><a href="detrending.html#cb48-4" tabindex="-1"></a><span class="fu">ggplot</span>(gmst, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> temp)) <span class="sc">+</span></span>
+<span id="cb48-5"><a href="detrending.html#cb48-5" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb48-6"><a href="detrending.html#cb48-6" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;Time [year C.E.]&#39;</span>, <span class="at">y =</span> <span class="st">&#39;GMST [°C]&#39;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
 <div id="detrending-methods-in-r" class="section level3 hasAnchor" number="3.3.1">
 <h3><span class="header-section-number">3.3.1</span> Detrending methods in R<a href="detrending.html#detrending-methods-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Let’s apply 3 methods: linear detrending, Empirical Mode Decomposition (EMD), and Savitzky-Golay filter:</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="detrending.html#cb44-1" tabindex="-1"></a><span class="co"># Linear detrending</span></span>
-<span id="cb44-2"><a href="detrending.html#cb44-2" tabindex="-1"></a>gmstLinear <span class="ot">&lt;-</span> gmst</span>
-<span id="cb44-3"><a href="detrending.html#cb44-3" tabindex="-1"></a>gmstLinear<span class="sc">$</span>detrended <span class="ot">&lt;-</span> pracma<span class="sc">::</span><span class="fu">detrend</span>(gmstLinear<span class="sc">$</span>temp)</span>
-<span id="cb44-4"><a href="detrending.html#cb44-4" tabindex="-1"></a>gmstLinear<span class="sc">$</span>trend <span class="ot">&lt;-</span> gmstLinear<span class="sc">$</span>temp <span class="sc">-</span> gmstLinear<span class="sc">$</span>detrended</span>
-<span id="cb44-5"><a href="detrending.html#cb44-5" tabindex="-1"></a>gmstLinear<span class="sc">$</span>method <span class="ot">&lt;-</span> <span class="st">&quot;Linear&quot;</span></span>
-<span id="cb44-6"><a href="detrending.html#cb44-6" tabindex="-1"></a></span>
-<span id="cb44-7"><a href="detrending.html#cb44-7" tabindex="-1"></a></span>
-<span id="cb44-8"><a href="detrending.html#cb44-8" tabindex="-1"></a><span class="co"># EMD using the EMD package</span></span>
-<span id="cb44-9"><a href="detrending.html#cb44-9" tabindex="-1"></a><span class="fu">library</span>(EMD)</span>
-<span id="cb44-10"><a href="detrending.html#cb44-10" tabindex="-1"></a>emd_result <span class="ot">&lt;-</span> <span class="fu">emd</span>(gmst<span class="sc">$</span>temp, <span class="at">boundary=</span><span class="st">&#39;symmetric&#39;</span>, <span class="at">max.imf=</span><span class="dv">4</span>)</span>
-<span id="cb44-11"><a href="detrending.html#cb44-11" tabindex="-1"></a></span>
-<span id="cb44-12"><a href="detrending.html#cb44-12" tabindex="-1"></a>gmstEmd <span class="ot">&lt;-</span> gmst</span>
-<span id="cb44-13"><a href="detrending.html#cb44-13" tabindex="-1"></a>gmstEmd<span class="sc">$</span>detrended <span class="ot">&lt;-</span> gmst<span class="sc">$</span>temp<span class="sc">-</span>emd_result<span class="sc">$</span>residue</span>
-<span id="cb44-14"><a href="detrending.html#cb44-14" tabindex="-1"></a>gmstEmd<span class="sc">$</span>trend <span class="ot">&lt;-</span> gmstEmd<span class="sc">$</span>temp <span class="sc">-</span> gmstEmd<span class="sc">$</span>detrended</span>
-<span id="cb44-15"><a href="detrending.html#cb44-15" tabindex="-1"></a>gmstEmd<span class="sc">$</span>method <span class="ot">&lt;-</span> <span class="st">&quot;EMD&quot;</span></span>
-<span id="cb44-16"><a href="detrending.html#cb44-16" tabindex="-1"></a></span>
-<span id="cb44-17"><a href="detrending.html#cb44-17" tabindex="-1"></a><span class="co"># Savitzky-Golay filter</span></span>
-<span id="cb44-18"><a href="detrending.html#cb44-18" tabindex="-1"></a>gmstSg <span class="ot">&lt;-</span> gmst</span>
-<span id="cb44-19"><a href="detrending.html#cb44-19" tabindex="-1"></a>gmstSg<span class="sc">$</span>trend <span class="ot">&lt;-</span> signal<span class="sc">::</span><span class="fu">sgolayfilt</span>(gmst<span class="sc">$</span>temp, <span class="at">p =</span> <span class="dv">3</span>, <span class="at">n =</span> <span class="dv">51</span>)</span>
-<span id="cb44-20"><a href="detrending.html#cb44-20" tabindex="-1"></a>gmstSg<span class="sc">$</span>detrended <span class="ot">&lt;-</span> gmst<span class="sc">$</span>temp <span class="sc">-</span> gmstSg<span class="sc">$</span>trend</span>
-<span id="cb44-21"><a href="detrending.html#cb44-21" tabindex="-1"></a>gmstSg<span class="sc">$</span>method <span class="ot">&lt;-</span> <span class="st">&quot;Savitzky-Golay&quot;</span></span>
-<span id="cb44-22"><a href="detrending.html#cb44-22" tabindex="-1"></a></span>
-<span id="cb44-23"><a href="detrending.html#cb44-23" tabindex="-1"></a><span class="co">#prepare the data for plotting</span></span>
-<span id="cb44-24"><a href="detrending.html#cb44-24" tabindex="-1"></a>gmstToPlot <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(gmstLinear,gmstEmd,gmstSg) <span class="sc">%&gt;%</span> </span>
-<span id="cb44-25"><a href="detrending.html#cb44-25" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span><span class="fu">c</span>(time,method),<span class="at">values_to =</span> <span class="st">&quot;Temperature&quot;</span>,<span class="at">names_to =</span> <span class="st">&quot;options&quot;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb44-26"><a href="detrending.html#cb44-26" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">method =</span> <span class="fu">factor</span>(method,<span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;Linear&quot;</span>,<span class="st">&quot;EMD&quot;</span>,<span class="st">&quot;Savitzky-Golay&quot;</span>)))</span>
-<span id="cb44-27"><a href="detrending.html#cb44-27" tabindex="-1"></a></span>
-<span id="cb44-28"><a href="detrending.html#cb44-28" tabindex="-1"></a><span class="co"># Plot it!</span></span>
-<span id="cb44-29"><a href="detrending.html#cb44-29" tabindex="-1"></a><span class="fu">ggplot</span>(gmstToPlot) <span class="sc">+</span> </span>
-<span id="cb44-30"><a href="detrending.html#cb44-30" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> Temperature, <span class="at">color =</span> options)) <span class="sc">+</span></span>
-<span id="cb44-31"><a href="detrending.html#cb44-31" tabindex="-1"></a>  <span class="fu">facet_grid</span>(method <span class="sc">~</span> .)</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="detrending.html#cb49-1" tabindex="-1"></a><span class="co"># Linear detrending</span></span>
+<span id="cb49-2"><a href="detrending.html#cb49-2" tabindex="-1"></a>gmstLinear <span class="ot">&lt;-</span> gmst</span>
+<span id="cb49-3"><a href="detrending.html#cb49-3" tabindex="-1"></a>gmstLinear<span class="sc">$</span>detrended <span class="ot">&lt;-</span> pracma<span class="sc">::</span><span class="fu">detrend</span>(gmstLinear<span class="sc">$</span>temp)</span>
+<span id="cb49-4"><a href="detrending.html#cb49-4" tabindex="-1"></a>gmstLinear<span class="sc">$</span>trend <span class="ot">&lt;-</span> gmstLinear<span class="sc">$</span>temp <span class="sc">-</span> gmstLinear<span class="sc">$</span>detrended</span>
+<span id="cb49-5"><a href="detrending.html#cb49-5" tabindex="-1"></a>gmstLinear<span class="sc">$</span>method <span class="ot">&lt;-</span> <span class="st">&quot;Linear&quot;</span></span>
+<span id="cb49-6"><a href="detrending.html#cb49-6" tabindex="-1"></a></span>
+<span id="cb49-7"><a href="detrending.html#cb49-7" tabindex="-1"></a></span>
+<span id="cb49-8"><a href="detrending.html#cb49-8" tabindex="-1"></a><span class="co"># EMD using the EMD package</span></span>
+<span id="cb49-9"><a href="detrending.html#cb49-9" tabindex="-1"></a><span class="fu">library</span>(EMD)</span>
+<span id="cb49-10"><a href="detrending.html#cb49-10" tabindex="-1"></a>emd_result <span class="ot">&lt;-</span> <span class="fu">emd</span>(gmst<span class="sc">$</span>temp, <span class="at">boundary=</span><span class="st">&#39;symmetric&#39;</span>, <span class="at">max.imf=</span><span class="dv">4</span>)</span>
+<span id="cb49-11"><a href="detrending.html#cb49-11" tabindex="-1"></a></span>
+<span id="cb49-12"><a href="detrending.html#cb49-12" tabindex="-1"></a>gmstEmd <span class="ot">&lt;-</span> gmst</span>
+<span id="cb49-13"><a href="detrending.html#cb49-13" tabindex="-1"></a>gmstEmd<span class="sc">$</span>detrended <span class="ot">&lt;-</span> gmst<span class="sc">$</span>temp<span class="sc">-</span>emd_result<span class="sc">$</span>residue</span>
+<span id="cb49-14"><a href="detrending.html#cb49-14" tabindex="-1"></a>gmstEmd<span class="sc">$</span>trend <span class="ot">&lt;-</span> gmstEmd<span class="sc">$</span>temp <span class="sc">-</span> gmstEmd<span class="sc">$</span>detrended</span>
+<span id="cb49-15"><a href="detrending.html#cb49-15" tabindex="-1"></a>gmstEmd<span class="sc">$</span>method <span class="ot">&lt;-</span> <span class="st">&quot;EMD&quot;</span></span>
+<span id="cb49-16"><a href="detrending.html#cb49-16" tabindex="-1"></a></span>
+<span id="cb49-17"><a href="detrending.html#cb49-17" tabindex="-1"></a><span class="co"># Savitzky-Golay filter</span></span>
+<span id="cb49-18"><a href="detrending.html#cb49-18" tabindex="-1"></a>gmstSg <span class="ot">&lt;-</span> gmst</span>
+<span id="cb49-19"><a href="detrending.html#cb49-19" tabindex="-1"></a>gmstSg<span class="sc">$</span>trend <span class="ot">&lt;-</span> signal<span class="sc">::</span><span class="fu">sgolayfilt</span>(gmst<span class="sc">$</span>temp, <span class="at">p =</span> <span class="dv">3</span>, <span class="at">n =</span> <span class="dv">51</span>)</span>
+<span id="cb49-20"><a href="detrending.html#cb49-20" tabindex="-1"></a>gmstSg<span class="sc">$</span>detrended <span class="ot">&lt;-</span> gmst<span class="sc">$</span>temp <span class="sc">-</span> gmstSg<span class="sc">$</span>trend</span>
+<span id="cb49-21"><a href="detrending.html#cb49-21" tabindex="-1"></a>gmstSg<span class="sc">$</span>method <span class="ot">&lt;-</span> <span class="st">&quot;Savitzky-Golay&quot;</span></span>
+<span id="cb49-22"><a href="detrending.html#cb49-22" tabindex="-1"></a></span>
+<span id="cb49-23"><a href="detrending.html#cb49-23" tabindex="-1"></a><span class="co">#prepare the data for plotting</span></span>
+<span id="cb49-24"><a href="detrending.html#cb49-24" tabindex="-1"></a>gmstToPlot <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">bind_rows</span>(gmstLinear,gmstEmd,gmstSg) <span class="sc">%&gt;%</span> </span>
+<span id="cb49-25"><a href="detrending.html#cb49-25" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span><span class="fu">c</span>(time,method),<span class="at">values_to =</span> <span class="st">&quot;Temperature&quot;</span>,<span class="at">names_to =</span> <span class="st">&quot;options&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb49-26"><a href="detrending.html#cb49-26" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">method =</span> <span class="fu">factor</span>(method,<span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;Linear&quot;</span>,<span class="st">&quot;EMD&quot;</span>,<span class="st">&quot;Savitzky-Golay&quot;</span>)))</span>
+<span id="cb49-27"><a href="detrending.html#cb49-27" tabindex="-1"></a></span>
+<span id="cb49-28"><a href="detrending.html#cb49-28" tabindex="-1"></a><span class="co"># Plot it!</span></span>
+<span id="cb49-29"><a href="detrending.html#cb49-29" tabindex="-1"></a><span class="fu">ggplot</span>(gmstToPlot) <span class="sc">+</span> </span>
+<span id="cb49-30"><a href="detrending.html#cb49-30" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> Temperature, <span class="at">color =</span> options)) <span class="sc">+</span></span>
+<span id="cb49-31"><a href="detrending.html#cb49-31" tabindex="-1"></a>  <span class="fu">facet_grid</span>(method <span class="sc">~</span> .)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
 <p>The linear trend here does a decent job at capturing first-order behavior. The EMD (approximated by SSA) and Savitzky-Golay methods also capture the nonlinear trend.</p>
 </div>
 <div id="ssa-detrending" class="section level3 hasAnchor" number="3.3.2">
 <h3><span class="header-section-number">3.3.2</span> SSA detrending<a href="detrending.html#ssa-detrending" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Another option to isolate a non-linear trend is Singular Spectrum Analysis (SSA). If there is a prominent trend, it is often the first mode coming out of that analysis.</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="detrending.html#cb45-1" tabindex="-1"></a>gmst_ssa <span class="ot">&lt;-</span> <span class="fu">ssa</span>(gmst<span class="sc">$</span>temp, <span class="at">L =</span> <span class="dv">10</span>)</span>
-<span id="cb45-2"><a href="detrending.html#cb45-2" tabindex="-1"></a><span class="fu">plot</span>(gmst_ssa)</span></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="detrending.html#cb50-1" tabindex="-1"></a>gmst_ssa <span class="ot">&lt;-</span> <span class="fu">ssa</span>(gmst<span class="sc">$</span>temp, <span class="at">L =</span> <span class="dv">10</span>)</span>
+<span id="cb50-2"><a href="detrending.html#cb50-2" tabindex="-1"></a><span class="fu">plot</span>(gmst_ssa)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
 <p>The first mode accounts for most fraction of the variance. Let’s compute this:</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="detrending.html#cb46-1" tabindex="-1"></a><span class="fu">paste0</span>(<span class="fu">round</span>(gmst_ssa<span class="sc">$</span>sigma[<span class="dv">1</span>] <span class="sc">/</span> <span class="fu">sum</span>(gmst_ssa<span class="sc">$</span>sigma),<span class="dv">3</span>) <span class="sc">*</span> <span class="dv">100</span>,<span class="st">&quot;%&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="detrending.html#cb51-1" tabindex="-1"></a><span class="fu">paste0</span>(<span class="fu">round</span>(gmst_ssa<span class="sc">$</span>sigma[<span class="dv">1</span>] <span class="sc">/</span> <span class="fu">sum</span>(gmst_ssa<span class="sc">$</span>sigma),<span class="dv">3</span>) <span class="sc">*</span> <span class="dv">100</span>,<span class="st">&quot;%&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;55%&quot;</code></pre>
 <p>Let’s use this mode as the trend:</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="detrending.html#cb48-1" tabindex="-1"></a>ssa_trend <span class="ot">&lt;-</span> <span class="fu">reconstruct</span>(gmst_ssa, <span class="at">groups =</span> <span class="fu">list</span>(<span class="at">trend =</span> <span class="dv">1</span>))</span>
-<span id="cb48-2"><a href="detrending.html#cb48-2" tabindex="-1"></a>gmst_ssa_dtd <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">time =</span> gmst<span class="sc">$</span>time, <span class="at">temp =</span> gmst<span class="sc">$</span>temp <span class="sc">-</span> ssa_trend<span class="sc">$</span>trend)</span>
-<span id="cb48-3"><a href="detrending.html#cb48-3" tabindex="-1"></a></span>
-<span id="cb48-4"><a href="detrending.html#cb48-4" tabindex="-1"></a><span class="fu">ggplot</span>(gmst, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> temp)) <span class="sc">+</span></span>
-<span id="cb48-5"><a href="detrending.html#cb48-5" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb48-6"><a href="detrending.html#cb48-6" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ssa_trend<span class="sc">$</span>trend, <span class="at">color =</span> <span class="st">&quot;SSA trend&quot;</span>), <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb48-7"><a href="detrending.html#cb48-7" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> gmst_ssa_dtd<span class="sc">$</span>temp, <span class="at">color =</span> <span class="st">&quot;SSA detrended&quot;</span>), <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb48-8"><a href="detrending.html#cb48-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;Time [year C.E.]&#39;</span>, <span class="at">y =</span> <span class="st">&#39;GMST [°C]&#39;</span>, <span class="at">color =</span> <span class="st">&#39;&#39;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="detrending.html#cb53-1" tabindex="-1"></a>ssa_trend <span class="ot">&lt;-</span> <span class="fu">reconstruct</span>(gmst_ssa, <span class="at">groups =</span> <span class="fu">list</span>(<span class="at">trend =</span> <span class="dv">1</span>))</span>
+<span id="cb53-2"><a href="detrending.html#cb53-2" tabindex="-1"></a>gmst_ssa_dtd <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">time =</span> gmst<span class="sc">$</span>time, <span class="at">temp =</span> gmst<span class="sc">$</span>temp <span class="sc">-</span> ssa_trend<span class="sc">$</span>trend)</span>
+<span id="cb53-3"><a href="detrending.html#cb53-3" tabindex="-1"></a></span>
+<span id="cb53-4"><a href="detrending.html#cb53-4" tabindex="-1"></a><span class="fu">ggplot</span>(gmst, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> temp)) <span class="sc">+</span></span>
+<span id="cb53-5"><a href="detrending.html#cb53-5" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb53-6"><a href="detrending.html#cb53-6" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> ssa_trend<span class="sc">$</span>trend, <span class="at">color =</span> <span class="st">&quot;SSA trend&quot;</span>), <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb53-7"><a href="detrending.html#cb53-7" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> gmst_ssa_dtd<span class="sc">$</span>temp, <span class="at">color =</span> <span class="st">&quot;SSA detrended&quot;</span>), <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb53-8"><a href="detrending.html#cb53-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;Time [year C.E.]&#39;</span>, <span class="at">y =</span> <span class="st">&#39;GMST [°C]&#39;</span>, <span class="at">color =</span> <span class="st">&#39;&#39;</span>)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
 <p>This pre-processing allows us to better isolate oscillatory behavior. To see this, let’s look at the spectra of the original and detrended versions:</p>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="detrending.html#cb49-1" tabindex="-1"></a><span class="fu">library</span>(astrochron)</span>
-<span id="cb49-2"><a href="detrending.html#cb49-2" tabindex="-1"></a></span>
-<span id="cb49-3"><a href="detrending.html#cb49-3" tabindex="-1"></a>mtmOrig <span class="ot">&lt;-</span> astrochron<span class="sc">::</span><span class="fu">mtm</span>(<span class="at">dat =</span> gmst,<span class="at">output =</span> <span class="dv">1</span>,<span class="at">verbose =</span> F,<span class="at">genplot =</span> F) <span class="sc">%&gt;%</span> </span>
-<span id="cb49-4"><a href="detrending.html#cb49-4" tabindex="-1"></a>  <span class="fu">select</span>(Frequency,Power) <span class="sc">%&gt;%</span> </span>
-<span id="cb49-5"><a href="detrending.html#cb49-5" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">data =</span> <span class="st">&quot;Original&quot;</span>,</span>
-<span id="cb49-6"><a href="detrending.html#cb49-6" tabindex="-1"></a>         <span class="at">period =</span> (<span class="dv">1</span><span class="sc">/</span>Frequency))</span>
-<span id="cb49-7"><a href="detrending.html#cb49-7" tabindex="-1"></a></span>
-<span id="cb49-8"><a href="detrending.html#cb49-8" tabindex="-1"></a></span>
-<span id="cb49-9"><a href="detrending.html#cb49-9" tabindex="-1"></a></span>
-<span id="cb49-10"><a href="detrending.html#cb49-10" tabindex="-1"></a>mtmSSA <span class="ot">&lt;-</span> astrochron<span class="sc">::</span><span class="fu">mtm</span>(<span class="at">dat =</span> gmst_ssa_dtd,<span class="at">output =</span> <span class="dv">1</span>,<span class="at">verbose =</span> F,<span class="at">genplot =</span> F) <span class="sc">%&gt;%</span> </span>
-<span id="cb49-11"><a href="detrending.html#cb49-11" tabindex="-1"></a>  <span class="fu">select</span>(Frequency,Power) <span class="sc">%&gt;%</span> </span>
-<span id="cb49-12"><a href="detrending.html#cb49-12" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">data =</span> <span class="st">&quot;SSA-detrended&quot;</span>,</span>
-<span id="cb49-13"><a href="detrending.html#cb49-13" tabindex="-1"></a>         <span class="at">period =</span> (<span class="dv">1</span><span class="sc">/</span>Frequency))</span>
-<span id="cb49-14"><a href="detrending.html#cb49-14" tabindex="-1"></a></span>
-<span id="cb49-15"><a href="detrending.html#cb49-15" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
-<span id="cb49-16"><a href="detrending.html#cb49-16" tabindex="-1"></a>reverselog_trans <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">base =</span> <span class="fu">exp</span>(<span class="dv">1</span>)) {</span>
-<span id="cb49-17"><a href="detrending.html#cb49-17" tabindex="-1"></a>    trans <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="sc">-</span><span class="fu">log</span>(x, base)</span>
-<span id="cb49-18"><a href="detrending.html#cb49-18" tabindex="-1"></a>    inv <span class="ot">&lt;-</span> <span class="cf">function</span>(x) base<span class="sc">^</span>(<span class="sc">-</span>x)</span>
-<span id="cb49-19"><a href="detrending.html#cb49-19" tabindex="-1"></a>    <span class="fu">trans_new</span>(<span class="fu">paste0</span>(<span class="st">&quot;reverselog-&quot;</span>, <span class="fu">format</span>(base)), trans, inv, </span>
-<span id="cb49-20"><a href="detrending.html#cb49-20" tabindex="-1"></a>              <span class="fu">log_breaks</span>(<span class="at">base =</span> base), </span>
-<span id="cb49-21"><a href="detrending.html#cb49-21" tabindex="-1"></a>              <span class="at">domain =</span> <span class="fu">c</span>(<span class="fl">1e-100</span>, <span class="cn">Inf</span>))</span>
-<span id="cb49-22"><a href="detrending.html#cb49-22" tabindex="-1"></a>}</span>
-<span id="cb49-23"><a href="detrending.html#cb49-23" tabindex="-1"></a></span>
-<span id="cb49-24"><a href="detrending.html#cb49-24" tabindex="-1"></a><span class="fu">bind_rows</span>(mtmOrig,mtmSSA) <span class="sc">%&gt;%</span> </span>
-<span id="cb49-25"><a href="detrending.html#cb49-25" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb49-26"><a href="detrending.html#cb49-26" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> period,<span class="at">y =</span> Power)) <span class="sc">+</span> </span>
-<span id="cb49-27"><a href="detrending.html#cb49-27" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">trans =</span> <span class="fu">reverselog_trans</span>(<span class="dv">10</span>),<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">100</span>,<span class="dv">50</span>,<span class="dv">20</span>,<span class="dv">10</span>,<span class="dv">5</span>,<span class="dv">2</span>),<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">100</span>,<span class="dv">2</span>)) <span class="sc">+</span> </span>
-<span id="cb49-28"><a href="detrending.html#cb49-28" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>() <span class="sc">+</span> </span>
-<span id="cb49-29"><a href="detrending.html#cb49-29" tabindex="-1"></a>  <span class="fu">facet_grid</span>(data <span class="sc">~</span> .)</span></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="detrending.html#cb54-1" tabindex="-1"></a><span class="fu">library</span>(astrochron)</span>
+<span id="cb54-2"><a href="detrending.html#cb54-2" tabindex="-1"></a></span>
+<span id="cb54-3"><a href="detrending.html#cb54-3" tabindex="-1"></a>mtmOrig <span class="ot">&lt;-</span> astrochron<span class="sc">::</span><span class="fu">mtm</span>(<span class="at">dat =</span> gmst,<span class="at">output =</span> <span class="dv">1</span>,<span class="at">verbose =</span> F,<span class="at">genplot =</span> F) <span class="sc">%&gt;%</span> </span>
+<span id="cb54-4"><a href="detrending.html#cb54-4" tabindex="-1"></a>  <span class="fu">select</span>(Frequency,Power) <span class="sc">%&gt;%</span> </span>
+<span id="cb54-5"><a href="detrending.html#cb54-5" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">data =</span> <span class="st">&quot;Original&quot;</span>,</span>
+<span id="cb54-6"><a href="detrending.html#cb54-6" tabindex="-1"></a>         <span class="at">period =</span> (<span class="dv">1</span><span class="sc">/</span>Frequency))</span>
+<span id="cb54-7"><a href="detrending.html#cb54-7" tabindex="-1"></a></span>
+<span id="cb54-8"><a href="detrending.html#cb54-8" tabindex="-1"></a></span>
+<span id="cb54-9"><a href="detrending.html#cb54-9" tabindex="-1"></a></span>
+<span id="cb54-10"><a href="detrending.html#cb54-10" tabindex="-1"></a>mtmSSA <span class="ot">&lt;-</span> astrochron<span class="sc">::</span><span class="fu">mtm</span>(<span class="at">dat =</span> gmst_ssa_dtd,<span class="at">output =</span> <span class="dv">1</span>,<span class="at">verbose =</span> F,<span class="at">genplot =</span> F) <span class="sc">%&gt;%</span> </span>
+<span id="cb54-11"><a href="detrending.html#cb54-11" tabindex="-1"></a>  <span class="fu">select</span>(Frequency,Power) <span class="sc">%&gt;%</span> </span>
+<span id="cb54-12"><a href="detrending.html#cb54-12" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">data =</span> <span class="st">&quot;SSA-detrended&quot;</span>,</span>
+<span id="cb54-13"><a href="detrending.html#cb54-13" tabindex="-1"></a>         <span class="at">period =</span> (<span class="dv">1</span><span class="sc">/</span>Frequency))</span>
+<span id="cb54-14"><a href="detrending.html#cb54-14" tabindex="-1"></a></span>
+<span id="cb54-15"><a href="detrending.html#cb54-15" tabindex="-1"></a><span class="fu">library</span>(scales)</span>
+<span id="cb54-16"><a href="detrending.html#cb54-16" tabindex="-1"></a>reverselog_trans <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">base =</span> <span class="fu">exp</span>(<span class="dv">1</span>)) {</span>
+<span id="cb54-17"><a href="detrending.html#cb54-17" tabindex="-1"></a>    trans <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="sc">-</span><span class="fu">log</span>(x, base)</span>
+<span id="cb54-18"><a href="detrending.html#cb54-18" tabindex="-1"></a>    inv <span class="ot">&lt;-</span> <span class="cf">function</span>(x) base<span class="sc">^</span>(<span class="sc">-</span>x)</span>
+<span id="cb54-19"><a href="detrending.html#cb54-19" tabindex="-1"></a>    <span class="fu">trans_new</span>(<span class="fu">paste0</span>(<span class="st">&quot;reverselog-&quot;</span>, <span class="fu">format</span>(base)), trans, inv, </span>
+<span id="cb54-20"><a href="detrending.html#cb54-20" tabindex="-1"></a>              <span class="fu">log_breaks</span>(<span class="at">base =</span> base), </span>
+<span id="cb54-21"><a href="detrending.html#cb54-21" tabindex="-1"></a>              <span class="at">domain =</span> <span class="fu">c</span>(<span class="fl">1e-100</span>, <span class="cn">Inf</span>))</span>
+<span id="cb54-22"><a href="detrending.html#cb54-22" tabindex="-1"></a>}</span>
+<span id="cb54-23"><a href="detrending.html#cb54-23" tabindex="-1"></a></span>
+<span id="cb54-24"><a href="detrending.html#cb54-24" tabindex="-1"></a><span class="fu">bind_rows</span>(mtmOrig,mtmSSA) <span class="sc">%&gt;%</span> </span>
+<span id="cb54-25"><a href="detrending.html#cb54-25" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb54-26"><a href="detrending.html#cb54-26" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> period,<span class="at">y =</span> Power)) <span class="sc">+</span> </span>
+<span id="cb54-27"><a href="detrending.html#cb54-27" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">trans =</span> <span class="fu">reverselog_trans</span>(<span class="dv">10</span>),<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">100</span>,<span class="dv">50</span>,<span class="dv">20</span>,<span class="dv">10</span>,<span class="dv">5</span>,<span class="dv">2</span>),<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">100</span>,<span class="dv">2</span>)) <span class="sc">+</span> </span>
+<span id="cb54-28"><a href="detrending.html#cb54-28" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>() <span class="sc">+</span> </span>
+<span id="cb54-29"><a href="detrending.html#cb54-29" tabindex="-1"></a>  <span class="fu">facet_grid</span>(data <span class="sc">~</span> .)</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
 <p>We see that detrending has removed much of the variability at scales longer than ~30y, allowing us to hone in on various peaks near 3.5, 6, 10, and 20 years. To see if those are significant, however, you would need to apply a significance test, which we would cover in another tutorial.</p>
 </div>

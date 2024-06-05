@@ -234,18 +234,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><strong>Lomb-Scargle Periodogram</strong>, an inverse approach designed for unevenly-spaced datasets. Several windows are available and Welch’s segmentation can also be used with this method.</p>
 <p><strong>Weighted Wavelet Z-transform</strong>, a wavelet-based method also made for unevenly-spaced datasets.</p>
 <p>Let’s have a look at the various methods. Since the first three methods require evenly-spaced data, we will be using a simple linear interpolation. The effect of pre-processing on the periodogram is discussed further in this notebook.</p>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="spectral-methods.html#cb87-1" tabindex="-1"></a><span class="co">#Extend the &#39;Year&#39; column to be continuous and annual over the trimmed interval</span></span>
-<span id="cb87-2"><a href="spectral-methods.html#cb87-2" tabindex="-1"></a>Year_interp <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">ceiling</span>(<span class="fu">min</span>(lr04_trimmed<span class="sc">$</span>Year)), <span class="fu">floor</span>(<span class="fu">max</span>(lr04_trimmed<span class="sc">$</span>Year)), <span class="at">by =</span> <span class="dv">1</span>)</span>
-<span id="cb87-3"><a href="spectral-methods.html#cb87-3" tabindex="-1"></a></span>
-<span id="cb87-4"><a href="spectral-methods.html#cb87-4" tabindex="-1"></a><span class="co">#Use a linear fit to interpolate the d18O series</span></span>
-<span id="cb87-5"><a href="spectral-methods.html#cb87-5" tabindex="-1"></a>d18O_interp <span class="ot">&lt;-</span> <span class="fu">approx</span>(lr04_trimmed<span class="sc">$</span>Year, lr04_trimmed<span class="sc">$</span>d18O, <span class="at">xout =</span> Year_interp, <span class="at">f =</span> <span class="fl">0.5</span>)<span class="sc">$</span>y</span>
-<span id="cb87-6"><a href="spectral-methods.html#cb87-6" tabindex="-1"></a></span>
-<span id="cb87-7"><a href="spectral-methods.html#cb87-7" tabindex="-1"></a><span class="co">#Put these new vectors into a data frame</span></span>
-<span id="cb87-8"><a href="spectral-methods.html#cb87-8" tabindex="-1"></a>lr04_interp <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Year=</span>Year_interp,</span>
-<span id="cb87-9"><a href="spectral-methods.html#cb87-9" tabindex="-1"></a>                          <span class="at">d18O=</span>d18O_interp)</span>
-<span id="cb87-10"><a href="spectral-methods.html#cb87-10" tabindex="-1"></a></span>
-<span id="cb87-11"><a href="spectral-methods.html#cb87-11" tabindex="-1"></a><span class="co">#Take a look at the first few observations of the interpolated series</span></span>
-<span id="cb87-12"><a href="spectral-methods.html#cb87-12" tabindex="-1"></a><span class="fu">head</span>(lr04_interp)</span></code></pre></div>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="spectral-methods.html#cb98-1" tabindex="-1"></a><span class="co">#Extend the &#39;Year&#39; column to be continuous and annual over the trimmed interval</span></span>
+<span id="cb98-2"><a href="spectral-methods.html#cb98-2" tabindex="-1"></a>Year_interp <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">ceiling</span>(<span class="fu">min</span>(lr04_trimmed<span class="sc">$</span>Year)), <span class="fu">floor</span>(<span class="fu">max</span>(lr04_trimmed<span class="sc">$</span>Year)), <span class="at">by =</span> <span class="dv">1</span>)</span>
+<span id="cb98-3"><a href="spectral-methods.html#cb98-3" tabindex="-1"></a></span>
+<span id="cb98-4"><a href="spectral-methods.html#cb98-4" tabindex="-1"></a><span class="co">#Use a linear fit to interpolate the d18O series</span></span>
+<span id="cb98-5"><a href="spectral-methods.html#cb98-5" tabindex="-1"></a>d18O_interp <span class="ot">&lt;-</span> <span class="fu">approx</span>(lr04_trimmed<span class="sc">$</span>Year, lr04_trimmed<span class="sc">$</span>d18O, <span class="at">xout =</span> Year_interp, <span class="at">f =</span> <span class="fl">0.5</span>)<span class="sc">$</span>y</span>
+<span id="cb98-6"><a href="spectral-methods.html#cb98-6" tabindex="-1"></a></span>
+<span id="cb98-7"><a href="spectral-methods.html#cb98-7" tabindex="-1"></a><span class="co">#Put these new vectors into a data frame</span></span>
+<span id="cb98-8"><a href="spectral-methods.html#cb98-8" tabindex="-1"></a>lr04_interp <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Year=</span>Year_interp,</span>
+<span id="cb98-9"><a href="spectral-methods.html#cb98-9" tabindex="-1"></a>                          <span class="at">d18O=</span>d18O_interp)</span>
+<span id="cb98-10"><a href="spectral-methods.html#cb98-10" tabindex="-1"></a></span>
+<span id="cb98-11"><a href="spectral-methods.html#cb98-11" tabindex="-1"></a><span class="co">#Take a look at the first few observations of the interpolated series</span></span>
+<span id="cb98-12"><a href="spectral-methods.html#cb98-12" tabindex="-1"></a><span class="fu">head</span>(lr04_interp)</span></code></pre></div>
 <pre><code>##   Year   d18O
 ## 1   12 4.3500
 ## 2   13 4.8300

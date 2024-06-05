@@ -228,8 +228,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="temperature-vs-co2" class="section level2 hasAnchor" number="6.4">
 <h2><span class="header-section-number">6.4</span> Temperature vs CO2<a href="temperature-vs-co2.html#temperature-vs-co2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Now let us load the CO2 composite from this and other neighboring sites around Antarctica:</p>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="temperature-vs-co2.html#cb98-1" tabindex="-1"></a>co2df <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&#39;ftp://ftp.ncdc.noaa.gov/pub/data/paleo/icecore/antarctica/antarctica2015co2composite.txt&#39;</span>, <span class="at">skip =</span> <span class="dv">137</span>, <span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>, <span class="at">header =</span> T)</span>
-<span id="cb98-2"><a href="temperature-vs-co2.html#cb98-2" tabindex="-1"></a><span class="fu">head</span>(co2df)</span></code></pre></div>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="temperature-vs-co2.html#cb109-1" tabindex="-1"></a>co2df <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&#39;ftp://ftp.ncdc.noaa.gov/pub/data/paleo/icecore/antarctica/antarctica2015co2composite.txt&#39;</span>, <span class="at">skip =</span> <span class="dv">137</span>, <span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>, <span class="at">header =</span> T)</span>
+<span id="cb109-2"><a href="temperature-vs-co2.html#cb109-2" tabindex="-1"></a><span class="fu">head</span>(co2df)</span></code></pre></div>
 <pre><code>##   age_gas_calBP co2_ppm co2_1s_ppm
 ## 1        -51.03  368.02       0.06
 ## 2        -48.00  361.78       0.37
@@ -238,12 +238,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5        -43.08  353.95       0.04
 ## 6        -42.31  353.72       0.22</code></pre>
 <p>We’ll again scale the Age column to kyr, and we’ll rename the verbose columns</p>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="temperature-vs-co2.html#cb100-1" tabindex="-1"></a>co2df <span class="ot">&lt;-</span> co2df <span class="sc">%&gt;%</span></span>
-<span id="cb100-2"><a href="temperature-vs-co2.html#cb100-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Age =</span> age_gas_calBP<span class="sc">/</span><span class="dv">1000</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb100-3"><a href="temperature-vs-co2.html#cb100-3" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">CO2 =</span> co2_ppm) <span class="sc">%&gt;%</span></span>
-<span id="cb100-4"><a href="temperature-vs-co2.html#cb100-4" tabindex="-1"></a>  <span class="fu">select</span>(Age, CO2)</span>
-<span id="cb100-5"><a href="temperature-vs-co2.html#cb100-5" tabindex="-1"></a></span>
-<span id="cb100-6"><a href="temperature-vs-co2.html#cb100-6" tabindex="-1"></a><span class="fu">head</span>(co2df)</span></code></pre></div>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="temperature-vs-co2.html#cb111-1" tabindex="-1"></a>co2df <span class="ot">&lt;-</span> co2df <span class="sc">%&gt;%</span></span>
+<span id="cb111-2"><a href="temperature-vs-co2.html#cb111-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Age =</span> age_gas_calBP<span class="sc">/</span><span class="dv">1000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb111-3"><a href="temperature-vs-co2.html#cb111-3" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">CO2 =</span> co2_ppm) <span class="sc">%&gt;%</span></span>
+<span id="cb111-4"><a href="temperature-vs-co2.html#cb111-4" tabindex="-1"></a>  <span class="fu">select</span>(Age, CO2)</span>
+<span id="cb111-5"><a href="temperature-vs-co2.html#cb111-5" tabindex="-1"></a></span>
+<span id="cb111-6"><a href="temperature-vs-co2.html#cb111-6" tabindex="-1"></a><span class="fu">head</span>(co2df)</span></code></pre></div>
 <pre><code>##        Age    CO2
 ## 1 -0.05103 368.02
 ## 2 -0.04800 361.78
@@ -252,12 +252,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## 5 -0.04308 353.95
 ## 6 -0.04231 353.72</code></pre>
 <p>Let’s have a look</p>
-<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="temperature-vs-co2.html#cb102-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> co2df, <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Age, <span class="at">y=</span>CO2)) <span class="sc">+</span> </span>
-<span id="cb102-2"><a href="temperature-vs-co2.html#cb102-2" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb102-3"><a href="temperature-vs-co2.html#cb102-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;EPICA Dome C CO2&quot;</span>,</span>
-<span id="cb102-4"><a href="temperature-vs-co2.html#cb102-4" tabindex="-1"></a>       <span class="at">x=</span><span class="st">&quot;Age (ky BP)&quot;</span>,</span>
-<span id="cb102-5"><a href="temperature-vs-co2.html#cb102-5" tabindex="-1"></a>       <span class="at">y=</span><span class="fu">expression</span>(<span class="fu">paste</span>(CO<span class="sc">^</span><span class="dv">2</span>, <span class="st">&quot; (ppm)&quot;</span>, <span class="at">sep=</span><span class="st">&quot;&quot;</span>))) <span class="sc">+</span></span>
-<span id="cb102-6"><a href="temperature-vs-co2.html#cb102-6" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="temperature-vs-co2.html#cb113-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> co2df, <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Age, <span class="at">y=</span>CO2)) <span class="sc">+</span> </span>
+<span id="cb113-2"><a href="temperature-vs-co2.html#cb113-2" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb113-3"><a href="temperature-vs-co2.html#cb113-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;EPICA Dome C CO2&quot;</span>,</span>
+<span id="cb113-4"><a href="temperature-vs-co2.html#cb113-4" tabindex="-1"></a>       <span class="at">x=</span><span class="st">&quot;Age (ky BP)&quot;</span>,</span>
+<span id="cb113-5"><a href="temperature-vs-co2.html#cb113-5" tabindex="-1"></a>       <span class="at">y=</span><span class="fu">expression</span>(<span class="fu">paste</span>(CO<span class="sc">^</span><span class="dv">2</span>, <span class="st">&quot; (ppm)&quot;</span>, <span class="at">sep=</span><span class="st">&quot;&quot;</span>))) <span class="sc">+</span></span>
+<span id="cb113-6"><a href="temperature-vs-co2.html#cb113-6" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-54-1.png" width="672" /></p>
 </div>
             </section>

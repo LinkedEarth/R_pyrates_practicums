@@ -228,18 +228,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="demonstration" class="section level2 hasAnchor" number="5.2">
 <h2><span class="header-section-number">5.2</span> Demonstration<a href="demonstration.html#demonstration" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Let’s import the necessary packages:</p>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="demonstration.html#cb85-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb85-2"><a href="demonstration.html#cb85-2" tabindex="-1"></a><span class="fu">library</span>(geoChronR)</span></code></pre></div>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="demonstration.html#cb94-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb94-2"><a href="demonstration.html#cb94-2" tabindex="-1"></a><span class="fu">library</span>(geoChronR)</span></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;geoChronR&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:astrochron&#39;:
+## 
+##     ar1</code></pre>
 <p>Let’s first import data and plot it so that up means “warm”:</p>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="demonstration.html#cb86-1" tabindex="-1"></a><span class="co">#Import data</span></span>
-<span id="cb86-2"><a href="demonstration.html#cb86-2" tabindex="-1"></a>lr04 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/LinkedEarth/RLeapFROGS/binder/static/module3/lr04.csv&quot;</span>)</span>
-<span id="cb86-3"><a href="demonstration.html#cb86-3" tabindex="-1"></a></span>
-<span id="cb86-4"><a href="demonstration.html#cb86-4" tabindex="-1"></a><span class="co">#Initial viz</span></span>
-<span id="cb86-5"><a href="demonstration.html#cb86-5" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> lr04, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x=</span>Year,<span class="at">y=</span>d18O))<span class="sc">+</span><span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">scale_y_reverse</span>() <span class="sc">+</span></span>
-<span id="cb86-6"><a href="demonstration.html#cb86-6" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;57 globally distributed benthic δ18O records, Lisiecki et al., 2005&quot;</span>,</span>
-<span id="cb86-7"><a href="demonstration.html#cb86-7" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Year (ky BP)&quot;</span>,</span>
-<span id="cb86-8"><a href="demonstration.html#cb86-8" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;\u03B418O (\u2030)&quot;</span>) <span class="sc">+</span></span>
-<span id="cb86-9"><a href="demonstration.html#cb86-9" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="demonstration.html#cb97-1" tabindex="-1"></a><span class="co">#Import data</span></span>
+<span id="cb97-2"><a href="demonstration.html#cb97-2" tabindex="-1"></a>lr04 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/LinkedEarth/RLeapFROGS/binder/static/module3/lr04.csv&quot;</span>)</span>
+<span id="cb97-3"><a href="demonstration.html#cb97-3" tabindex="-1"></a></span>
+<span id="cb97-4"><a href="demonstration.html#cb97-4" tabindex="-1"></a><span class="co">#Initial viz</span></span>
+<span id="cb97-5"><a href="demonstration.html#cb97-5" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> lr04, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x=</span>Year,<span class="at">y=</span>d18O))<span class="sc">+</span><span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">scale_y_reverse</span>() <span class="sc">+</span></span>
+<span id="cb97-6"><a href="demonstration.html#cb97-6" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;57 globally distributed benthic δ18O records, Lisiecki et al., 2005&quot;</span>,</span>
+<span id="cb97-7"><a href="demonstration.html#cb97-7" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Year (ky BP)&quot;</span>,</span>
+<span id="cb97-8"><a href="demonstration.html#cb97-8" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;\u03B418O (\u2030)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb97-9"><a href="demonstration.html#cb97-9" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
 <p>Let’s work with the first 3 million years (3000 kyr) of the record for illustrative purposes:</p>
 <p><img src="_main_files/figure-html/pressure-1.png" width="672" /></p>

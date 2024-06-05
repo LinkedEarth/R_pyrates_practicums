@@ -227,17 +227,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="wavelet-transform-in-r" class="section level1 hasAnchor" number="6">
 <h1><span class="header-section-number">6</span> Wavelet Transform in R<a href="wavelet-transform-in-r.html#wavelet-transform-in-r" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>This tutorial is adapted from <a href="https://linked.earth/PyleoTutorials/notebooks/L2_wavelet_analysis.html">Wavelet Analysis with Pyleoclim</a> by Julien Emile-Geay, USC</p>
 <p>Wavelet analysis is one of the most misused tools in climate timeseries analysis, partially due to the popularity of <a href="https://atoc.colorado.edu/research/wavelets/">this webpage</a>, which used to feature an interactive plotter. Wavelets are a very broad topic in applied mathematics, which we won’t attempt to summarize here. In the paleoclimate context, the term nearly always refers to the Continuous Wavelet Transform, and 99% of the time this uses the Morlet wavelet, which is a generalization of Fourier bases to endow them with localization in time and scale. Accordingly, this demo focuses on how to obtain wavelet spectra from the iconic EPICA Dome C record by <a href="https://doi.org/10.1126/science.1141038">Jouzel et al. (2007)</a>, and how to establish its coherency with a record of atmospheric CO2.</p>
 <div id="packages-1" class="section level3 hasAnchor" number="6.0.1">
 <h3><span class="header-section-number">6.0.1</span> Packages<a href="wavelet-transform-in-r.html#packages-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>dplyr, ggplot2, tidyr, biwavelet</p>
+<p>Let’s load these:</p>
 </div>
 <div id="data-description-1" class="section level3 hasAnchor" number="6.0.2">
 <h3><span class="header-section-number">6.0.2</span> Data description<a href="wavelet-transform-in-r.html#data-description-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>ice phase deuterium data (<span class="math inline">\(\delta\)</span>D) from Jouzel et al. (2007). <span class="math inline">\(\delta\)</span>D is a proxy for the temperature of snow formation above the site, taken to be representative of Antartic temperature over such timescales.</p>
 <p>gas phase CO2 measurements from Luthi et al (2008), corrected by Bereiter et al. (2015).</p>
-<p>Let us first load necessary packages:</p>
 </div>
 </div>
             </section>
