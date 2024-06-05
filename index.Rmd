@@ -2,7 +2,7 @@
 
 ---
 title: ""
-author: "David Edge and Nick McKay"
+author: "David Edge, Nick McKay, and Julien Emile-Geay (with help from Claude.ai)"
 date: "June 5, 2024"
 site: bookdown::bookdown_site
 documentclass: book
