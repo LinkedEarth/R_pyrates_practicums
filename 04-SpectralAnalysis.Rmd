@@ -1,10 +1,4 @@
-# 04-Spectral Analysis
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
-![](http://linked.earth/FROGS/images/Pyrateslogo.jpg){width=400}
+# Spectral Analysis in R
 
 Recall that in spectral analysis we step into a "bizarro world", switching from the time domain to the frequency domain. There, two essential features are of interest: peaks, and background. In this tutorial, we will perform spectral analysis on Rio Grande streamflow, and see if we can learn anything interesting about it in this way.
 
