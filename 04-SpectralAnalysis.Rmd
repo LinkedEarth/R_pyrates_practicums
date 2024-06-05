@@ -1,10 +1,4 @@
-# 04-Spectral Analysis
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
-![](http://linked.earth/FROGS/images/Pyrateslogo.jpg){width=400}
+# Spectral Analysis in R
 
 Recall that in spectral analysis we step into a "bizarro world", switching from the time domain to the frequency domain. There, two essential features are of interest: peaks, and background. In this tutorial, we will perform spectral analysis on Rio Grande streamflow, and see if we can learn anything interesting about it in this way.
 
@@ -16,6 +10,7 @@ library(scales)
 library(astrochron)
 library(lomb)
 library(biwavelet)
+library(scales)
 ```
 
 ### Dataset    
@@ -89,8 +84,6 @@ mtm1 <- mtm(df4,output = 1,verbose = F) |>
                   Power = Power/1000) |> #account for differing units in astrochrons MTM
   dplyr::select(Period, Power)
 
-
-library(scales)
 reverselog_trans <- function(base = exp(1)) {
   trans <- function(x) -log(x, base)
   inv <- function(x) base^(-x)
@@ -292,3 +285,11 @@ comboPlotData <- bind_rows(mutate(mtm1,method = "mtm"),
 
 ```
 It is often useful to be able to compare methods and/or parameter choices, to see if the results are robust. We see that some choices lump peaks into broad bands, others tend to slice them up.
+
+
+We'll explore wavelets more in the next chapter.
+
+## Takeaways
+
+There are many methods for looking at the spectra of time series. For unevenly sampled series, we are more limited in methods, and interpolation may cause artifacts in our analyses.
+
