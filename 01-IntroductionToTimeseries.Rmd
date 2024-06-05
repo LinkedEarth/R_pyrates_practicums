@@ -18,14 +18,15 @@ As for **noise**, it clearly involves a subjective definition. Under this name w
 
 To see these concepts in action, let us consider the iconic Mauna Loa Observatory CO2 measurements.
 
-## Load packages
+
+## Data Wrangling
+
+### Load packages
 
 ```{r}
 library(dplyr)
 library(ggplot2)
 ```
-
-## Data Wrangling
 
 We can pull the data directly from the Scripps Institute website
 
