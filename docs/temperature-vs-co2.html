@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>3.1 Packages | Time Series Analysis in R</title>
+  <title>6.4 Temperature vs CO2 | Time Series Analysis in R</title>
   <meta name="description" content="This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the PyRATES Timeseries Practicums in python by Julien Emile-Geay" />
   <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="3.1 Packages | Time Series Analysis in R" />
+  <meta property="og:title" content="6.4 Temperature vs CO2 | Time Series Analysis in R" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the PyRATES Timeseries Practicums in python by Julien Emile-Geay" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="3.1 Packages | Time Series Analysis in R" />
+  <meta name="twitter:title" content="6.4 Temperature vs CO2 | Time Series Analysis in R" />
   
   <meta name="twitter:description" content="This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the PyRATES Timeseries Practicums in python by Julien Emile-Geay" />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="signal-processing-in-r.html"/>
-<link rel="next" href="filtering.html"/>
+<link rel="prev" href="wavelet-analysis.html"/>
+<link rel="next" href="bringing-the-datasets-together.html"/>
 <script src="assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -225,23 +225,48 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="packages" class="section level2 hasAnchor" number="3.1">
-<h2><span class="header-section-number">3.1</span> Packages<a href="packages.html#packages" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Let’s first load necessary packages:</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="packages.html#cb40-1" tabindex="-1"></a><span class="fu">library</span>(signal)</span>
-<span id="cb40-2"><a href="packages.html#cb40-2" tabindex="-1"></a><span class="fu">library</span>(zoo)</span>
-<span id="cb40-3"><a href="packages.html#cb40-3" tabindex="-1"></a><span class="fu">library</span>(trend)</span>
-<span id="cb40-4"><a href="packages.html#cb40-4" tabindex="-1"></a><span class="fu">library</span>(Mcomp)</span>
-<span id="cb40-5"><a href="packages.html#cb40-5" tabindex="-1"></a><span class="fu">library</span>(Rssa)</span>
-<span id="cb40-6"><a href="packages.html#cb40-6" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
+<div id="temperature-vs-co2" class="section level2 hasAnchor" number="6.4">
+<h2><span class="header-section-number">6.4</span> Temperature vs CO2<a href="temperature-vs-co2.html#temperature-vs-co2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Now let us load the CO2 composite from this and other neighboring sites around Antarctica:</p>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="temperature-vs-co2.html#cb98-1" tabindex="-1"></a>co2df <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&#39;ftp://ftp.ncdc.noaa.gov/pub/data/paleo/icecore/antarctica/antarctica2015co2composite.txt&#39;</span>, <span class="at">skip =</span> <span class="dv">137</span>, <span class="at">sep =</span> <span class="st">&quot;</span><span class="sc">\t</span><span class="st">&quot;</span>, <span class="at">header =</span> T)</span>
+<span id="cb98-2"><a href="temperature-vs-co2.html#cb98-2" tabindex="-1"></a><span class="fu">head</span>(co2df)</span></code></pre></div>
+<pre><code>##   age_gas_calBP co2_ppm co2_1s_ppm
+## 1        -51.03  368.02       0.06
+## 2        -48.00  361.78       0.37
+## 3        -46.28  359.65       0.10
+## 4        -44.41  357.11       0.16
+## 5        -43.08  353.95       0.04
+## 6        -42.31  353.72       0.22</code></pre>
+<p>We’ll again scale the Age column to kyr, and we’ll rename the verbose columns</p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="temperature-vs-co2.html#cb100-1" tabindex="-1"></a>co2df <span class="ot">&lt;-</span> co2df <span class="sc">%&gt;%</span></span>
+<span id="cb100-2"><a href="temperature-vs-co2.html#cb100-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Age =</span> age_gas_calBP<span class="sc">/</span><span class="dv">1000</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb100-3"><a href="temperature-vs-co2.html#cb100-3" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">CO2 =</span> co2_ppm) <span class="sc">%&gt;%</span></span>
+<span id="cb100-4"><a href="temperature-vs-co2.html#cb100-4" tabindex="-1"></a>  <span class="fu">select</span>(Age, CO2)</span>
+<span id="cb100-5"><a href="temperature-vs-co2.html#cb100-5" tabindex="-1"></a></span>
+<span id="cb100-6"><a href="temperature-vs-co2.html#cb100-6" tabindex="-1"></a><span class="fu">head</span>(co2df)</span></code></pre></div>
+<pre><code>##        Age    CO2
+## 1 -0.05103 368.02
+## 2 -0.04800 361.78
+## 3 -0.04628 359.65
+## 4 -0.04441 357.11
+## 5 -0.04308 353.95
+## 6 -0.04231 353.72</code></pre>
+<p>Let’s have a look</p>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="temperature-vs-co2.html#cb102-1" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> co2df, <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Age, <span class="at">y=</span>CO2)) <span class="sc">+</span> </span>
+<span id="cb102-2"><a href="temperature-vs-co2.html#cb102-2" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb102-3"><a href="temperature-vs-co2.html#cb102-3" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;EPICA Dome C CO2&quot;</span>,</span>
+<span id="cb102-4"><a href="temperature-vs-co2.html#cb102-4" tabindex="-1"></a>       <span class="at">x=</span><span class="st">&quot;Age (ky BP)&quot;</span>,</span>
+<span id="cb102-5"><a href="temperature-vs-co2.html#cb102-5" tabindex="-1"></a>       <span class="at">y=</span><span class="fu">expression</span>(<span class="fu">paste</span>(CO<span class="sc">^</span><span class="dv">2</span>, <span class="st">&quot; (ppm)&quot;</span>, <span class="at">sep=</span><span class="st">&quot;&quot;</span>))) <span class="sc">+</span></span>
+<span id="cb102-6"><a href="temperature-vs-co2.html#cb102-6" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-54-1.png" width="672" /></p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="signal-processing-in-r.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="filtering.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="wavelet-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="bringing-the-datasets-together.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="assets/gitbook-2.6.7/js/app.min.js"></script>

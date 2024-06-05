@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>5.2 Demonstration | Time Series Analysis in R</title>
+  <title>3.1 Packages | Time Series Analysis in R</title>
   <meta name="description" content="This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the PyRATES Timeseries Practicums in python by Julien Emile-Geay" />
   <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="5.2 Demonstration | Time Series Analysis in R" />
+  <meta property="og:title" content="3.1 Packages | Time Series Analysis in R" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the PyRATES Timeseries Practicums in python by Julien Emile-Geay" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="5.2 Demonstration | Time Series Analysis in R" />
+  <meta name="twitter:title" content="3.1 Packages | Time Series Analysis in R" />
   
   <meta name="twitter:description" content="This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the PyRATES Timeseries Practicums in python by Julien Emile-Geay" />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="data-description.html"/>
-<link rel="next" href="spectral-methods.html"/>
+<link rel="prev" href="signal-processing-in-r.html"/>
+<link rel="next" href="filtering.html"/>
 <script src="assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -225,37 +225,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="demonstration" class="section level2 hasAnchor" number="5.2">
-<h2><span class="header-section-number">5.2</span> Demonstration<a href="demonstration.html#demonstration" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Let’s import the necessary packages:</p>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="demonstration.html#cb94-1" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb94-2"><a href="demonstration.html#cb94-2" tabindex="-1"></a><span class="fu">library</span>(geoChronR)</span></code></pre></div>
-<pre><code>## 
-## Attaching package: &#39;geoChronR&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:astrochron&#39;:
-## 
-##     ar1</code></pre>
-<p>Let’s first import data and plot it so that up means “warm”:</p>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="demonstration.html#cb97-1" tabindex="-1"></a><span class="co">#Import data</span></span>
-<span id="cb97-2"><a href="demonstration.html#cb97-2" tabindex="-1"></a>lr04 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/LinkedEarth/RLeapFROGS/binder/static/module3/lr04.csv&quot;</span>)</span>
-<span id="cb97-3"><a href="demonstration.html#cb97-3" tabindex="-1"></a></span>
-<span id="cb97-4"><a href="demonstration.html#cb97-4" tabindex="-1"></a><span class="co">#Initial viz</span></span>
-<span id="cb97-5"><a href="demonstration.html#cb97-5" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> lr04, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x=</span>Year,<span class="at">y=</span>d18O))<span class="sc">+</span><span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">scale_y_reverse</span>() <span class="sc">+</span></span>
-<span id="cb97-6"><a href="demonstration.html#cb97-6" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;57 globally distributed benthic δ18O records, Lisiecki et al., 2005&quot;</span>,</span>
-<span id="cb97-7"><a href="demonstration.html#cb97-7" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Year (ky BP)&quot;</span>,</span>
-<span id="cb97-8"><a href="demonstration.html#cb97-8" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">&quot;\u03B418O (\u2030)&quot;</span>) <span class="sc">+</span></span>
-<span id="cb97-9"><a href="demonstration.html#cb97-9" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
-<p>Let’s work with the first 3 million years (3000 kyr) of the record for illustrative purposes:</p>
-<p><img src="_main_files/figure-html/pressure-1.png" width="672" /></p>
+<div id="packages" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Packages<a href="packages.html#packages" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Let’s first load necessary packages:</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="packages.html#cb35-1" tabindex="-1"></a><span class="fu">library</span>(signal)</span>
+<span id="cb35-2"><a href="packages.html#cb35-2" tabindex="-1"></a><span class="fu">library</span>(zoo)</span>
+<span id="cb35-3"><a href="packages.html#cb35-3" tabindex="-1"></a><span class="fu">library</span>(trend)</span>
+<span id="cb35-4"><a href="packages.html#cb35-4" tabindex="-1"></a><span class="fu">library</span>(Mcomp)</span>
+<span id="cb35-5"><a href="packages.html#cb35-5" tabindex="-1"></a><span class="fu">library</span>(Rssa)</span>
+<span id="cb35-6"><a href="packages.html#cb35-6" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="data-description.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="spectral-methods.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="signal-processing-in-r.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="filtering.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="assets/gitbook-2.6.7/js/app.min.js"></script>

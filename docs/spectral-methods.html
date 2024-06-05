@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2.2 Load packages | Time Series Analysis in R</title>
+  <title>5.3 Spectral methods | Time Series Analysis in R</title>
   <meta name="description" content="This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the PyRATES Timeseries Practicums in python by Julien Emile-Geay" />
   <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="2.2 Load packages | Time Series Analysis in R" />
+  <meta property="og:title" content="5.3 Spectral methods | Time Series Analysis in R" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the PyRATES Timeseries Practicums in python by Julien Emile-Geay" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2.2 Load packages | Time Series Analysis in R" />
+  <meta name="twitter:title" content="5.3 Spectral methods | Time Series Analysis in R" />
   
   <meta name="twitter:description" content="This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the PyRATES Timeseries Practicums in python by Julien Emile-Geay" />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="background.html"/>
-<link rel="next" href="data-wrangling.html"/>
+<link rel="prev" href="demonstration.html"/>
+<link rel="next" href="wavelet-transform-in-r.html"/>
 <script src="assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -225,27 +225,44 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="load-packages" class="section level2 hasAnchor" number="2.2">
-<h2><span class="header-section-number">2.2</span> Load packages<a href="load-packages.html#load-packages" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="load-packages.html#cb1-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
-<pre><code>## 
-## Attaching package: &#39;dplyr&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     filter, lag</code></pre>
-<pre><code>## The following objects are masked from &#39;package:base&#39;:
-## 
-##     intersect, setdiff, setequal, union</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="load-packages.html#cb5-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
-<pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 4.3.3</code></pre>
+<div id="spectral-methods" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> Spectral methods<a href="spectral-methods.html#spectral-methods" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Here’s a quick overview of the five spectral analysis methods we’ll cover:</p>
+<p><strong>Basic Periodogram</strong>, which uses a Fourier transform. The method has various windowing available to reduce variance.</p>
+<p><strong>Welch’s Periodogram</strong>, a variant of the basic periodogram, which uses Welch’s method of overlapping segments. The periodogram of the full timeseries is the average of the segment periodograms.</p>
+<p><strong>Multi-Taper Method (MTM)</strong>, which attempts to reduce the variance of spectral estimates by using a small set of tapers rather than the unique data taper or spectral window</p>
+<p><strong>Lomb-Scargle Periodogram</strong>, an inverse approach designed for unevenly-spaced datasets. Several windows are available and Welch’s segmentation can also be used with this method.</p>
+<p><strong>Weighted Wavelet Z-transform</strong>, a wavelet-based method also made for unevenly-spaced datasets.</p>
+<p>Let’s have a look at the various methods. Since the first three methods require evenly-spaced data, we will be using a simple linear interpolation. The effect of pre-processing on the periodogram is discussed further in this notebook.</p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="spectral-methods.html#cb87-1" tabindex="-1"></a><span class="co">#Extend the &#39;Year&#39; column to be continuous and annual over the trimmed interval</span></span>
+<span id="cb87-2"><a href="spectral-methods.html#cb87-2" tabindex="-1"></a>Year_interp <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">ceiling</span>(<span class="fu">min</span>(lr04_trimmed<span class="sc">$</span>Year)), <span class="fu">floor</span>(<span class="fu">max</span>(lr04_trimmed<span class="sc">$</span>Year)), <span class="at">by =</span> <span class="dv">1</span>)</span>
+<span id="cb87-3"><a href="spectral-methods.html#cb87-3" tabindex="-1"></a></span>
+<span id="cb87-4"><a href="spectral-methods.html#cb87-4" tabindex="-1"></a><span class="co">#Use a linear fit to interpolate the d18O series</span></span>
+<span id="cb87-5"><a href="spectral-methods.html#cb87-5" tabindex="-1"></a>d18O_interp <span class="ot">&lt;-</span> <span class="fu">approx</span>(lr04_trimmed<span class="sc">$</span>Year, lr04_trimmed<span class="sc">$</span>d18O, <span class="at">xout =</span> Year_interp, <span class="at">f =</span> <span class="fl">0.5</span>)<span class="sc">$</span>y</span>
+<span id="cb87-6"><a href="spectral-methods.html#cb87-6" tabindex="-1"></a></span>
+<span id="cb87-7"><a href="spectral-methods.html#cb87-7" tabindex="-1"></a><span class="co">#Put these new vectors into a data frame</span></span>
+<span id="cb87-8"><a href="spectral-methods.html#cb87-8" tabindex="-1"></a>lr04_interp <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Year=</span>Year_interp,</span>
+<span id="cb87-9"><a href="spectral-methods.html#cb87-9" tabindex="-1"></a>                          <span class="at">d18O=</span>d18O_interp)</span>
+<span id="cb87-10"><a href="spectral-methods.html#cb87-10" tabindex="-1"></a></span>
+<span id="cb87-11"><a href="spectral-methods.html#cb87-11" tabindex="-1"></a><span class="co">#Take a look at the first few observations of the interpolated series</span></span>
+<span id="cb87-12"><a href="spectral-methods.html#cb87-12" tabindex="-1"></a><span class="fu">head</span>(lr04_interp)</span></code></pre></div>
+<pre><code>##   Year   d18O
+## 1   12 4.3500
+## 2   13 4.8300
+## 3   14 5.0450
+## 4   15 4.9950
+## 5   16 4.9135
+## 6   17 4.8285</code></pre>
+
 </div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="background.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="data-wrangling.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="demonstration.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="wavelet-transform-in-r.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="assets/gitbook-2.6.7/js/app.min.js"></script>

@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2.5 Forecasting | Time Series Analysis in R</title>
+  <title>6.2 Sampling interval | Time Series Analysis in R</title>
   <meta name="description" content="This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the PyRATES Timeseries Practicums in python by Julien Emile-Geay" />
   <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="2.5 Forecasting | Time Series Analysis in R" />
+  <meta property="og:title" content="6.2 Sampling interval | Time Series Analysis in R" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the PyRATES Timeseries Practicums in python by Julien Emile-Geay" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2.5 Forecasting | Time Series Analysis in R" />
+  <meta name="twitter:title" content="6.2 Sampling interval | Time Series Analysis in R" />
   
   <meta name="twitter:description" content="This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the PyRATES Timeseries Practicums in python by Julien Emile-Geay" />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="trend-extraction.html"/>
-<link rel="next" href="signal-processing-in-r.html"/>
+<link rel="prev" href="loading-and-visualizing-the-deltad-series.html"/>
+<link rel="next" href="wavelet-analysis.html"/>
 <script src="assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -225,36 +225,24 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="forecasting" class="section level2 hasAnchor" number="2.5">
-<h2><span class="header-section-number">2.5</span> Forecasting<a href="forecasting.html#forecasting" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Let us return to our parametric model of atmospheric CO2 (quadractic trend + seasonal harmonics), which we may use to forecast future observations. Let’s extend our time axis to 2050 and see what CO2 may look like then if we don’t curb emissions or fail to remove it from the atmosphere:</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="forecasting.html#cb39-1" tabindex="-1"></a>Date_ext <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">max</span>(df1<span class="sc">$</span>Date), <span class="at">length.out=</span><span class="fu">length</span>(df1<span class="sc">$</span>Date), <span class="at">by=</span><span class="dv">1</span><span class="sc">/</span><span class="dv">12</span>)</span>
-<span id="cb39-2"><a href="forecasting.html#cb39-2" tabindex="-1"></a></span>
-<span id="cb39-3"><a href="forecasting.html#cb39-3" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> df1</span>
-<span id="cb39-4"><a href="forecasting.html#cb39-4" tabindex="-1"></a></span>
-<span id="cb39-5"><a href="forecasting.html#cb39-5" tabindex="-1"></a>df2[,<span class="dv">4</span>] <span class="ot">&lt;-</span> Date_ext</span>
-<span id="cb39-6"><a href="forecasting.html#cb39-6" tabindex="-1"></a></span>
-<span id="cb39-7"><a href="forecasting.html#cb39-7" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> df2 <span class="sc">%&gt;%</span></span>
-<span id="cb39-8"><a href="forecasting.html#cb39-8" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">CO2_predicted =</span> <span class="fu">predict</span>(fit.lm, <span class="at">newdata =</span> df2)) <span class="sc">%&gt;%</span></span>
-<span id="cb39-9"><a href="forecasting.html#cb39-9" tabindex="-1"></a>  <span class="fu">select</span>(Date, CO2_predicted)</span>
-<span id="cb39-10"><a href="forecasting.html#cb39-10" tabindex="-1"></a></span>
-<span id="cb39-11"><a href="forecasting.html#cb39-11" tabindex="-1"></a></span>
-<span id="cb39-12"><a href="forecasting.html#cb39-12" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>df1, <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Date, <span class="at">y=</span>CO2)) <span class="sc">+</span> </span>
-<span id="cb39-13"><a href="forecasting.html#cb39-13" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb39-14"><a href="forecasting.html#cb39-14" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>df2, <span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">x=</span>Date, <span class="at">y=</span>CO2_predicted), <span class="at">inherit.aes =</span> F, <span class="at">color=</span><span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
-<span id="cb39-15"><a href="forecasting.html#cb39-15" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Mauna Loa CO2 forecast&quot;</span>,</span>
-<span id="cb39-16"><a href="forecasting.html#cb39-16" tabindex="-1"></a>       <span class="at">y=</span><span class="st">&quot;CO2 (ppm)&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
-
+<div id="sampling-interval" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> Sampling interval<a href="sampling-interval.html#sampling-interval" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>First, take a look at the distribution of time increments. We’ll use the base function <code>diff()</code> to extract the sampling intervals.</p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="sampling-interval.html#cb92-1" tabindex="-1"></a>deltaT <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="st">&quot;ID&quot;</span> <span class="ot">=</span> <span class="dv">1</span><span class="sc">:</span>(<span class="fu">length</span>(dDdf<span class="sc">$</span>AgeKy)<span class="sc">-</span><span class="dv">1</span>),</span>
+<span id="cb92-2"><a href="sampling-interval.html#cb92-2" tabindex="-1"></a>                     <span class="st">&quot;interval&quot;</span> <span class="ot">=</span> <span class="fu">diff</span>(dDdf<span class="sc">$</span>AgeKy))</span>
+<span id="cb92-3"><a href="sampling-interval.html#cb92-3" tabindex="-1"></a></span>
+<span id="cb92-4"><a href="sampling-interval.html#cb92-4" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> deltaT, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x=</span>interval)) <span class="sc">+</span> <span class="fu">geom_histogram</span>()</span></code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="_main_files/figure-html/unnamed-chunk-49-1.png" width="672" /></p>
+<p>The data are not evenly spaced, which is a challenge because most timeseries analysis methods (particularly Fourier and wavelet analysis) make the implicit assumption that data are evenly spaced, so applying those tools to unevenly-spaced data will result in methods not behaving as they are supposed to. We therefore interpolate the data at 500y resolution to enable the much faster CWT algorithm of Torrence &amp; Compo (1998) to run. We also standardize because the original data range is rather large, which could cause numerical issues.</p>
 </div>
-<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="trend-extraction.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="signal-processing-in-r.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="loading-and-visualizing-the-deltad-series.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="wavelet-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="assets/gitbook-2.6.7/js/app.min.js"></script>
