@@ -10,3 +10,8 @@ description: "This book offers a number of tutorials for analyzing time series i
 ---
 
 This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the [PyRATES Timeseries Practicums in python by Julien Emile-Geay](https://linked.earth/PyRATES_practicums_py/intro.html)
+
+authors: David Edge, Nick McKay, and Julien Emile-Geay (with help from Claude.ai)
+
+<img src='http://linked.earth/FROGS/images/Pyrateslogo.jpg' width="400">
+

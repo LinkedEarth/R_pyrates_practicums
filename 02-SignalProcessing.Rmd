@@ -1,7 +1,5 @@
 # Signal Processing in R
 
-<img src='http://linked.earth/FROGS/images/Pyrateslogo.jpg' width="400">
-
 Often timeseries have to be treated prior to analysis. This is a delicate game: altering data is a cardinal sin, so one needs to be very aware of one's doing prior to engaging in this activity. Here we show a few examples where such treatment may be warranted.
 
 Goals
