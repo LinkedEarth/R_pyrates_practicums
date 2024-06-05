@@ -27,7 +27,7 @@ detrending-methods-in-r
 ssa-detrending
 comparing-methods
 takeways
-association-correlation-and-significance-in-r
+association
 measures-of-association-nao-vs-soi
 load-data-and-packages
 r-packages
@@ -41,10 +41,14 @@ smoothing
 takeways-1
 references
 spectral-analysis-in-r
+load-data-and-packages-1
 packages-1
 dataset
+data-preview
+data-cleaning
 aggregate-to-monthly
 even-sampling
+spectral-analysis
 multi-taper
 stl
 gaussianize
@@ -57,6 +61,7 @@ lomb-scargle
 wavelet
 takeaways
 wavelet-transform-in-r
+data-and-packages-1
 packages-2
 data-description
 loading-and-visualizing-the-deltad-series

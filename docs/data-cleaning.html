@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>5.3 Data cleaning | _main.knit</title>
+  <meta name="description" content="This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the PyRATES Timeseries Practicums in python by Julien Emile-Geay" />
+  <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="5.3 Data cleaning | _main.knit" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the PyRATES Timeseries Practicums in python by Julien Emile-Geay" />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="5.3 Data cleaning | _main.knit" />
+  
+  <meta name="twitter:description" content="This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the PyRATES Timeseries Practicums in python by Julien Emile-Geay" />
+  
+
+<meta name="author" content="David Edge, Nick McKay, and Julien Emile-Geay (with help from Claude.ai)" />
+
+
+<meta name="date" content="2024-06-05" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="data-preview.html"/>
+<link rel="next" href="gap-tolerant-spectral-analysis.html"/>
+<script src="assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="assets/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="assets/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="assets/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Time Series Analysis in R</a></li>
+<li class="chapter" data-level="2" data-path="introduction-to-timeseries.html"><a href="introduction-to-timeseries.html"><i class="fa fa-check"></i><b>2</b> Introduction to Timeseries</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="background.html"><a href="background.html"><i class="fa fa-check"></i><b>2.1</b> Background</a></li>
+<li class="chapter" data-level="2.2" data-path="data-wrangling.html"><a href="data-wrangling.html"><i class="fa fa-check"></i><b>2.2</b> Data Wrangling</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="data-wrangling.html"><a href="data-wrangling.html#load-packages"><i class="fa fa-check"></i><b>2.2.1</b> Load packages</a></li>
+<li class="chapter" data-level="2.2.2" data-path="data-wrangling.html"><a href="data-wrangling.html#load-data"><i class="fa fa-check"></i><b>2.2.2</b> Load data</a></li>
+<li class="chapter" data-level="2.2.3" data-path="data-wrangling.html"><a href="data-wrangling.html#format-data"><i class="fa fa-check"></i><b>2.2.3</b> Format data</a></li>
+<li class="chapter" data-level="2.2.4" data-path="data-wrangling.html"><a href="data-wrangling.html#first-viz"><i class="fa fa-check"></i><b>2.2.4</b> First viz</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="trend-extraction.html"><a href="trend-extraction.html"><i class="fa fa-check"></i><b>2.3</b> Trend Extraction</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="trend-extraction.html"><a href="trend-extraction.html#linear-trend-model"><i class="fa fa-check"></i><b>2.3.1</b> Linear trend model</a></li>
+<li class="chapter" data-level="2.3.2" data-path="trend-extraction.html"><a href="trend-extraction.html#quadratic-fit"><i class="fa fa-check"></i><b>2.3.2</b> Quadratic fit</a></li>
+<li class="chapter" data-level="2.3.3" data-path="trend-extraction.html"><a href="trend-extraction.html#harmonic-waves"><i class="fa fa-check"></i><b>2.3.3</b> Harmonic waves</a></li>
+<li class="chapter" data-level="2.3.4" data-path="trend-extraction.html"><a href="trend-extraction.html#automated-model"><i class="fa fa-check"></i><b>2.3.4</b> Automated model</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="forecasting.html"><a href="forecasting.html"><i class="fa fa-check"></i><b>2.4</b> Forecasting</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="signal-processing-in-r.html"><a href="signal-processing-in-r.html"><i class="fa fa-check"></i><b>3</b> Signal Processing in R</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="data-and-packages.html"><a href="data-and-packages.html"><i class="fa fa-check"></i><b>3.1</b> Data and packages</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="data-and-packages.html"><a href="data-and-packages.html#packages"><i class="fa fa-check"></i><b>3.1.1</b> Packages</a></li>
+<li class="chapter" data-level="3.1.2" data-path="data-and-packages.html"><a href="data-and-packages.html#data"><i class="fa fa-check"></i><b>3.1.2</b> Data</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="filtering.html"><a href="filtering.html"><i class="fa fa-check"></i><b>3.2</b> Filtering</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="filtering.html"><a href="filtering.html#data-spacing"><i class="fa fa-check"></i><b>3.2.1</b> Data spacing</a></li>
+<li class="chapter" data-level="3.2.2" data-path="filtering.html"><a href="filtering.html#lowpass-filter"><i class="fa fa-check"></i><b>3.2.2</b> Lowpass filter</a></li>
+<li class="chapter" data-level="3.2.3" data-path="filtering.html"><a href="filtering.html#high-pass-filter"><i class="fa fa-check"></i><b>3.2.3</b> High-pass filter</a></li>
+<li class="chapter" data-level="3.2.4" data-path="filtering.html"><a href="filtering.html#band-pass-filter"><i class="fa fa-check"></i><b>3.2.4</b> Band-pass filter</a></li>
+<li class="chapter" data-level="3.2.5" data-path="filtering.html"><a href="filtering.html#notch-filter"><i class="fa fa-check"></i><b>3.2.5</b> Notch filter</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="detrending.html"><a href="detrending.html"><i class="fa fa-check"></i><b>3.3</b> Detrending</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="detrending.html"><a href="detrending.html#detrending-methods-in-r"><i class="fa fa-check"></i><b>3.3.1</b> Detrending methods in R</a></li>
+<li class="chapter" data-level="3.3.2" data-path="detrending.html"><a href="detrending.html#ssa-detrending"><i class="fa fa-check"></i><b>3.3.2</b> SSA detrending</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="comparing-methods.html"><a href="comparing-methods.html"><i class="fa fa-check"></i><b>3.4</b> Comparing methods</a></li>
+<li class="chapter" data-level="3.5" data-path="takeways.html"><a href="takeways.html"><i class="fa fa-check"></i><b>3.5</b> Takeways</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="association.html"><a href="association.html"><i class="fa fa-check"></i><b>4</b> Association</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="measures-of-association-nao-vs-soi.html"><a href="measures-of-association-nao-vs-soi.html"><i class="fa fa-check"></i><b>4.1</b> Measures of association: NAO vs SOI</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="measures-of-association-nao-vs-soi.html"><a href="measures-of-association-nao-vs-soi.html#load-data-and-packages"><i class="fa fa-check"></i><b>4.1.1</b> Load data and packages</a></li>
+<li class="chapter" data-level="4.1.2" data-path="measures-of-association-nao-vs-soi.html"><a href="measures-of-association-nao-vs-soi.html#format-and-plot-the-nao-data"><i class="fa fa-check"></i><b>4.1.2</b> Format and plot the NAO data</a></li>
+<li class="chapter" data-level="4.1.3" data-path="measures-of-association-nao-vs-soi.html"><a href="measures-of-association-nao-vs-soi.html#merge-the-soi-data-into-the-nao-data.frame"><i class="fa fa-check"></i><b>4.1.3</b> Merge the SOI data into the NAO data.frame</a></li>
+<li class="chapter" data-level="4.1.4" data-path="measures-of-association-nao-vs-soi.html"><a href="measures-of-association-nao-vs-soi.html#interpolation"><i class="fa fa-check"></i><b>4.1.4</b> Interpolation</a></li>
+<li class="chapter" data-level="4.1.5" data-path="measures-of-association-nao-vs-soi.html"><a href="measures-of-association-nao-vs-soi.html#correlation"><i class="fa fa-check"></i><b>4.1.5</b> Correlation</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="spurious-correlations.html"><a href="spurious-correlations.html"><i class="fa fa-check"></i><b>4.2</b> Spurious Correlations</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="spurious-correlations.html"><a href="spurious-correlations.html#smoothing"><i class="fa fa-check"></i><b>4.2.1</b> Smoothing</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="takeways-1.html"><a href="takeways-1.html"><i class="fa fa-check"></i><b>4.3</b> Takeways</a></li>
+<li class="chapter" data-level="4.4" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i><b>4.4</b> References</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="spectral-analysis-in-r.html"><a href="spectral-analysis-in-r.html"><i class="fa fa-check"></i><b>5</b> Spectral Analysis in R</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="load-data-and-packages-1.html"><a href="load-data-and-packages-1.html"><i class="fa fa-check"></i><b>5.1</b> Load Data and Packages</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="load-data-and-packages-1.html"><a href="load-data-and-packages-1.html#packages-1"><i class="fa fa-check"></i><b>5.1.1</b> Packages</a></li>
+<li class="chapter" data-level="5.1.2" data-path="load-data-and-packages-1.html"><a href="load-data-and-packages-1.html#dataset"><i class="fa fa-check"></i><b>5.1.2</b> Dataset</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="data-preview.html"><a href="data-preview.html"><i class="fa fa-check"></i><b>5.2</b> Data preview</a></li>
+<li class="chapter" data-level="5.3" data-path="data-cleaning.html"><a href="data-cleaning.html"><i class="fa fa-check"></i><b>5.3</b> Data cleaning</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="data-cleaning.html"><a href="data-cleaning.html#aggregate-to-monthly"><i class="fa fa-check"></i><b>5.3.1</b> Aggregate to monthly</a></li>
+<li class="chapter" data-level="5.3.2" data-path="data-cleaning.html"><a href="data-cleaning.html#even-sampling"><i class="fa fa-check"></i><b>5.3.2</b> Even sampling</a></li>
+<li class="chapter" data-level="5.3.3" data-path="data-cleaning.html"><a href="data-cleaning.html#spectral-analysis"><i class="fa fa-check"></i><b>5.3.3</b> Spectral analysis</a></li>
+<li class="chapter" data-level="5.3.4" data-path="data-cleaning.html"><a href="data-cleaning.html#stl"><i class="fa fa-check"></i><b>5.3.4</b> STL</a></li>
+<li class="chapter" data-level="5.3.5" data-path="data-cleaning.html"><a href="data-cleaning.html#estimation-of-scaling-behavior"><i class="fa fa-check"></i><b>5.3.5</b> Estimation of scaling behavior</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="gap-tolerant-spectral-analysis.html"><a href="gap-tolerant-spectral-analysis.html"><i class="fa fa-check"></i><b>5.4</b> Gap-tolerant spectral analysis</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="gap-tolerant-spectral-analysis.html"><a href="gap-tolerant-spectral-analysis.html#lomb-scargle"><i class="fa fa-check"></i><b>5.4.1</b> Lomb-Scargle</a></li>
+<li class="chapter" data-level="5.4.2" data-path="gap-tolerant-spectral-analysis.html"><a href="gap-tolerant-spectral-analysis.html#wavelet"><i class="fa fa-check"></i><b>5.4.2</b> Wavelet</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="takeaways.html"><a href="takeaways.html"><i class="fa fa-check"></i><b>5.5</b> Takeaways</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="wavelet-transform-in-r.html"><a href="wavelet-transform-in-r.html"><i class="fa fa-check"></i><b>6</b> Wavelet Transform in R</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="data-and-packages-1.html"><a href="data-and-packages-1.html"><i class="fa fa-check"></i><b>6.1</b> Data and packages</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="data-and-packages-1.html"><a href="data-and-packages-1.html#packages-2"><i class="fa fa-check"></i><b>6.1.1</b> Packages</a></li>
+<li class="chapter" data-level="6.1.2" data-path="data-and-packages-1.html"><a href="data-and-packages-1.html#data-description"><i class="fa fa-check"></i><b>6.1.2</b> Data description</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="loading-and-visualizing-the-deltad-series.html"><a href="loading-and-visualizing-the-deltad-series.html"><i class="fa fa-check"></i><b>6.2</b> Loading and visualizing the <span class="math inline">\(\delta\)</span>D series</a></li>
+<li class="chapter" data-level="6.3" data-path="sampling-interval.html"><a href="sampling-interval.html"><i class="fa fa-check"></i><b>6.3</b> Sampling interval</a></li>
+<li class="chapter" data-level="6.4" data-path="wavelet-analysis.html"><a href="wavelet-analysis.html"><i class="fa fa-check"></i><b>6.4</b> Wavelet Analysis</a>
+<ul>
+<li class="chapter" data-level="6.4.1" data-path="wavelet-analysis.html"><a href="wavelet-analysis.html#null-hypothesis"><i class="fa fa-check"></i><b>6.4.1</b> Null hypothesis</a></li>
+</ul></li>
+<li class="chapter" data-level="6.5" data-path="temperature-vs-co2.html"><a href="temperature-vs-co2.html"><i class="fa fa-check"></i><b>6.5</b> Temperature vs CO2</a></li>
+<li class="chapter" data-level="6.6" data-path="bringing-the-datasets-together.html"><a href="bringing-the-datasets-together.html"><i class="fa fa-check"></i><b>6.6</b> Bringing the datasets together</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="bringing-the-datasets-together.html"><a href="bringing-the-datasets-together.html#standardization"><i class="fa fa-check"></i><b>6.6.1</b> Standardization</a></li>
+<li class="chapter" data-level="6.6.2" data-path="bringing-the-datasets-together.html"><a href="bringing-the-datasets-together.html#coherency"><i class="fa fa-check"></i><b>6.6.2</b> Coherency</a></li>
+<li class="chapter" data-level="6.6.3" data-path="bringing-the-datasets-together.html"><a href="bringing-the-datasets-together.html#common-power"><i class="fa fa-check"></i><b>6.6.3</b> Common power</a></li>
+</ul></li>
+<li class="chapter" data-level="6.7" data-path="takeways-2.html"><a href="takeways-2.html"><i class="fa fa-check"></i><b>6.7</b> Takeways</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./"></a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="data-cleaning" class="section level2 hasAnchor" number="5.3">
+<h2><span class="header-section-number">5.3</span> Data cleaning<a href="data-cleaning.html#data-cleaning" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="aggregate-to-monthly" class="section level3 hasAnchor" number="5.3.1">
+<h3><span class="header-section-number">5.3.1</span> Aggregate to monthly<a href="data-cleaning.html#aggregate-to-monthly" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="data-cleaning.html#cb87-1" tabindex="-1"></a>discharge_monthly <span class="ot">&lt;-</span> df <span class="sc">|&gt;</span> </span>
+<span id="cb87-2"><a href="data-cleaning.html#cb87-2" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="at">Date =</span> <span class="fu">floor_date</span>(<span class="fu">ymd</span>(df<span class="sc">$</span>datetime), <span class="st">&#39;1 month&#39;</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb87-3"><a href="data-cleaning.html#cb87-3" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">discharge =</span> <span class="fu">mean</span>(<span class="st">`</span><span class="at">discharge (cf/s)</span><span class="st">`</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">&#39;drop&#39;</span>)</span>
+<span id="cb87-4"><a href="data-cleaning.html#cb87-4" tabindex="-1"></a></span>
+<span id="cb87-5"><a href="data-cleaning.html#cb87-5" tabindex="-1"></a></span>
+<span id="cb87-6"><a href="data-cleaning.html#cb87-6" tabindex="-1"></a><span class="fu">ggplot</span>(discharge_monthly, <span class="fu">aes</span>(<span class="at">x=</span>Date, <span class="at">y=</span>discharge)) <span class="sc">+</span></span>
+<span id="cb87-7"><a href="data-cleaning.html#cb87-7" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Rio Grande at Embudo, NM (monthly)&quot;</span>,</span>
+<span id="cb87-8"><a href="data-cleaning.html#cb87-8" tabindex="-1"></a>       <span class="at">x=</span><span class="st">&quot;Year (CE)&quot;</span>,</span>
+<span id="cb87-9"><a href="data-cleaning.html#cb87-9" tabindex="-1"></a>       <span class="at">y=</span><span class="st">&quot;dicharge (cf/s)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb87-10"><a href="data-cleaning.html#cb87-10" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb87-11"><a href="data-cleaning.html#cb87-11" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Rio Grand Discharge&quot;</span>) <span class="sc">+</span></span>
+<span id="cb87-12"><a href="data-cleaning.html#cb87-12" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-47-1.png" width="672" /></p>
+</div>
+<div id="even-sampling" class="section level3 hasAnchor" number="5.3.2">
+<h3><span class="header-section-number">5.3.2</span> Even sampling<a href="data-cleaning.html#even-sampling" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="data-cleaning.html#cb88-1" tabindex="-1"></a>missing_vals <span class="ot">&lt;-</span> discharge_monthly<span class="sc">$</span>Date[<span class="fu">which</span>(<span class="fu">is.na</span>(discharge_monthly<span class="sc">$</span>discharge))]</span>
+<span id="cb88-2"><a href="data-cleaning.html#cb88-2" tabindex="-1"></a>missing_vals</span></code></pre></div>
+<pre><code>##   [1] &quot;1894-03-01&quot; &quot;1894-04-01&quot; &quot;1894-05-01&quot; &quot;1894-06-01&quot; &quot;1894-07-01&quot; &quot;1894-08-01&quot;
+##   [7] &quot;1894-09-01&quot; &quot;1904-04-01&quot; &quot;1904-05-01&quot; &quot;1904-06-01&quot; &quot;1904-07-01&quot; &quot;1904-08-01&quot;
+##  [13] &quot;1904-09-01&quot; &quot;1904-10-01&quot; &quot;1904-11-01&quot; &quot;1904-12-01&quot; &quot;1905-01-01&quot; &quot;1905-02-01&quot;
+##  [19] &quot;1905-03-01&quot; &quot;1905-04-01&quot; &quot;1905-05-01&quot; &quot;1905-06-01&quot; &quot;1905-07-01&quot; &quot;1905-08-01&quot;
+##  [25] &quot;1905-09-01&quot; &quot;1905-10-01&quot; &quot;1905-11-01&quot; &quot;1905-12-01&quot; &quot;1906-01-01&quot; &quot;1906-02-01&quot;
+##  [31] &quot;1906-03-01&quot; &quot;1906-04-01&quot; &quot;1906-05-01&quot; &quot;1906-06-01&quot; &quot;1906-07-01&quot; &quot;1906-08-01&quot;
+##  [37] &quot;1906-09-01&quot; &quot;1906-10-01&quot; &quot;1906-11-01&quot; &quot;1906-12-01&quot; &quot;1907-01-01&quot; &quot;1907-02-01&quot;
+##  [43] &quot;1907-03-01&quot; &quot;1907-04-01&quot; &quot;1907-05-01&quot; &quot;1907-06-01&quot; &quot;1907-07-01&quot; &quot;1907-08-01&quot;
+##  [49] &quot;1907-09-01&quot; &quot;1907-10-01&quot; &quot;1907-11-01&quot; &quot;1907-12-01&quot; &quot;1908-01-01&quot; &quot;1908-02-01&quot;
+##  [55] &quot;1908-03-01&quot; &quot;1908-04-01&quot; &quot;1908-05-01&quot; &quot;1908-06-01&quot; &quot;1908-07-01&quot; &quot;1908-08-01&quot;
+##  [61] &quot;1908-09-01&quot; &quot;1908-10-01&quot; &quot;1908-11-01&quot; &quot;1908-12-01&quot; &quot;1909-01-01&quot; &quot;1909-02-01&quot;
+##  [67] &quot;1909-03-01&quot; &quot;1909-04-01&quot; &quot;1909-05-01&quot; &quot;1909-06-01&quot; &quot;1909-07-01&quot; &quot;1909-08-01&quot;
+##  [73] &quot;1909-09-01&quot; &quot;1909-10-01&quot; &quot;1909-11-01&quot; &quot;1909-12-01&quot; &quot;1910-01-01&quot; &quot;1910-02-01&quot;
+##  [79] &quot;1910-03-01&quot; &quot;1910-04-01&quot; &quot;1910-05-01&quot; &quot;1910-06-01&quot; &quot;1910-07-01&quot; &quot;1910-08-01&quot;
+##  [85] &quot;1910-09-01&quot; &quot;1910-10-01&quot; &quot;1910-11-01&quot; &quot;1910-12-01&quot; &quot;1911-01-01&quot; &quot;1911-02-01&quot;
+##  [91] &quot;1911-03-01&quot; &quot;1911-04-01&quot; &quot;1911-05-01&quot; &quot;1911-06-01&quot; &quot;1911-07-01&quot; &quot;1911-08-01&quot;
+##  [97] &quot;1911-09-01&quot; &quot;1911-10-01&quot; &quot;1911-11-01&quot; &quot;1911-12-01&quot; &quot;1912-01-01&quot; &quot;1912-02-01&quot;
+## [103] &quot;1912-03-01&quot; &quot;1912-04-01&quot; &quot;1912-05-01&quot; &quot;1912-06-01&quot; &quot;1912-07-01&quot; &quot;1912-08-01&quot;</code></pre>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="data-cleaning.html#cb90-1" tabindex="-1"></a>df3 <span class="ot">&lt;-</span> discharge_monthly <span class="sc">|&gt;</span> </span>
+<span id="cb90-2"><a href="data-cleaning.html#cb90-2" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(Date <span class="sc">&gt;</span> <span class="fu">max</span>(missing_vals))</span>
+<span id="cb90-3"><a href="data-cleaning.html#cb90-3" tabindex="-1"></a></span>
+<span id="cb90-4"><a href="data-cleaning.html#cb90-4" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">as.numeric</span>(<span class="fu">diff</span>(df3<span class="sc">$</span>Date)),<span class="at">main =</span> <span class="st">&quot;Distribution of Time Steps&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Days&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-48-1.png" width="672" /></p>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="data-cleaning.html#cb91-1" tabindex="-1"></a>df4 <span class="ot">&lt;-</span> df3 <span class="sc">|&gt;</span> </span>
+<span id="cb91-2"><a href="data-cleaning.html#cb91-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Date =</span> <span class="fu">decimal_date</span>(Date)) <span class="sc">|&gt;</span> </span>
+<span id="cb91-3"><a href="data-cleaning.html#cb91-3" tabindex="-1"></a>  astrochron<span class="sc">::</span><span class="fu">linterp</span>(<span class="at">dt=</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">12</span>),<span class="at">genplot =</span> F) <span class="sc">|&gt;</span> </span>
+<span id="cb91-4"><a href="data-cleaning.html#cb91-4" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(Date <span class="sc">&gt;</span> <span class="fu">max</span>(missing_vals))</span></code></pre></div>
+<pre><code>## 
+## ----- APPLYING PIECEWISE-LINEAR INTERPOLATION TO STRATIGRAPHIC SERIES -----
+## 
+##  * Number of samples= 1341 
+##  * New number of samples= 1340</code></pre>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="data-cleaning.html#cb93-1" tabindex="-1"></a><span class="fu">ggplot</span>(df4, <span class="fu">aes</span>(<span class="at">x=</span>Date, <span class="at">y=</span>discharge)) <span class="sc">+</span></span>
+<span id="cb93-2"><a href="data-cleaning.html#cb93-2" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Rio Grande at Embudo, NM (30.4375-day period)&quot;</span>,</span>
+<span id="cb93-3"><a href="data-cleaning.html#cb93-3" tabindex="-1"></a>       <span class="at">x=</span><span class="st">&quot;Year (CE)&quot;</span>,</span>
+<span id="cb93-4"><a href="data-cleaning.html#cb93-4" tabindex="-1"></a>       <span class="at">y=</span><span class="st">&quot;dicharge (cf/s)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb93-5"><a href="data-cleaning.html#cb93-5" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb93-6"><a href="data-cleaning.html#cb93-6" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-48-2.png" width="672" /></p>
+</div>
+<div id="spectral-analysis" class="section level3 hasAnchor" number="5.3.3">
+<h3><span class="header-section-number">5.3.3</span> Spectral analysis<a href="data-cleaning.html#spectral-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="multi-taper" class="section level4 hasAnchor" number="5.3.3.1">
+<h4><span class="header-section-number">5.3.3.1</span> multi-taper<a href="data-cleaning.html#multi-taper" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb94-1"><a href="data-cleaning.html#cb94-1" tabindex="-1"></a>mtm1 <span class="ot">&lt;-</span> <span class="fu">mtm</span>(df4,<span class="at">output =</span> <span class="dv">1</span>,<span class="at">verbose =</span> F) <span class="sc">|&gt;</span> </span>
+<span id="cb94-2"><a href="data-cleaning.html#cb94-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Period =</span> <span class="dv">1</span><span class="sc">/</span>Frequency,</span>
+<span id="cb94-3"><a href="data-cleaning.html#cb94-3" tabindex="-1"></a>                  <span class="at">Power =</span> Power<span class="sc">/</span><span class="dv">1000</span>) <span class="sc">|&gt;</span> <span class="co">#account for differing units in astrochrons MTM</span></span>
+<span id="cb94-4"><a href="data-cleaning.html#cb94-4" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Period, Power)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-49-1.png" width="672" /></p>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="data-cleaning.html#cb95-1" tabindex="-1"></a>reverselog_trans <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">base =</span> <span class="fu">exp</span>(<span class="dv">1</span>)) {</span>
+<span id="cb95-2"><a href="data-cleaning.html#cb95-2" tabindex="-1"></a>  trans <span class="ot">&lt;-</span> <span class="cf">function</span>(x) <span class="sc">-</span><span class="fu">log</span>(x, base)</span>
+<span id="cb95-3"><a href="data-cleaning.html#cb95-3" tabindex="-1"></a>  inv <span class="ot">&lt;-</span> <span class="cf">function</span>(x) base<span class="sc">^</span>(<span class="sc">-</span>x)</span>
+<span id="cb95-4"><a href="data-cleaning.html#cb95-4" tabindex="-1"></a>  <span class="fu">trans_new</span>(<span class="fu">paste0</span>(<span class="st">&quot;reverselog-&quot;</span>, <span class="fu">format</span>(base)), trans, inv, </span>
+<span id="cb95-5"><a href="data-cleaning.html#cb95-5" tabindex="-1"></a>            <span class="fu">log_breaks</span>(<span class="at">base =</span> base), </span>
+<span id="cb95-6"><a href="data-cleaning.html#cb95-6" tabindex="-1"></a>            <span class="at">domain =</span> <span class="fu">c</span>(<span class="fl">1e-100</span>, <span class="cn">Inf</span>))</span>
+<span id="cb95-7"><a href="data-cleaning.html#cb95-7" tabindex="-1"></a>}</span>
+<span id="cb95-8"><a href="data-cleaning.html#cb95-8" tabindex="-1"></a></span>
+<span id="cb95-9"><a href="data-cleaning.html#cb95-9" tabindex="-1"></a><span class="fu">ggplot</span>(mtm1, <span class="fu">aes</span>(<span class="at">x=</span>Period, <span class="at">y=</span>Power)) <span class="sc">+</span></span>
+<span id="cb95-10"><a href="data-cleaning.html#cb95-10" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Rio Grande discharge spectrum (mtm)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb95-11"><a href="data-cleaning.html#cb95-11" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb95-12"><a href="data-cleaning.html#cb95-12" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>() <span class="sc">+</span> </span>
+<span id="cb95-13"><a href="data-cleaning.html#cb95-13" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">trans =</span> <span class="fu">reverselog_trans</span>(<span class="dv">10</span>),</span>
+<span id="cb95-14"><a href="data-cleaning.html#cb95-14" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">100</span>,<span class="dv">50</span>,<span class="dv">20</span>,<span class="dv">10</span>,<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="fl">0.5</span>,<span class="fl">0.2</span>),</span>
+<span id="cb95-15"><a href="data-cleaning.html#cb95-15" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">100</span>,<span class="fl">0.2</span>)) <span class="sc">+</span></span>
+<span id="cb95-16"><a href="data-cleaning.html#cb95-16" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-49-2.png" width="672" />
+The prominent feature is a strong annual cycle and higher-order harmonics, super-imposed on a “warm colored” background (i.e. variations at long timescales are larger than variations at short timescales). There are hints of long-term scaling as well, one in the subannual range, and one from period of 1 to 50y. We may be interested in the shape of this background, and whether it can be fit by one or more power laws.</p>
+<p>In addition, we may be interested in interannual (year-to-year) to interdecadal (decade-to-decade) variations in streamflow. We would like to know whether the peak observed around 3-4 years in the plot above is <em>significant</em> with respect to a reasonable null.</p>
+</div>
+</div>
+<div id="stl" class="section level3 hasAnchor" number="5.3.4">
+<h3><span class="header-section-number">5.3.4</span> STL<a href="data-cleaning.html#stl" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To do both of these things it would make sense to remove the annual cycle. We’ll use STL decomposition for this.</p>
+<div id="gaussianize" class="section level4 hasAnchor" number="5.3.4.1">
+<h4><span class="header-section-number">5.3.4.1</span> Gaussianize<a href="data-cleaning.html#gaussianize" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Now, because of the positive skew mentioned above, it turns out that the STL decomposition has trouble with this dataset. Instead, we can use the gaussianize() to map this dataset to a standard normal. There are applications for which this would be undesirable, but for this purpose it is good:</p>
+<p>Gaussianize is available as part of the geoChronR package - but it’s also pretty simple, so let’s just define that here:</p>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="data-cleaning.html#cb96-1" tabindex="-1"></a>gaussianize <span class="ot">&lt;-</span> <span class="cf">function</span>(X) {</span>
+<span id="cb96-2"><a href="data-cleaning.html#cb96-2" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.matrix</span>(X)) {</span>
+<span id="cb96-3"><a href="data-cleaning.html#cb96-3" tabindex="-1"></a>        X <span class="ot">=</span> <span class="fu">as.matrix</span>(X)</span>
+<span id="cb96-4"><a href="data-cleaning.html#cb96-4" tabindex="-1"></a>    }</span>
+<span id="cb96-5"><a href="data-cleaning.html#cb96-5" tabindex="-1"></a>    p <span class="ot">=</span> <span class="fu">NCOL</span>(X)</span>
+<span id="cb96-6"><a href="data-cleaning.html#cb96-6" tabindex="-1"></a>    n <span class="ot">=</span> <span class="fu">NROW</span>(X)</span>
+<span id="cb96-7"><a href="data-cleaning.html#cb96-7" tabindex="-1"></a>    Xn <span class="ot">=</span> <span class="fu">matrix</span>(<span class="at">data =</span> <span class="cn">NA</span>, <span class="at">nrow =</span> n, <span class="at">ncol =</span> p)</span>
+<span id="cb96-8"><a href="data-cleaning.html#cb96-8" tabindex="-1"></a>    <span class="cf">for</span> (j <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>p) {</span>
+<span id="cb96-9"><a href="data-cleaning.html#cb96-9" tabindex="-1"></a>        nz <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="sc">!</span><span class="fu">is.na</span>(X[, j]))</span>
+<span id="cb96-10"><a href="data-cleaning.html#cb96-10" tabindex="-1"></a>        N <span class="ot">&lt;-</span> <span class="fu">length</span>(nz)</span>
+<span id="cb96-11"><a href="data-cleaning.html#cb96-11" tabindex="-1"></a>        R <span class="ot">&lt;-</span> <span class="fu">rank</span>(X[nz, j])</span>
+<span id="cb96-12"><a href="data-cleaning.html#cb96-12" tabindex="-1"></a>        CDF <span class="ot">&lt;-</span> R<span class="sc">/</span>N <span class="sc">-</span> <span class="dv">1</span><span class="sc">/</span>(<span class="dv">2</span> <span class="sc">*</span> N)</span>
+<span id="cb96-13"><a href="data-cleaning.html#cb96-13" tabindex="-1"></a>        Xn[nz, j] <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(CDF)</span>
+<span id="cb96-14"><a href="data-cleaning.html#cb96-14" tabindex="-1"></a>    }</span>
+<span id="cb96-15"><a href="data-cleaning.html#cb96-15" tabindex="-1"></a>    <span class="fu">return</span>(Xn)</span>
+<span id="cb96-16"><a href="data-cleaning.html#cb96-16" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+<div id="mtm-again" class="section level4 hasAnchor" number="5.3.4.2">
+<h4><span class="header-section-number">5.3.4.2</span> MTM, again<a href="data-cleaning.html#mtm-again" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Let’s take a look at how this affects the spectrum:</p>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="data-cleaning.html#cb97-1" tabindex="-1"></a>df5 <span class="ot">&lt;-</span> df4 <span class="sc">|&gt;</span> </span>
+<span id="cb97-2"><a href="data-cleaning.html#cb97-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">discharge =</span> <span class="fu">gaussianize</span>(discharge))</span>
+<span id="cb97-3"><a href="data-cleaning.html#cb97-3" tabindex="-1"></a>  </span>
+<span id="cb97-4"><a href="data-cleaning.html#cb97-4" tabindex="-1"></a>  </span>
+<span id="cb97-5"><a href="data-cleaning.html#cb97-5" tabindex="-1"></a>mtm2 <span class="ot">&lt;-</span>   <span class="fu">mtm</span>(df5,<span class="at">output =</span> <span class="dv">1</span>,<span class="at">verbose =</span> F) <span class="sc">|&gt;</span> </span>
+<span id="cb97-6"><a href="data-cleaning.html#cb97-6" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Period =</span> <span class="dv">1</span><span class="sc">/</span>Frequency, <span class="co">#Calculate frequency</span></span>
+<span id="cb97-7"><a href="data-cleaning.html#cb97-7" tabindex="-1"></a>         <span class="at">Power =</span> Power<span class="sc">/</span><span class="dv">1000</span>, <span class="co">#account for differing units in astrochrons MTM</span></span>
+<span id="cb97-8"><a href="data-cleaning.html#cb97-8" tabindex="-1"></a>        <span class="at">AR1_95_power =</span> AR1_95_power<span class="sc">/</span><span class="dv">1000</span>) <span class="sc">|&gt;</span>  <span class="co">#account for differing units in astrochrons MTM</span></span>
+<span id="cb97-9"><a href="data-cleaning.html#cb97-9" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(Period, Power)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-51-1.png" width="672" /></p>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb98-1"><a href="data-cleaning.html#cb98-1" tabindex="-1"></a><span class="fu">ggplot</span>(mtm2, <span class="fu">aes</span>(<span class="at">x=</span>Period, <span class="at">y=</span>Power)) <span class="sc">+</span></span>
+<span id="cb98-2"><a href="data-cleaning.html#cb98-2" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Rio Grande discharge spectrum (mtm)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb98-3"><a href="data-cleaning.html#cb98-3" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb98-4"><a href="data-cleaning.html#cb98-4" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>() <span class="sc">+</span> </span>
+<span id="cb98-5"><a href="data-cleaning.html#cb98-5" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">trans =</span> <span class="fu">reverselog_trans</span>(<span class="dv">10</span>),</span>
+<span id="cb98-6"><a href="data-cleaning.html#cb98-6" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">100</span>,<span class="dv">50</span>,<span class="dv">20</span>,<span class="dv">10</span>,<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="fl">0.5</span>,<span class="fl">0.2</span>),</span>
+<span id="cb98-7"><a href="data-cleaning.html#cb98-7" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">100</span>,<span class="fl">0.2</span>)) <span class="sc">+</span></span>
+<span id="cb98-8"><a href="data-cleaning.html#cb98-8" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-51-2.png" width="672" /></p>
+</div>
+<div id="applying-stl" class="section level4 hasAnchor" number="5.3.4.3">
+<h4><span class="header-section-number">5.3.4.3</span> Applying STL<a href="data-cleaning.html#applying-stl" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>We see that the spectrum is nearly unchanged, but now we can apply STL:</p>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="data-cleaning.html#cb99-1" tabindex="-1"></a>dis <span class="ot">&lt;-</span> <span class="fu">ts</span>(<span class="fu">as.numeric</span>(df5<span class="sc">$</span>discharge), <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">1889</span>, <span class="dv">1</span>), <span class="at">frequency =</span> <span class="dv">12</span>)</span>
+<span id="cb99-2"><a href="data-cleaning.html#cb99-2" tabindex="-1"></a>stl_res <span class="ot">&lt;-</span> <span class="fu">stl</span>(dis, <span class="at">s.window =</span> <span class="st">&quot;periodic&quot;</span>)</span>
+<span id="cb99-3"><a href="data-cleaning.html#cb99-3" tabindex="-1"></a><span class="fu">plot</span>(stl_res)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-52-1.png" width="672" /></p>
+</div>
+<div id="the-trend" class="section level4 hasAnchor" number="5.3.4.4">
+<h4><span class="header-section-number">5.3.4.4</span> The trend<a href="data-cleaning.html#the-trend" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Now let’s apply spectral analysis to the trend component:</p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb100-1"><a href="data-cleaning.html#cb100-1" tabindex="-1"></a>df6 <span class="ot">&lt;-</span> df5 <span class="sc">|&gt;</span> </span>
+<span id="cb100-2"><a href="data-cleaning.html#cb100-2" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">discharge =</span> <span class="fu">as.numeric</span>(stl_res<span class="sc">$</span>time.series[,<span class="dv">2</span>]))</span>
+<span id="cb100-3"><a href="data-cleaning.html#cb100-3" tabindex="-1"></a></span>
+<span id="cb100-4"><a href="data-cleaning.html#cb100-4" tabindex="-1"></a></span>
+<span id="cb100-5"><a href="data-cleaning.html#cb100-5" tabindex="-1"></a>mtm3 <span class="ot">&lt;-</span>   <span class="fu">mtm</span>(df6,<span class="at">output =</span> <span class="dv">1</span>,<span class="at">verbose =</span> F,)  <span class="sc">|&gt;</span> </span>
+<span id="cb100-6"><a href="data-cleaning.html#cb100-6" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Period =</span> <span class="dv">1</span><span class="sc">/</span>Frequency,</span>
+<span id="cb100-7"><a href="data-cleaning.html#cb100-7" tabindex="-1"></a>         <span class="at">Power =</span> Power<span class="sc">/</span><span class="dv">1000</span>, <span class="co">#account for differing units in astrochrons MTM</span></span>
+<span id="cb100-8"><a href="data-cleaning.html#cb100-8" tabindex="-1"></a>         <span class="at">AR1_95_power =</span> AR1_95_power<span class="sc">/</span><span class="dv">1000</span>) <span class="co">#account for differing units in astrochrons MTM</span></span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-53-1.png" width="672" /></p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="data-cleaning.html#cb101-1" tabindex="-1"></a>trendOnlySpectrum <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(mtm3, <span class="fu">aes</span>(<span class="at">x=</span>Period, <span class="at">y=</span>Power)) <span class="sc">+</span></span>
+<span id="cb101-2"><a href="data-cleaning.html#cb101-2" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;Rio Grande discharge trend-only spectrum (mtm)&quot;</span>) <span class="sc">+</span></span>
+<span id="cb101-3"><a href="data-cleaning.html#cb101-3" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb101-4"><a href="data-cleaning.html#cb101-4" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> AR1_95_power),<span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span></span>
+<span id="cb101-5"><a href="data-cleaning.html#cb101-5" tabindex="-1"></a>  <span class="fu">scale_y_log10</span>() <span class="sc">+</span> </span>
+<span id="cb101-6"><a href="data-cleaning.html#cb101-6" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">trans =</span> <span class="fu">reverselog_trans</span>(<span class="dv">10</span>),</span>
+<span id="cb101-7"><a href="data-cleaning.html#cb101-7" tabindex="-1"></a>                     <span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">100</span>,<span class="dv">50</span>,<span class="dv">20</span>,<span class="dv">10</span>,<span class="dv">5</span>,<span class="dv">2</span>,<span class="dv">1</span>,<span class="fl">0.5</span>,<span class="fl">0.2</span>),</span>
+<span id="cb101-8"><a href="data-cleaning.html#cb101-8" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">100</span>,<span class="fl">0.2</span>)) <span class="sc">+</span></span>
+<span id="cb101-9"><a href="data-cleaning.html#cb101-9" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span>
+<span id="cb101-10"><a href="data-cleaning.html#cb101-10" tabindex="-1"></a></span>
+<span id="cb101-11"><a href="data-cleaning.html#cb101-11" tabindex="-1"></a>trendOnlySpectrum</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-53-2.png" width="672" /></p>
+<p>Indeed this removed the annual cycle and its harmonics (for the most part). It’s a fairly aggressive treatment, but we can now compare the significance of the interannual peaks w.r.t to an AR(1) benchmark.</p>
+<p>We see that the broadband peak in the 2-10y range is above the AR(1) spectrum, so these frequencies could be considered significant.</p>
+</div>
+</div>
+<div id="estimation-of-scaling-behavior" class="section level3 hasAnchor" number="5.3.5">
+<h3><span class="header-section-number">5.3.5</span> Estimation of scaling behavior<a href="data-cleaning.html#estimation-of-scaling-behavior" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>In this last example, we fit a single scaling exponent to the timeseries, spanning the entire range of frequencies (periods). Under the hood, all we are doing is fitting a straight line to the spectrum:</p>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb102-1"><a href="data-cleaning.html#cb102-1" tabindex="-1"></a><span class="co"># Log-transform both axes</span></span>
+<span id="cb102-2"><a href="data-cleaning.html#cb102-2" tabindex="-1"></a>toScale <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(mtm3, <span class="fu">between</span>(Period,<span class="fl">0.2</span>,<span class="dv">100</span>))</span>
+<span id="cb102-3"><a href="data-cleaning.html#cb102-3" tabindex="-1"></a>log_period <span class="ot">&lt;-</span> <span class="fu">log10</span>(toScale<span class="sc">$</span>Period)</span>
+<span id="cb102-4"><a href="data-cleaning.html#cb102-4" tabindex="-1"></a>log_spec <span class="ot">&lt;-</span> <span class="fu">log10</span>(toScale<span class="sc">$</span>Power)</span>
+<span id="cb102-5"><a href="data-cleaning.html#cb102-5" tabindex="-1"></a></span>
+<span id="cb102-6"><a href="data-cleaning.html#cb102-6" tabindex="-1"></a><span class="co"># Fit a line</span></span>
+<span id="cb102-7"><a href="data-cleaning.html#cb102-7" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(log_spec <span class="sc">~</span> log_period)</span>
+<span id="cb102-8"><a href="data-cleaning.html#cb102-8" tabindex="-1"></a>toScale<span class="sc">$</span>plotLine <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit)</span>
+<span id="cb102-9"><a href="data-cleaning.html#cb102-9" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb102-10"><a href="data-cleaning.html#cb102-10" tabindex="-1"></a></span>
+<span id="cb102-11"><a href="data-cleaning.html#cb102-11" tabindex="-1"></a>trendOnlySpectrum <span class="sc">+</span> </span>
+<span id="cb102-12"><a href="data-cleaning.html#cb102-12" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> toScale,<span class="fu">aes</span>(<span class="at">x =</span> Period,<span class="at">y =</span> <span class="dv">10</span><span class="sc">^</span>plotLine),<span class="at">color =</span> <span class="st">&quot;blue&quot;</span>,<span class="at">linetype =</span> <span class="dv">3</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-54-1.png" width="672" /></p>
+<p>This results in a fairly steep exponent near 4.52. If we were specifically interested in the scaling exponent (spectral slope) between periods of 2-100y, you would do it like so:</p>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="data-cleaning.html#cb103-1" tabindex="-1"></a><span class="co"># Log-transform both axes</span></span>
+<span id="cb103-2"><a href="data-cleaning.html#cb103-2" tabindex="-1"></a>toScale <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(mtm3, <span class="fu">between</span>(Period,<span class="dv">2</span>,<span class="dv">100</span>))</span>
+<span id="cb103-3"><a href="data-cleaning.html#cb103-3" tabindex="-1"></a>log_period <span class="ot">&lt;-</span> <span class="fu">log10</span>(toScale<span class="sc">$</span>Period)</span>
+<span id="cb103-4"><a href="data-cleaning.html#cb103-4" tabindex="-1"></a>log_spec <span class="ot">&lt;-</span> <span class="fu">log10</span>(toScale<span class="sc">$</span>Power)</span>
+<span id="cb103-5"><a href="data-cleaning.html#cb103-5" tabindex="-1"></a></span>
+<span id="cb103-6"><a href="data-cleaning.html#cb103-6" tabindex="-1"></a><span class="co"># Fit a line</span></span>
+<span id="cb103-7"><a href="data-cleaning.html#cb103-7" tabindex="-1"></a>fitLong <span class="ot">&lt;-</span> <span class="fu">lm</span>(log_spec <span class="sc">~</span> log_period)</span>
+<span id="cb103-8"><a href="data-cleaning.html#cb103-8" tabindex="-1"></a>toScale<span class="sc">$</span>plotLine <span class="ot">&lt;-</span> <span class="fu">predict</span>(fitLong)</span>
+<span id="cb103-9"><a href="data-cleaning.html#cb103-9" tabindex="-1"></a><span class="co"># Plot</span></span>
+<span id="cb103-10"><a href="data-cleaning.html#cb103-10" tabindex="-1"></a></span>
+<span id="cb103-11"><a href="data-cleaning.html#cb103-11" tabindex="-1"></a>trendOnlySpectrum <span class="sc">+</span> </span>
+<span id="cb103-12"><a href="data-cleaning.html#cb103-12" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> toScale,<span class="fu">aes</span>(<span class="at">x =</span> Period,<span class="at">y =</span> <span class="dv">10</span><span class="sc">^</span>plotLine),<span class="at">color =</span> <span class="st">&quot;blue&quot;</span>,<span class="at">linetype =</span> <span class="dv">3</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
+<p>We see that this results in a much flatter line, i.e. a smaller scaling exponent around 0.52.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="data-preview.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="gap-tolerant-spectral-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="assets/gitbook-2.6.7/js/app.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="assets/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+},
+"toolbar": {
+"position": "static"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
