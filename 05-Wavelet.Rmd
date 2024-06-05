@@ -1,0 +1,268 @@
+# Wavelet Transform in R
+
+Wavelet analysis is one of the most misused tools in climate timeseries analysis, partially due to the popularity of [this webpage](https://atoc.colorado.edu/research/wavelets/), which used to feature an interactive plotter. Wavelets are a very broad topic in applied mathematics, which we won’t attempt to summarize here. In the paleoclimate context, the term nearly always refers to the Continuous Wavelet Transform, and 99% of the time this uses the Morlet wavelet, which is a generalization of Fourier bases to endow them with localization in time and scale. Accordingly, this demo focuses on how to obtain wavelet spectra from the iconic EPICA Dome C record by [Jouzel et al. (2007)](https://doi.org/10.1126/science.1141038), and how to establish its coherency with a record of atmospheric CO2.
+
+### Packages
+
+dplyr, ggplot2, tidyr, biwavelet
+
+Let's load these:
+
+```{r, echo = FALSE, message=FALSE, warning=FALSE}
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(biwavelet)
+```
+
+### Data description
+
+ice phase deuterium data ($\delta$D) from Jouzel et al. (2007). $\delta$D is a proxy for the temperature of snow formation above the site, taken to be representative of Antartic temperature over such timescales.
+
+gas phase CO2 measurements from Luthi et al (2008), corrected by Bereiter et al. (2015).
+
+
+## Loading and visualizing the $\delta$D series
+
+We'll also start by formatting Age in kyr.
+
+```{r}
+dDdf <- read.csv("https://github.com/LinkedEarth/Pyleoclim_util/raw/master/pyleoclim/data/edc3deuttemp2007.csv")
+
+dDdf <- dDdf %>%
+  mutate(AgeKy = Age/1000) %>%
+  select(AgeKy, Deuterium, Temperature)
+
+head(dDdf)
+```
+
+Let's see a simple plot
+
+```{r}
+ggplot(data=dDdf, mapping = aes(x=AgeKy, y=Deuterium)) + 
+  geom_line() +
+  ylab("\u03B4D (\u2030)") +
+  xlab("Age_(ky_BP)") +
+  ggtitle("EPICA Dome C Deuterium") +
+  theme_light()
+```
+
+
+## Sampling interval
+
+First, take a look at the distribution of time increments. We'll use the base function `diff()` to extract the sampling intervals.
+
+```{r}
+deltaT <- data.frame("ID" = 1:(length(dDdf$AgeKy)-1),
+                     "interval" = diff(dDdf$AgeKy))
+
+ggplot(data = deltaT, mapping = aes(x=interval)) + geom_histogram()
+```
+
+The data are not evenly spaced, which is a challenge because most timeseries analysis methods (particularly Fourier and wavelet analysis) make the implicit assumption that data are evenly spaced, so applying those tools to unevenly-spaced data will result in methods not behaving as they are supposed to. We therefore interpolate the data at 500y resolution to enable the much faster CWT algorithm of Torrence & Compo (1998) to run. We also standardize because the original data range is rather large, which could cause numerical issues.
+
+## Wavelet Analysis
+
+Lastly, we play with wavelet analysis, which may be used to “unfold” a spectrum and look at its evolution over time. There are several ways to access that functionality in Pyleoclim, but here we use summary_plot, which stacks together the timeseries itself, its scalogram (a plot of the magnitude of the wavelet power), and the power spectral density (PSD) obtained from summing the wavelet coefficients over time.
+
+```{r}
+
+Age.interp <- seq(ceiling(min(dDdf$AgeKy)), floor(max(dDdf$AgeKy)), by=0.5)
+
+df2 <- data.frame("AgeKy" = Age.interp,
+        "Deuterium" = rep(NA, length(Age.interp)))
+
+dDdf2 <- merge.data.frame(dDdf, df2, all = T)
+
+dDdf3 <- dDdf2 %>%
+  mutate(Temp.interp = approx(AgeKy, Temperature, AgeKy)$y) %>%
+  mutate(D.interp = approx(AgeKy, Deuterium, AgeKy)$y) %>%
+  dplyr::filter(AgeKy %in% Age.interp) %>%
+  select(AgeKy, D.interp, Temp.interp) %>%
+  rename(Age = AgeKy)
+
+head(dDdf3)
+
+dDdf4 <- dDdf3 %>%
+  select(-Temp.interp)
+
+dD_wave <- biwavelet::wt(dDdf4, do.sig = F)
+
+par(oma = c(0, 0, 0, 1), mar = c(5, 4, 4, 5) + 0.1)
+plot(dD_wave, plot.cb=TRUE, plot.phase=FALSE)
+
+```
+
+The scalogram reveals how spectral power (technically, wavelet power) changes over time. But which aspects of this are significant? 
+
+### Null hypothesis
+
+There are ways to test this using an AR(1) benchmark. Let's use the conditional-sum-of-squares method to fit the AR1 model. (see ?arima for details)
+
+```{r}
+
+dD_wave <- biwavelet::wt(dDdf4, do.sig = TRUE, arima.method = "CSS")
+
+par(oma = c(0, 0, 0, 1), mar = c(5, 4, 4, 5) + 0.1)
+plot(dD_wave, plot.cb=TRUE, plot.phase=FALSE)
+
+```
+
+The solid lines delineate regions of the scalogram that are significant against an AR(1) benchmark, thus encircling “islands” of notable power. We see that the 100kyr periodicity is particularly pronounced around 300-600 kyr BP, while the 40 and 20kyr periodicities are more pronounced in the later portions (since 400 ky BP). This may be because of the compaction of the ice at depth, which you wouldn’t know from analyzing just this dataset. Paleoclimate timeseries must always be interpreted with those possible artifacts in mind. There are a lot of significant islands at short (<5ky) scales as well, but it is unclear whether this is reflective of large-scale climate variability.
+
+## Temperature vs CO2
+
+Now let us load the CO2 composite from this and other neighboring sites around Antarctica:
+
+```{r}
+co2df <- read.table('ftp://ftp.ncdc.noaa.gov/pub/data/paleo/icecore/antarctica/antarctica2015co2composite.txt', skip = 137, sep = "\t", header = T)
+head(co2df)
+```
+
+We'll again scale the Age column to kyr, and we'll rename the verbose columns
+
+```{r}
+co2df <- co2df %>%
+  mutate(Age = age_gas_calBP/1000) %>%
+  rename(CO2 = co2_ppm) %>%
+  select(Age, CO2)
+
+head(co2df)
+```
+
+Let's have a look
+
+```{r}
+
+ggplot(data = co2df, mapping=aes(x=Age, y=CO2)) + 
+  geom_line() +
+  labs(title = "EPICA Dome C CO2",
+       x="Age (ky BP)",
+       y=expression(paste(CO^2, " (ppm)", sep=""))) +
+  theme_light()
+
+```
+
+## Bringing the datasets together
+
+We see very similar Ice Ages as in the deuterium data and of course a precipitous rise since the Industrial Revolution. To plot the two series side by side, we'll merge them into one data frame
+
+```{r}
+
+dDdfnew <- dDdf %>%
+  rename(Age = AgeKy) %>%
+  select(Age, Deuterium)
+
+co2_dD <- merge.data.frame(co2df, dDdfnew, all = T)
+
+co2_dD_long <- gather(co2_dD, variable, value, -Age)
+co2_dD_long <- na.omit(co2_dD_long)
+
+ggplot(data=co2_dD_long, mapping = aes(x=Age, y=value, color=variable)) + geom_line() +
+theme_light()
+
+```
+
+By default, the ggplot assumes commensurate units, which is not really the case here. Fear not, we can just standardize the series:
+
+```{r}
+
+co2_dD_scaled <- co2_dD %>%
+  mutate(across(-Age, ~ as.numeric(scale(.x)), .names = "{.col}_z")) %>%
+  select(Age, CO2_z, Deuterium_z) %>%
+  rename(CO2 = CO2_z) %>%
+  rename(Deuterium = Deuterium_z) %>%
+  gather(key=variable, value = value, -Age) %>%
+  na.omit()
+
+
+ggplot(data=co2_dD_scaled, mapping = aes(x=Age, y=value, color=variable)) + 
+  geom_line() +
+  labs(title = "EPICA Dome C CO2 and Deuterium",
+       x="Age (ky BP)",
+       y="z-score") +
+  theme_light()
+
+```
+
+We seek to understand potential lead/lag relationships between those two series. Before that, a brief primer: the temperature proxy $\delta$D is measured on the ice, whereas CO2 is measured in the air trapped in the ice. Because bubbles close only progressively as the firn gets compacted, the air can be younger than the surrouding ice by several hundred years. The ice core community has worked diligently on this for decades and have made very clever adjustments to correct for this effect, but that is to be kept in mind when comparing those two data streams.
+
+### Standardization
+
+With that in mind, let us interpolate this new record and merge the two.
+
+```{r}
+
+CO2.Age.interp <- seq(ceiling(min(co2df$Age)), floor(max(co2df$Age)), by=0.5)
+
+CO2.interp.df <- data.frame("Age" = CO2.Age.interp,
+                  "CO2" = rep(NA, length(CO2.Age.interp)))
+
+co2df2 <- merge.data.frame(co2df, CO2.interp.df, all = T)
+
+head(co2df2[is.na(co2df2$CO2),])
+
+co2df3 <- co2df2 %>%
+  mutate(CO2.interp = approx(Age, CO2, Age)$y) %>%
+  dplyr::filter(Age %in% CO2.Age.interp) %>%
+  select(Age, CO2.interp)
+  
+interp.CO2.dD <- merge(co2df3, dDdf4, all=T)
+
+head(interp.CO2.dD)
+
+```
+
+
+### Coherency
+
+Now we can apply wavelet transform coherency to identify phase relationships between the two series at various scales:
+
+```{r}
+
+# Wavelet coherence; nrands should be large (>= 1000), using 100 for speed
+wtc1 <- wtc(d1=co2df3[1:(dim(co2df3)[1]-10),], d2=dDdf4,  nrands=100, quiet = TRUE)
+
+# Plot wavelet coherence and phase difference (arrows)
+# Make room to the right for the color bar
+par(oma=c(0, 0, 0, 1), mar=c(5, 4, 4, 5) + 0.1)
+plot(wtc1, plot.cb=TRUE,plot.phase = TRUE)
+
+```
+
+This plot shows two things
+
+the wavelet transform coherency (WTC), which may be thought of as a (squared) correlation coefficient in time-scale space: 0 if the series do not covary, 1 if they vary in perfect unison at that time and scale.
+
+the phase angle between the two series, using a trigonometric convention (right = 0, top = 90 degrees, left = 180 degrees, bottom = -90 or + 270 degrees).
+
+This means that on orbital timescales, the two series are essentially in phase ; there is no consistent lead or lag between the two series. This is remarkable given the dating challenges mentioned earlier, and is widely interpreted to mean that on such timescales, atmospheric CO2 is a part of a positive feedback loop amplifying orbitally-triggered changes in temperature. However, the variance of this angle is fairly high, and by this test it does not register as a very consistent signal. Lastly, note that in the anthropogenic era, atmospheric CO2 is of course a forcing (the largest climate forcing, currently), acting on much, much faster timescales for which the climate system is still catching up. You would not know it from this analysis, but it’s important to state out loud, given that climate deniers have an annoying tendency to cherry-pick the paleoclimate record in support of their feeble arguments.
+
+### Common power
+
+Another consideration is that coherency is like the correlation coefficient in wavelet space: it tells you how similar two series are for a given time and scale, yet it says nothing about what fraction of the total variability is shared. This is better measured by the cross-wavelet transform (XWT), which highlights areas of high common power. Both of those, along with the original series, can be visualized with one swift function call:
+
+```{r}
+
+xwt1 <- xwt(d1=co2df3[1:(dim(co2df3)[1]-10),], d2=dDdf4)
+
+# Plot cross-wavelet and phase difference (arrows)
+# Make room to the right for the color bar
+par(oma=c(0, 0, 0, 1), mar=c(5, 4, 4, 5) + 0.1)
+plot(xwt1, plot.cb=TRUE,plot.phase = TRUE)
+
+```
+
+Here we see that the orbital bands are the only ones to show up consistently throughout the record, but precession and obliquity fade before 200 ky BP in their common power, and the XWT band near 120 ka drifts to 80ka back in time. This means that, out of the large swathes of WTC one would consider “coherent”, only those areas highlighted in XWT in green-yellow are likely important. That’s where we stop the banter, though: when you are getting down to that level, you had better be a glaciologist or talk to one about what is going on in those datasets.
+
+
+## Takeways
+
+* evenly-spaced data are handled with the CWT algorithm of Torrence & Compo (1998), which is very fast; unevenly-spaced data are handled through the WWZ algorithm of Foster (1996), which is slow. The temptation to interpolate is strong, but it has serious downsides (INTERPOLATION = MAKING UP DATA!). WWZ should be preferred, though CWT+interpolation can be used at exploratory stages.
+
+* Wavelet Transform Coherency may be thought of as a (squared) correlation coefficient in time-scale space: 0 if the series do not covary, 1 if they vary in perfect unison at that time and scale.
+
+* Properly interpreting the results of wavelet and wavelet coherence analyses requires knowing something about the methods.
+
+
+

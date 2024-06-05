@@ -1,0 +1,80 @@
+# Spectral Analysis in R
+
+## Data Description
+
+This tutorial makes use of the following dataset, stored in CSV format:
+
+Lisiecki, L. E., and Raymo, M. E. (2005), A Pliocene-Pleistocene stack of 57 globally distributed benthic δ18O records, Paleoceanography, 20, PA1003, doi:10.1029/2004PA001071.
+
+## Demonstration
+
+Let’s import the necessary packages:
+
+```{r}
+library(tidyverse)
+library(geoChronR)
+```
+
+Let’s first import data and plot it so that up means “warm”:
+
+```{r}
+
+#Import data
+lr04 <- read.csv("https://raw.githubusercontent.com/LinkedEarth/RLeapFROGS/binder/static/module3/lr04.csv")
+
+#Initial viz
+ggplot(data = lr04, mapping = aes(x=Year,y=d18O))+geom_line() + scale_y_reverse() +
+  labs(title = "57 globally distributed benthic δ18O records, Lisiecki et al., 2005",
+       x = "Year (ky BP)",
+       y = "\u03B418O (\u2030)") +
+  theme_light()
+
+```
+
+Let’s work with the first 3 million years (3000 kyr) of the record for illustrative purposes:
+
+```{r pressure, echo=FALSE}
+#Trim data
+lr04_trimmed <- lr04 %>%
+  dplyr::filter(Year < 3000)
+
+#Trimmed viz
+ggplot(data = lr04_trimmed, mapping = aes(x=Year,y=d18O))+geom_line() + scale_y_reverse() +
+  labs(title = "57 globally distributed benthic δ18O records, Lisiecki et al., 2005",
+       x = "Year (ky BP)",
+       y = "\u03B418O (\u2030)") +
+  theme_light()
+
+```
+
+## Spectral methods
+
+Here's a quick overview of the five spectral analysis methods we'll cover:
+
+**Basic Periodogram**, which uses a Fourier transform. The method has various windowing available to reduce variance.
+
+**Welch’s Periodogram**, a variant of the basic periodogram, which uses Welch’s method of overlapping segments. The periodogram of the full timeseries is the average of the segment periodograms.
+
+**Multi-Taper Method (MTM)**, which attempts to reduce the variance of spectral estimates by using a small set of tapers rather than the unique data taper or spectral window
+
+**Lomb-Scargle Periodogram**, an inverse approach designed for unevenly-spaced datasets. Several windows are available and Welch’s segmentation can also be used with this method.
+
+**Weighted Wavelet Z-transform**, a wavelet-based method also made for unevenly-spaced datasets.
+
+Let’s have a look at the various methods. Since the first three methods require evenly-spaced data, we will be using a simple linear interpolation. The effect of pre-processing on the periodogram is discussed further in this notebook.
+
+
+```{r}
+#Extend the 'Year' column to be continuous and annual over the trimmed interval
+Year_interp <- seq(ceiling(min(lr04_trimmed$Year)), floor(max(lr04_trimmed$Year)), by = 1)
+
+#Use a linear fit to interpolate the d18O series
+d18O_interp <- approx(lr04_trimmed$Year, lr04_trimmed$d18O, xout = Year_interp, f = 0.5)$y
+
+#Put these new vectors into a data frame
+lr04_interp <- data.frame(Year=Year_interp,
+                          d18O=d18O_interp)
+
+#Take a look at the first few observations of the interpolated series
+head(lr04_interp)
+```

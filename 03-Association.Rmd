@@ -1,0 +1,218 @@
+# Association: Correlation and Significance in R
+
+
+## Measures of association: NAO vs SOI
+
+In this notebook we explore the relationship between two well-known climate indices, the Southern Oscillation Index (SOI) and the North Atlantic Oscillation (NAO) index. The NAO and SOI index have been alleged to show some relationship, albeit a subtle one, in some seasons/epochs. Specifically, we will explore:
+
+* effects of trends
+* effects of autocorrelation
+* various measures of association
+* various methods of establishing the significance of a relationship
+
+### R packages
+
+* We will use `tidyverse` for data formating/manipulation as well as for plotting
+* We will also make use of `reshape2` for data formatting
+* `astrochron` will provide a test of correlation significance
+
+```{r}
+
+library(reshape2)
+library(tidyverse)
+library(astrochron)
+```
+
+
+### Data Wrangling
+
+* The NAO data are from NCEP
+* The SOI data ship with Pyleoclim, which houses a few datasets that make it easy to experiment with real-world geoscientific timeseries. We'll grab the data directly from the github page.
+
+
+```{r}
+#Load SOI
+SOI <- read.table("https://github.com/LinkedEarth/Pyleoclim_util/raw/master/pyleoclim/data/soi_data.csv", sep = ",", header = TRUE, skip = 1)
+head(SOI)
+
+#Load NAO
+NAO <- read.table('https://www.cpc.ncep.noaa.gov/products/precip/CWlink/pna/norm.nao.monthly.b5001.current.ascii.table',header = TRUE, fill=TRUE, row.names = NULL)
+head(NAO)
+names(NAO)[1] <- "Year"
+```
+
+Note the latter arguments to `read.table()`. `fill=TRUE` adds `NA` values where data is missing at the end of the file while `row.names=NULL` employs the row names of the file as the first column of the data.frame.
+
+### Format and plot the NAO data
+
+The `melt()` function from `reshape2` is handy for reorganizing data from wide to long format. In this case we have a 13-column data.frame with a Year column and a column for each month. `melt()` reformats this data to 3 columns: Year, month, and value.
+
+Next we use `lubridate` to convert the Year+month to a datetime object. The data are provided in monthly averages, so we assign the values to the 15th of each month.We utilize `dplyr` to format the data for plotting.
+
+```{r echo=FALSE}
+NAO1 <- melt(data=NAO, id.vars='Year')
+NAO <- NAO1 %>%
+  mutate(datetime = make_datetime(as.integer(NAO1$Year), unlist(lapply(NAO1$variable, function(x) which(x==month.abb))), 15)) %>%
+  dplyr::select(datetime, value) %>%
+  arrange(datetime)
+head(NAO)
+```
+
+Now we use ggplot to look at the timeseries
+
+```{r}
+ggplot(NAO, aes(x=datetime, y=value)) +
+  geom_line() +
+  labs(title = "North Atlantic Oscillation",
+       y="Index",
+       x="Year") +
+  theme_minimal()
+```
+
+
+### Merge the SOI data into the NAO data.frame
+
+Again we use `lubridate` to format the datetime portion.
+
+Next, we create a new data.frame with evenly space time using `seq`. Our final data.frame will merge the 3 unique datetime series from NAO, SOI, and the evenly spaced series into a single column.
+
+Let's take a look at the top and bottom of the new data.frame
+
+```{r}
+SOI <- SOI %>%
+  mutate(datetime = as.Date(format(date_decimal(Year), "%Y-%m-%d"))) %>%
+  rename(SOI = Value) %>%
+  dplyr::select(datetime, SOI)
+head(SOI)
+
+newDateDF <- data.frame(datetime = as.Date(round(seq(as.numeric(min(SOI$datetime)),
+                                                     as.numeric(max(SOI$datetime)), 
+                                                     length.out=69*12),5)))
+
+SOInewDate <- merge.data.frame(SOI, newDateDF, all = T)
+
+dfAll <- merge.data.frame(NAO, SOInewDate, all = T)
+
+#first 20
+head(dfAll,n = 20)
+
+#last 20
+tail(dfAll,n = 20)
+```
+
+### Interpolation
+
+Now we will use the evenly space datetime to interpolate NAO and SOI:
+
+* we restrict our time interval to that with data from both sources
+* we perform linear interpolation of each index
+* we extract the data for only the interpolated values, creating evenly spaced series
+
+
+```{r}
+dfAll <- dfAll %>%
+  slice(13:2505) %>%
+  mutate(NAO = approx(datetime, value, datetime)$y) %>%
+  mutate(SOI = approx(datetime, SOI, datetime)$y) %>%
+  select(-value) %>%
+  slice(which(datetime %in% newDateDF$datetime)) %>%
+  drop_na()
+head(dfAll)
+
+allLong <- melt(dfAll,id.vars = "datetime")
+head(allLong)
+```
+
+Now we can convert to a long format for plotting
+
+```{r}
+allLong <- melt(dfAll,id.vars = "datetime")
+head(allLong)
+
+ggplot(allLong, aes(x=datetime, y=value, group=variable)) +
+  geom_line() +
+  facet_wrap(~variable, ncol=1) +
+  labs(title = "NAO vs SOI (Interpolated)",
+       y="Index",
+       x="Year") +
+  theme_minimal()
+```
+
+### Correlation
+
+Both calls use lapply to repeat a correlation test 3 times using different methods: "pearson", "spearman", and "kendall"
+
+The second call employs a Monte Carlo simulation from the `astrochron` package. The method implemented is described in Ebisuzaki (1997).
+
+```{r}
+lapply(c("pearson", "spearman", "kendall"), function(x) cor.test(dfAll$NAO, dfAll$SOI, method = x))
+
+#Methods: 1-pearson, 2-spearman, 3-kendall
+lapply(c(1,2,3), function(x) surrogateCor(dfAll$NAO,dfAll$SOI,nsim = 10000,cormethod = x, genplot = F, verbose = F))
+
+```
+
+All the methods tested show similarly weak evidence for significant correlations.
+
+## Spurious Correlations
+
+In the geosciences, there are two process that might artificially increase correlations between otherwise unrelated variables
+
+### Smoothing
+
+* common trends
+* Smoothing-enhanced correlations
+
+```{r}
+dfAll$lowpassNAO <- smooth.spline(x = dfAll$datetime, y=dfAll$NAO, spar = 0.2)$y
+dfAll$lowpassSOI <- smooth.spline(x = dfAll$datetime, y=dfAll$SOI, spar = 0.2)$y
+```
+
+Let's reformat and plot the smoothed series
+
+```{r}
+allLong2 <- melt(dfAll,id.vars = "datetime")
+allLong2 <- allLong2 %>%
+  mutate(group = ifelse(grepl("SOI", variable), "SOI", "NAO")) %>%
+  mutate(type = ifelse(grepl("lowpass", variable), "filtered", "original"))
+head(allLong2)
+
+ggplot(allLong2, aes(x=datetime, y=value, group=group, color=type)) +
+  geom_line() +
+  facet_wrap(~group, ncol=1) +
+  labs(title = "NAO vs SOI",
+       y="Index",
+       x="Year") +
+  theme_minimal()
+```
+
+
+Perhaps the smoothed series will show the cryptic relationship
+
+```{r}
+lapply(c("pearson", "spearman", "kendall"), 
+       function(x) cor.test(dfAll$lowpassNAO, dfAll$lowpassSOI, method = x))
+lapply(c(1,2,3), 
+       function(x) surrogateCor(dfAll$lowpassNAO,
+                                dfAll$lowpassSOI,
+                                nsim = 10000,
+                                cormethod = x, 
+                                genplot = F, 
+                                verbose = F)
+       )
+
+```
+
+Okay, so the simple Pearson correlation comes through significant (p < .05), but this assumes that each value is independent, which we know is not true because we smoothed the series.
+
+The Ebisuzaki test is very useful here, and we see that the corresponding Pearson p-value does not approach .05.
+
+Take-home message: common trends can easily create the appearance of correlations (see Tyler Vigen's excellent [website](https://www.tylervigen.com/spurious-correlations)) and really complicate assessments of significance. If the trend is not relevant to your question, we recommend removing it prior to computing correlations, e.g. using `lm()`.
+
+## Takeways
+
+Not only is correlation not indicative of causation, but spurious correlations abound, often driven by smoothing, trends, or short sample sizes. Some null hypotheses are more stringent than others, but the simple methods like `cor.test()` assume independent samples, which is hardly ever verified in the geosciences. Make sure you carefully match your null hypothesis to your data/problem.
+
+## References
+
+Ebisuzaki, W. (1997). A method to estimate the statistical significance of a correlation when the data are serially correlated. Journal of climate, 10(9), 2147-2153.

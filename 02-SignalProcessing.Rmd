@@ -1,0 +1,263 @@
+# Signal Processing in R
+
+<img src='http://linked.earth/FROGS/images/Pyrateslogo.jpg' width="400">
+
+Often timeseries have to be treated prior to analysis. This is a delicate game: altering data is a cardinal sin, so one needs to be very aware of one's doing prior to engaging in this activity. Here we show a few examples where such treatment may be warranted.
+
+Goals
+
+* Become familiar with various filtering methods and some of their arguments
+* Become familiar with various detrending methods and some of their arguments 
+
+## Packages
+
+Let's first load necessary packages:
+
+```{r, echo=TRUE, message=FALSE, warning=FALSE}
+library(signal)
+library(zoo)
+library(trend)
+library(Mcomp)
+library(Rssa)
+library(tidyverse)
+```
+
+## Filtering
+
+The goal of filtering is to enhance part of a signal, or suppress one or more parts. We'll use R's `signal` package, which provides a variety of filters.
+
+Let's use data from a Hawai'i seismogram and isolate certain oscillations.
+
+```{r, echo=TRUE}
+df <- read.table('https://github.com/LinkedEarth/PyRATES_practicums_py/raw/main/jbook/data/hawaii.e.dat', col.names = c('time', 'ground_motion'))
+df$time <- df$time / 1000
+df$ground_motion <- df$ground_motion * 1000
+
+ggplot(df, aes(x = time, y = ground_motion)) +
+  geom_line() +
+  labs(x = 'time [s]', y = 'amplitude (m)', title = 'Hawaii.e')
+```
+
+### Filter Types
+
+First, let's check if the data is evenly spaced:
+
+```{r, echo=TRUE,message=FALSE,warning=FALSE}
+diff_time <- data.frame(resolution= diff(df$time),
+                        time = rowMeans(cbind(df$time[-1],df$time[-length(df$time)])))
+
+
+#make a histogram of the options
+ggplot(diff_time) + 
+  geom_line(aes(x = time,y = resolution)) + 
+  labs(x = 'time [s]', y = 'time difference [s]', title = 'Resolution')
+```
+
+It appears that the resolution jumps at around the 100th second. Let's interpolate to get an even resolution of 1ms:
+
+```{r, echo=TRUE,message=FALSE,warning=FALSE}
+ts <- zoo(df$ground_motion, df$time)
+ts_interp <- na.approx(ts, xout = seq(min(df$time), max(df$time), by = 0.001))
+
+ggplot() +
+  geom_line(data = df, aes(x = time, y = ground_motion, color = 'original'), alpha = 0.4) +
+  geom_line(data = data.frame(time = index(ts_interp), ground_motion = coredata(ts_interp)), 
+           aes(x = time, y = ground_motion, color = 'interpolated'), alpha = 0.4) +
+  labs(x = 'time [s]', y = 'amplitude (m)', color = '')
+```
+
+The two series are indistinguishable, so we are safe to proceed.
+
+#### Lowpass filter
+Let's use a Butterworth filter with a `cutoff_scale` of 2 to remove all frequencies with a period of less than 2s. This is known as a **low-pass filter**.
+
+```{r, echo=TRUE,message=FALSE,warning=FALSE}
+fs <- 1000  # 1 kHz sampling rate
+f_nyq <- fs / 2  # Nyquist frequency
+f_cutoff <- 1/2  # 2s period
+
+# Create Butterworth filter
+butter_low <- butter(2, f_cutoff / f_nyq, type = "low")
+
+# Apply filter
+lp <- filtfilt(butter_low, coredata(ts_interp))
+
+ggplot() +
+  geom_line(data = data.frame(time = index(ts_interp), ground_motion = coredata(ts_interp)), 
+           aes(x = time, y = ground_motion, color = 'original')) +
+  geom_line(data = data.frame(time = index(ts_interp), ground_motion = lp), 
+           aes(x = time, y = ground_motion, color = 'low-pass')) +
+  labs(x = 'time [s]', y = 'amplitude (m)', color = '')
+```
+
+#### High-pass filter
+The opposite operation is a **high-pass** filter, which keeps only frequencies higher than a given cutoff. To generate a high-pass filter, you can simply subtract the low-pass filtered version from the original:
+
+```{r, echo=TRUE,message=FALSE,warning=FALSE}
+hp <- coredata(ts_interp) - lp
+
+ggplot() +
+  geom_line(data = data.frame(time = index(ts_interp), ground_motion = coredata(ts_interp)), 
+           aes(x = time, y = ground_motion, color = 'original')) +
+  geom_line(data = data.frame(time = index(ts_interp), ground_motion = hp), 
+           aes(x = time, y = ground_motion, color = 'high-pass'), alpha = 0.8) +
+  labs(x = 'time [s]', y = 'amplitude (m)', color = '')
+```
+
+#### Band-pass filter
+If you want to isolate variability in a band of frequencies (say 1-2s), you can create a band-pass filter:
+
+```{r, echo=TRUE,message=FALSE,warning=FALSE}
+f_low <- 1/2  # 2s period
+f_high <- 1/1  # 1s period
+
+butter_band <- butter(2, c(f_low, f_high) / f_nyq, type = "pass")
+bp <- filtfilt(butter_band, coredata(ts_interp))
+
+ggplot() +
+  geom_line(data = data.frame(time = index(ts_interp), ground_motion = coredata(ts_interp)), 
+           aes(x = time, y = ground_motion, color = 'original')) +
+  geom_line(data = data.frame(time = index(ts_interp), ground_motion = bp), 
+           aes(x = time, y = ground_motion, color = '1-2s band-pass'), alpha = 0.8) +
+  labs(x = 'time [s]', y = 'amplitude (m)', color = '')
+```
+
+#### Notch filter
+Conversely, if you wanted to remove all variability between 1-2s (a **notch** in frequency space), you would subtract the bandpass-filtered version.
+
+```{r, echo=TRUE,message=FALSE,warning=FALSE}
+notch <- coredata(ts_interp) - bp
+
+ggplot() +
+  geom_line(data = data.frame(time = index(ts_interp), ground_motion = coredata(ts_interp)), 
+           aes(x = time, y = ground_motion, color = 'original')) +
+  geom_line(data = data.frame(time = index(ts_interp), ground_motion = notch), 
+           aes(x = time, y = ground_motion, color = '1-2s notch'), alpha = 0.8) +
+  labs(x = 'time [s]', y = 'amplitude (m)', color = '')
+```
+
+## Detrending
+
+Now let's move on to detrending. We'll use the HadCRUT5 global mean surface temperature dataset.
+
+```{r, echo=TRUE,message=FALSE,warning=FALSE}
+
+gmst <- read_csv("https://github.com/LinkedEarth/Pyleoclim_util/raw/master/pyleoclim/data/HadCRUT.5.0.1.0.analysis.summary_series.global.annual.csv") %>% 
+  select(time = Time,temp = `Anomaly (deg C)`)
+
+ggplot(gmst, aes(x = time, y = temp)) +
+  geom_line() +
+  labs(x = 'Time [year C.E.]', y = 'GMST [°C]')
+```
+
+### Detrending methods in R
+
+Let's apply 3 methods: linear detrending, Empirical Mode Decomposition (EMD), and Savitzky-Golay filter:
+
+```{r, echo=TRUE,message=FALSE,warning=FALSE}
+# Linear detrending
+gmstLinear <- gmst
+gmstLinear$detrended <- pracma::detrend(gmstLinear$temp)
+gmstLinear$trend <- gmstLinear$temp - gmstLinear$detrended
+gmstLinear$method <- "Linear"
+
+
+# EMD using the EMD package
+library(EMD)
+emd_result <- emd(gmst$temp, boundary='symmetric', max.imf=4)
+
+gmstEmd <- gmst
+gmstEmd$detrended <- gmst$temp-emd_result$residue
+gmstEmd$trend <- gmstEmd$temp - gmstEmd$detrended
+gmstEmd$method <- "EMD"
+
+# Savitzky-Golay filter
+gmstSg <- gmst
+gmstSg$trend <- signal::sgolayfilt(gmst$temp, p = 3, n = 51)
+gmstSg$detrended <- gmst$temp - gmstSg$trend
+gmstSg$method <- "Savitzky-Golay"
+
+#prepare the data for plotting
+gmstToPlot <- dplyr::bind_rows(gmstLinear,gmstEmd,gmstSg) %>% 
+  tidyr::pivot_longer(cols = -c(time,method),values_to = "Temperature",names_to = "options") %>% 
+  mutate(method = factor(method,levels = c("Linear","EMD","Savitzky-Golay")))
+
+# Plot it!
+ggplot(gmstToPlot) + 
+  geom_line(aes(x = time, y = Temperature, color = options)) +
+  facet_grid(method ~ .)
+
+```
+
+The linear trend here does a decent job at capturing first-order behavior. The EMD (approximated by SSA) and Savitzky-Golay methods also capture the nonlinear trend.
+
+### SSA detrending
+
+Another option to isolate a non-linear trend is Singular Spectrum Analysis (SSA). If there is a prominent trend, it is often the first mode coming out of that analysis.
+
+```{r, echo=TRUE,message=FALSE,warning=FALSE}
+gmst_ssa <- ssa(gmst$temp, L = 10)
+plot(gmst_ssa)
+```
+
+The first mode accounts for most fraction of the variance. Let's compute this:
+
+```{r, echo=TRUE}
+paste0(round(gmst_ssa$sigma[1] / sum(gmst_ssa$sigma),3) * 100,"%")
+```
+
+Let's use this mode as the trend:
+
+```{r, echo=TRUE,message=FALSE,warning=FALSE}
+ssa_trend <- reconstruct(gmst_ssa, groups = list(trend = 1))
+gmst_ssa_dtd <- data.frame(time = gmst$time, temp = gmst$temp - ssa_trend$trend)
+
+ggplot(gmst, aes(x = time, y = temp)) +
+  geom_line() +
+  geom_line(aes(y = ssa_trend$trend, color = "SSA trend"), alpha = 0.8) +
+  geom_line(aes(y = gmst_ssa_dtd$temp, color = "SSA detrended"), alpha = 0.8) +
+  labs(x = 'Time [year C.E.]', y = 'GMST [°C]', color = '')
+```
+
+This pre-processing allows us to better isolate oscillatory behavior. To see this, let's look at the spectra of the original and detrended versions:
+
+```{r, echo=TRUE,message=FALSE,warning=FALSE}
+library(astrochron)
+
+mtmOrig <- astrochron::mtm(dat = gmst,output = 1,verbose = F,genplot = F) %>% 
+  select(Frequency,Power) %>% 
+  mutate(data = "Original",
+         period = (1/Frequency))
+
+
+
+mtmSSA <- astrochron::mtm(dat = gmst_ssa_dtd,output = 1,verbose = F,genplot = F) %>% 
+  select(Frequency,Power) %>% 
+  mutate(data = "SSA-detrended",
+         period = (1/Frequency))
+
+library(scales)
+reverselog_trans <- function(base = exp(1)) {
+    trans <- function(x) -log(x, base)
+    inv <- function(x) base^(-x)
+    trans_new(paste0("reverselog-", format(base)), trans, inv, 
+              log_breaks(base = base), 
+              domain = c(1e-100, Inf))
+}
+
+bind_rows(mtmOrig,mtmSSA) %>% 
+  ggplot() +
+  geom_line(aes(x = period,y = Power)) + 
+  scale_x_continuous(trans = reverselog_trans(10),breaks = c(100,50,20,10,5,2),limits = c(100,2)) + 
+  scale_y_log10() + 
+  facet_grid(data ~ .)
+ 
+
+```
+
+We see that detrending has removed much of the variability at scales longer than ~30y, allowing us to hone in on various peaks near 3.5, 6, 10, and 20 years. To see if those are significant, however, you would need to apply a significance test, which we would cover in another tutorial.
+
+## Takeways
+
+- R provides powerful packages for signal processing, including filtering and detrending.
+- **Interactive visualization is a key part of the process**, to make sure that the signal processing is achieving what it is supposed to do.

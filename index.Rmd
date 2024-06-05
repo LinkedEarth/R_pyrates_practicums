@@ -1,0 +1,12 @@
+#  
+
+---
+title: "Time Series Analysis in R"
+author: "David Edge and Nick McKay"
+date: "June 5, 2024"
+site: bookdown::bookdown_site
+documentclass: book
+description: "This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the [PyRATES Timeseries Practicums in python by Julien Emile-Geay](https://linked.earth/PyRATES_practicums_py/intro.html)"
+---
+
+This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the [PyRATES Timeseries Practicums in python by Julien Emile-Geay](https://linked.earth/PyRATES_practicums_py/intro.html)

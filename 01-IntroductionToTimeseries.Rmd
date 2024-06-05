@@ -1,0 +1,254 @@
+# Introduction
+
+Content: Data Wrangling, Trend estimation
+
+adapted from the Python tutorial by: Julien Emile-Geay, USC Earth Sciences (link)
+
+## Background
+
+Recall that a timeseries `X(t)` is an ordered data sequence, either continuous or discrete. On a computer, everything is discretized, so regardless of the original process, what we have is a discrete sequence.
+
+In timeseries analysis, it is common to consider a timeseries as the sum of one or more oscillatory, stationary components (or **signals**), a **trend**, and **noise**`. The oscillatory components are often the reason we're doing the analysis in the first place - it will tell us how big they are and what their frequency is.
+
+Whether or not those oscillatory components are present, a **trend** is often present as well.
+
+In today's world the word "trend" is so overused that it has lost all meaning. Here, it will refer to a **slowly-evolving, non-stationary component that dominates the behavior of the timeseries**. For instance: a linear increase or decrease; a sinusoidal component so slow that its period is not resolved by the dataset; a nonlinear trend like the exponential increase of the Keeling curve (see below).
+
+As for **noise**, it clearly involves a subjective definition. Under this name we usually subsume any variable component in which we are not interested. Some of this noise may be composed of actual measurement errors (what you would think of as noise, strictly speaking), but some of it could be what another analyst would call **signal**. If you study climate, daily fluctuations are noise; if you study weather, they are your signal. One commonly says that *one analyst's signal is another analyst's noise*. This noise is often modeled as a Normal random process with zero mean (aka Gaussian white noise).
+
+To see these concepts in action, let us consider the iconic Mauna Loa Observatory CO2 measurements.
+
+## Load packages
+
+```{r}
+library(dplyr)
+library(ggplot2)
+```
+
+## Data Wrangling
+
+We can pull the data directly from the Scripps Institute website
+
+```{r}
+df1 <- read.csv("https://scrippsco2.ucsd.edu/assets/data/atmospheric/stations/in_situ_co2/monthly/monthly_in_situ_co2_mlo.csv")
+
+head(df1)
+```
+
+Ooo, that doesn't look right. This file has a big header, and doesn't quite follow a normal spreadsheet format for the column headers. Let's skip the header and column names. We can add them back in after loading.
+
+```{r}
+df1 <- read.csv("https://scrippsco2.ucsd.edu/assets/data/atmospheric/stations/in_situ_co2/monthly/monthly_in_situ_co2_mlo.csv",skip=64,header = F)
+
+
+head(df1)
+```
+
+Okay, not the data looks right. Lets add the column names.
+
+```{r}
+names(df1) <- c('Yr','Mn','XLDate','Date','CO2','seasonally adjusted','fit','seasonally adjusted fit','CO2 filled','seasonally adjusted filled','Sta')
+head(df1)
+```
+
+The missing value default here is -99.99, let's change that to `NA`, R's standard.
+
+```{r}
+df1 <- df1 %>% mutate(across(everything(), ~replace(., . ==  -99.99 , NA)))
+```
+
+Okay, we're ready for an initial plot
+
+```{r}
+ggplot(data=df1, mapping=aes(x=Date, y=CO2)) + 
+  geom_line() +
+  labs(title = "Mauna Loa Dataset (latest)",
+       y="CO2 (ppm)")
+```
+
+Great, that looks right.
+
+## Trend Extraction
+
+### Linear trend model
+
+The most obvious thing to do is to see if a linear trend might fit the data. In this case it's likely to be a poor approximation, as the previous plot should make obvious. However, it will be an instructive benchmark for the finer modeling choices we'll subsequently make.
+
+We'll use the built-in function `lm()` What is happening under the hood is a simple linear regression, which you don't need to know much about at this stage. Specifically, we will use the OLS method. which relates a predictand y to a matrix of predictors X, called the design matrix.
+
+First, we'll omit the rows with `NA` values
+
+```{r}
+df1 <- na.omit(df1)
+
+CO2model <- lm(CO2~Date, data = df1)
+summary(CO2model)
+```
+
+For more information about what each term means, see this [post](http://connor-johnson.com/2014/02/18/linear-regression-with-python/)
+
+What information can you glean from this summary? What features would you check for in a visual inspection?
+
+Let us look at the plot, shall we? How well does the time variable predict CO2?
+
+Next, we can use the `predict()` method to predict CO2 given the design matrix (1, t)
+
+```{r}
+df1 <-df1 %>% 
+  mutate(linear_model = CO2model$fitted.values)
+
+ggplot(data=df1, mapping=aes(x=Date, y=CO2)) + 
+  geom_line() +
+  geom_line(data=df1, mapping=aes(x=Date, y=linear_model), inherit.aes = F, color="red") +
+  labs(title = "Mauna Loa Dataset (linear model)",
+       y="CO2 (ppm)")
+```
+
+We see that the line captures the first order behavior of the series, but that leaves a lot to be desired. To zoom in, we can look at the residuals (original values - fitted values) as a function of fitted values:
+
+```{r}
+df1 <-df1 %>% 
+  mutate(linear_model_resids = CO2 - CO2model$fitted.values)
+
+ggplot(data=df1, mapping=aes(x=Date, y=linear_model_resids)) + 
+  geom_line() +
+  labs(title = "Linear Model Residuals Fit",
+       y="Residuals")
+```
+
+To be quantitative, we can look at the [Root Mean Squared Error](https://en.wikipedia.org/wiki/Root_mean_square_deviation) of these residuals:
+
+```{r}
+sqrt(mean((df1$CO2 - CO2model$fitted.values)^2))
+```
+
+This means that this linear trend is, on average, about 5ppm away from the measurements. Can we do better?
+
+### Quadratic fit
+
+The second thing one might do is to add a quadratic term.
+
+```{r}
+CO2_quadratic_model <- lm(CO2 ~ Date + I(Date^2), data = df1)
+
+summary(CO2_quadratic_model)
+
+df1 <-df1 %>% 
+  mutate(quadratic_model = CO2_quadratic_model$fitted.values)
+
+ggplot(data=df1, mapping=aes(x=Date, y=CO2)) + 
+  geom_line() +
+  geom_line(data=df1, mapping=aes(x=Date, y=quadratic_model), inherit.aes = F, color="red") +
+  labs(title = "Mauna Loa Dataset (quadratic model)",
+       y="CO2 (ppm)")
+```
+
+Let's see the residuals and the RMSE for this model
+
+```{r}
+sqrt(mean((df1$CO2 - CO2_quadratic_model$fitted.values)^2))
+
+df1 <-df1 %>% 
+  mutate(quadratic_model_resids = CO2 - CO2_quadratic_model$fitted.values)
+
+ggplot(data=df1, mapping=aes(x=Date, y=quadratic_model_resids)) + 
+  geom_line() +
+  labs(title = "Quadratic Model Residuals Fit",
+       y="Residuals")
+```
+
+Does this improve the fit? By how much have we shrunk the RMSE of residuals?
+
+It should be obvious from the simple visual inspection of the original series that there is a strong periodic component we are not currently capturing. It turns out to the a simple seasonal cycle: in spring/summer, the growth of terrestrial biomass in the Northern hemisphere sequesters CO2 away from the atmosphere, so the atmospheric CO2 concentrations goes down; the reverse happens in the Fall/Winter, where the fallen leaves are degraded and their organic carbon returned to mineral (CO2) form via respiration.
+
+### Harmonic waves
+
+Let us thus define harmonic waves (sines and cosines) with a period of 1 year and add them to the design matrix.
+
+```{r}
+xc<-cos(2*pi*df1$Date)
+xs<-sin(2*pi*df1$Date)
+fit.lm <- lm(CO2~Date + I(Date^2) + xc + xs, data = df1)
+
+summary(fit.lm)
+
+sqrt(mean((df1$CO2 - fit.lm$fitted.values)^2))
+
+df1 <-df1 %>% 
+  mutate(harmonic_model = fit.lm$fitted.values)
+
+ggplot(data=df1, mapping=aes(x=Date, y=CO2)) + 
+  geom_line() +
+  geom_line(data=df1, mapping=aes(x=Date, y=harmonic_model), inherit.aes = F, color="red") +
+  labs(title = "Mauna Loa Dataset (quadratic + harmonic model)",
+       y="CO2 (ppm)")
+```
+
+And the residuals...
+
+```{r}
+df1 <-df1 %>% 
+  mutate(harmonic_model_resids = CO2 - fit.lm$fitted.values)
+
+ggplot(data=df1, mapping=aes(x=Date, y=harmonic_model_resids)) + 
+  geom_line() +
+  labs(title = "Quadratic+Harmonic Model Residuals Fit",
+       y="Residuals")
+```
+
+This should look better. Does it? By how much have we shrunk the RMSE of residuals (compared to the linear model)?
+
+```{r}
+100*(1-sqrt(mean((df1$CO2 - fit.lm$fitted.values)^2))/sqrt(mean((df1$CO2 - CO2model$fitted.values)^2)))
+```
+
+80% improvement in the RMSE, that's a big improvement!
+
+### Automated model
+
+The forecast package can figure this out for us.
+
+```{r}
+
+arima_model <- forecast::auto.arima(df1$CO2, stepwise = F, approximation = F)
+
+summary(arima_model)
+
+df1 <-df1 %>% 
+  mutate(arima_model = arima_model$fitted)
+
+ggplot(data=df1, mapping=aes(x=Date, y=CO2)) + 
+  geom_line() +
+  geom_line(data=df1, mapping=aes(x=Date, y=arima_model), inherit.aes = F, color="red") +
+  labs(title = "Mauna Loa Dataset (arima_model)",
+       y="CO2 (ppm)")
+
+```
+
+This is an improvement on ou best RMSE with little work, but it's a black box. This model is probably overfit, but we could turn some knobs to help prevent that if we spent some time with it.
+
+Let's make some use of our newfound time series modeling skills.
+
+## Forecasting
+
+Let us return to our parametric model of atmospheric CO2 (quadractic trend + seasonal harmonics), which we may use to forecast future observations. Let's extend our time axis to 2050 and see what CO2 may look like then if we don't curb emissions or fail to remove it from the atmosphere:
+
+```{r}
+Date_ext <- seq(max(df1$Date), length.out=length(df1$Date), by=1/12)
+
+df2 <- df1
+
+df2[,4] <- Date_ext
+
+df2 <- df2 %>%
+  mutate(CO2_predicted = predict(fit.lm, newdata = df2)) %>%
+  select(Date, CO2_predicted)
+
+
+ggplot(data=df1, mapping=aes(x=Date, y=CO2)) + 
+  geom_line() +
+  geom_line(data=df2, mapping=aes(x=Date, y=CO2_predicted), inherit.aes = F, color="red") +
+  labs(title = "Mauna Loa CO2 forecast",
+       y="CO2 (ppm)")
+
+```
