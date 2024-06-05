@@ -9,11 +9,6 @@ knitr::opts_chunk$set(echo = TRUE)
 Recall that in spectral analysis we step into a "bizarro world", switching from the time domain to the frequency domain. There, two essential features are of interest: peaks, and background. In this tutorial, we will perform spectral analysis on Rio Grande streamflow, and see if we can learn anything interesting about it in this way.
 
 ### Packages
-In addition to the standard R packages (tidyverse, lubridate), this tutorial showcases: 
-- [imputeTS](https://cran.r-project.org/web/packages/imputeTS/index.html) for time series imputation
-- [TSA](https://cran.r-project.org/web/packages/TSA/index.html) for time series analysis, including spectral analysis
-- [stlplus](https://cran.r-project.org/web/packages/stlplus/index.html) for STL decomposition
-- [biwavelet](https://cran.r-project.org/web/packages/biwavelet/index.html) for wavelet analysis
 
 ```{r, message=FALSE}
 library(tidyverse)
