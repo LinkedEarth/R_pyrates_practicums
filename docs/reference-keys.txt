@@ -1,8 +1,8 @@
 time-series-analysis-in-r
 introduction
 background
-load-packages
 data-wrangling
+load-packages
 trend-extraction
 linear-trend-model
 quadratic-fit

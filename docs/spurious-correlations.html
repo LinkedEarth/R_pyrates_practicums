@@ -140,16 +140,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="background.html"><a href="background.html"><i class="fa fa-check"></i><b>2.1</b> Background</a></li>
-<li class="chapter" data-level="2.2" data-path="load-packages.html"><a href="load-packages.html"><i class="fa fa-check"></i><b>2.2</b> Load packages</a></li>
-<li class="chapter" data-level="2.3" data-path="data-wrangling.html"><a href="data-wrangling.html"><i class="fa fa-check"></i><b>2.3</b> Data Wrangling</a></li>
-<li class="chapter" data-level="2.4" data-path="trend-extraction.html"><a href="trend-extraction.html"><i class="fa fa-check"></i><b>2.4</b> Trend Extraction</a>
+<li class="chapter" data-level="2.2" data-path="data-wrangling.html"><a href="data-wrangling.html"><i class="fa fa-check"></i><b>2.2</b> Data Wrangling</a>
 <ul>
-<li class="chapter" data-level="2.4.1" data-path="trend-extraction.html"><a href="trend-extraction.html#linear-trend-model"><i class="fa fa-check"></i><b>2.4.1</b> Linear trend model</a></li>
-<li class="chapter" data-level="2.4.2" data-path="trend-extraction.html"><a href="trend-extraction.html#quadratic-fit"><i class="fa fa-check"></i><b>2.4.2</b> Quadratic fit</a></li>
-<li class="chapter" data-level="2.4.3" data-path="trend-extraction.html"><a href="trend-extraction.html#harmonic-waves"><i class="fa fa-check"></i><b>2.4.3</b> Harmonic waves</a></li>
-<li class="chapter" data-level="2.4.4" data-path="trend-extraction.html"><a href="trend-extraction.html#automated-model"><i class="fa fa-check"></i><b>2.4.4</b> Automated model</a></li>
+<li class="chapter" data-level="2.2.1" data-path="data-wrangling.html"><a href="data-wrangling.html#load-packages"><i class="fa fa-check"></i><b>2.2.1</b> Load packages</a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="forecasting.html"><a href="forecasting.html"><i class="fa fa-check"></i><b>2.5</b> Forecasting</a></li>
+<li class="chapter" data-level="2.3" data-path="trend-extraction.html"><a href="trend-extraction.html"><i class="fa fa-check"></i><b>2.3</b> Trend Extraction</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="trend-extraction.html"><a href="trend-extraction.html#linear-trend-model"><i class="fa fa-check"></i><b>2.3.1</b> Linear trend model</a></li>
+<li class="chapter" data-level="2.3.2" data-path="trend-extraction.html"><a href="trend-extraction.html#quadratic-fit"><i class="fa fa-check"></i><b>2.3.2</b> Quadratic fit</a></li>
+<li class="chapter" data-level="2.3.3" data-path="trend-extraction.html"><a href="trend-extraction.html#harmonic-waves"><i class="fa fa-check"></i><b>2.3.3</b> Harmonic waves</a></li>
+<li class="chapter" data-level="2.3.4" data-path="trend-extraction.html"><a href="trend-extraction.html#automated-model"><i class="fa fa-check"></i><b>2.3.4</b> Automated model</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="forecasting.html"><a href="forecasting.html"><i class="fa fa-check"></i><b>2.4</b> Forecasting</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="signal-processing-in-r.html"><a href="signal-processing-in-r.html"><i class="fa fa-check"></i><b>3</b> Signal Processing in R</a>
 <ul>
@@ -324,15 +326,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb80-8"><a href="spurious-correlations.html#cb80-8" tabindex="-1"></a>       )</span></code></pre></div>
 <pre><code>## [[1]]
 ##       datcor pvalue
-## 1 -0.1317769 0.2782
+## 1 -0.1317769  0.276
 ## 
 ## [[2]]
 ##        datcor pvalue
-## 1 -0.08088386 0.5048
+## 1 -0.08088386   0.49
 ## 
 ## [[3]]
 ##       datcor pvalue
-## 1 -0.0569587 0.4744</code></pre>
+## 1 -0.0569587 0.4754</code></pre>
 <p>Okay, so the simple Pearson correlation comes through significant (p &lt; .05), but this assumes that each value is independent, which we know is not true because we smoothed the series.</p>
 <p>The Ebisuzaki test is very useful here, and we see that the corresponding Pearson p-value does not approach .05.</p>
 <p>Take-home message: common trends can easily create the appearance of correlations (see Tyler Vigen’s excellent <a href="https://www.tylervigen.com/spurious-correlations">website</a>) and really complicate assessments of significance. If the trend is not relevant to your question, we recommend removing it prior to computing correlations, e.g. using <code>lm()</code>.</p>

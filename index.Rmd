@@ -1,5 +1,11 @@
 # Time Series Analysis in R
 
+This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the [PyRATES Timeseries Practicums in python by Julien Emile-Geay](https://linked.earth/PyRATES_practicums_py/intro.html)
+
+authors: David Edge, Nick McKay, and Julien Emile-Geay (with help from Claude.ai)
+
+<img src='http://linked.earth/FROGS/images/Pyrateslogo.jpg' width="400">
+
 ---
 title: ""
 author: "David Edge, Nick McKay, and Julien Emile-Geay (with help from Claude.ai)"
@@ -9,9 +15,4 @@ documentclass: book
 description: "This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the [PyRATES Timeseries Practicums in python by Julien Emile-Geay](https://linked.earth/PyRATES_practicums_py/intro.html)"
 ---
 
-This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the [PyRATES Timeseries Practicums in python by Julien Emile-Geay](https://linked.earth/PyRATES_practicums_py/intro.html)
-
-authors: David Edge, Nick McKay, and Julien Emile-Geay (with help from Claude.ai)
-
-<img src='http://linked.earth/FROGS/images/Pyrateslogo.jpg' width="400">
 

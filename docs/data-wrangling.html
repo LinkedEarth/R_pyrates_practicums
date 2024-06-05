@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2.3 Data Wrangling | _main.knit</title>
+  <title>2.2 Data Wrangling | _main.knit</title>
   <meta name="description" content="This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the PyRATES Timeseries Practicums in python by Julien Emile-Geay" />
   <meta name="generator" content="bookdown 0.39 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="2.3 Data Wrangling | _main.knit" />
+  <meta property="og:title" content="2.2 Data Wrangling | _main.knit" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the PyRATES Timeseries Practicums in python by Julien Emile-Geay" />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2.3 Data Wrangling | _main.knit" />
+  <meta name="twitter:title" content="2.2 Data Wrangling | _main.knit" />
   
   <meta name="twitter:description" content="This book offers a number of tutorials for analyzing time series in the R programming language. The content is adapted from the PyRATES Timeseries Practicums in python by Julien Emile-Geay" />
   
@@ -30,7 +30,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="load-packages.html"/>
+<link rel="prev" href="background.html"/>
 <link rel="next" href="trend-extraction.html"/>
 <script src="assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -140,16 +140,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="background.html"><a href="background.html"><i class="fa fa-check"></i><b>2.1</b> Background</a></li>
-<li class="chapter" data-level="2.2" data-path="load-packages.html"><a href="load-packages.html"><i class="fa fa-check"></i><b>2.2</b> Load packages</a></li>
-<li class="chapter" data-level="2.3" data-path="data-wrangling.html"><a href="data-wrangling.html"><i class="fa fa-check"></i><b>2.3</b> Data Wrangling</a></li>
-<li class="chapter" data-level="2.4" data-path="trend-extraction.html"><a href="trend-extraction.html"><i class="fa fa-check"></i><b>2.4</b> Trend Extraction</a>
+<li class="chapter" data-level="2.2" data-path="data-wrangling.html"><a href="data-wrangling.html"><i class="fa fa-check"></i><b>2.2</b> Data Wrangling</a>
 <ul>
-<li class="chapter" data-level="2.4.1" data-path="trend-extraction.html"><a href="trend-extraction.html#linear-trend-model"><i class="fa fa-check"></i><b>2.4.1</b> Linear trend model</a></li>
-<li class="chapter" data-level="2.4.2" data-path="trend-extraction.html"><a href="trend-extraction.html#quadratic-fit"><i class="fa fa-check"></i><b>2.4.2</b> Quadratic fit</a></li>
-<li class="chapter" data-level="2.4.3" data-path="trend-extraction.html"><a href="trend-extraction.html#harmonic-waves"><i class="fa fa-check"></i><b>2.4.3</b> Harmonic waves</a></li>
-<li class="chapter" data-level="2.4.4" data-path="trend-extraction.html"><a href="trend-extraction.html#automated-model"><i class="fa fa-check"></i><b>2.4.4</b> Automated model</a></li>
+<li class="chapter" data-level="2.2.1" data-path="data-wrangling.html"><a href="data-wrangling.html#load-packages"><i class="fa fa-check"></i><b>2.2.1</b> Load packages</a></li>
 </ul></li>
-<li class="chapter" data-level="2.5" data-path="forecasting.html"><a href="forecasting.html"><i class="fa fa-check"></i><b>2.5</b> Forecasting</a></li>
+<li class="chapter" data-level="2.3" data-path="trend-extraction.html"><a href="trend-extraction.html"><i class="fa fa-check"></i><b>2.3</b> Trend Extraction</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="trend-extraction.html"><a href="trend-extraction.html#linear-trend-model"><i class="fa fa-check"></i><b>2.3.1</b> Linear trend model</a></li>
+<li class="chapter" data-level="2.3.2" data-path="trend-extraction.html"><a href="trend-extraction.html#quadratic-fit"><i class="fa fa-check"></i><b>2.3.2</b> Quadratic fit</a></li>
+<li class="chapter" data-level="2.3.3" data-path="trend-extraction.html"><a href="trend-extraction.html#harmonic-waves"><i class="fa fa-check"></i><b>2.3.3</b> Harmonic waves</a></li>
+<li class="chapter" data-level="2.3.4" data-path="trend-extraction.html"><a href="trend-extraction.html#automated-model"><i class="fa fa-check"></i><b>2.3.4</b> Automated model</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="forecasting.html"><a href="forecasting.html"><i class="fa fa-check"></i><b>2.4</b> Forecasting</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="signal-processing-in-r.html"><a href="signal-processing-in-r.html"><i class="fa fa-check"></i><b>3</b> Signal Processing in R</a>
 <ul>
@@ -243,8 +245,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="data-wrangling" class="section level2 hasAnchor" number="2.3">
-<h2><span class="header-section-number">2.3</span> Data Wrangling<a href="data-wrangling.html#data-wrangling" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="data-wrangling" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Data Wrangling<a href="data-wrangling.html#data-wrangling" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="load-packages" class="section level3 hasAnchor" number="2.2.1">
+<h3><span class="header-section-number">2.2.1</span> Load packages<a href="data-wrangling.html#load-packages" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="data-wrangling.html#cb1-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-2"><a href="data-wrangling.html#cb1-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
 <p>We can pull the data directly from the Scripps Institute website</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="data-wrangling.html#cb2-1" tabindex="-1"></a>df1 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;https://scrippsco2.ucsd.edu/assets/data/atmospheric/stations/in_situ_co2/monthly/monthly_in_situ_co2_mlo.csv&quot;</span>)</span>
 <span id="cb2-2"><a href="data-wrangling.html#cb2-2" tabindex="-1"></a></span>
@@ -295,12 +301,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="_main_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <p>Great, that looks right.</p>
 </div>
+</div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="load-packages.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="background.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="trend-extraction.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
