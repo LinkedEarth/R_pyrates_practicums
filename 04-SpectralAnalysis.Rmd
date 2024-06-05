@@ -12,9 +12,9 @@ Recall that in spectral analysis we step into a "bizarro world", switching from 
 
 ```{r, message=FALSE}
 library(tidyverse)
-library(imputeTS)
-library(TSA)
-library(stlplus)
+library(scales)
+library(astrochron)
+library(lomb)
 library(biwavelet)
 ```
 
@@ -46,8 +46,8 @@ ggplot(df, aes(x = datetime, y = `discharge (cf/s)`)) +
 
 
 ```{r}
-discharge_monthly <- df %>%
-  group_by(Date = floor_date(ymd(df$datetime), '1 month')) %>%
+discharge_monthly <- df |> 
+  group_by(Date = floor_date(ymd(df$datetime), '1 month')) |> 
   summarise(discharge = mean(`discharge (cf/s)`, na.rm = TRUE), .groups = 'drop')
 
 
@@ -65,14 +65,14 @@ ggplot(discharge_monthly, aes(x=Date, y=discharge)) +
 missing_vals <- discharge_monthly$Date[which(is.na(discharge_monthly$discharge))]
 missing_vals
 
-df3 <- discharge_monthly %>%
+df3 <- discharge_monthly |> 
   filter(Date > max(missing_vals))
 
 hist(as.numeric(diff(df3$Date)),main = "Distribution of Time Steps", xlab = "Days")
 
-df4 <- df3 %>%
+df4 <- df3 |> 
   mutate(Date = decimal_date(Date)) |> 
-  astrochron::linterp(dt=(1/12),genplot = F) %>%
+  astrochron::linterp(dt=(1/12),genplot = F) |> 
   filter(Date > max(missing_vals))
 
 ggplot(df4, aes(x=Date, y=discharge)) +
@@ -84,8 +84,9 @@ ggplot(df4, aes(x=Date, y=discharge)) +
 ```
 
 ```{r}
-mtm1 <- mtm(df4,output = 1,verbose = F) %>%
-  mutate(Period = 1/Frequency) %>%
+mtm1 <- mtm(df4,output = 1,verbose = F) |> 
+  mutate(Period = 1/Frequency,
+                  Power = Power/1000) |> #account for differing units in astrochrons MTM
   dplyr::select(Period, Power)
 
 
@@ -145,8 +146,10 @@ df5 <- df4 |>
   mutate(discharge = gaussianize(discharge))
   
   
-mtm2 <-   mtm(df5,output = 1,verbose = F) %>%
-  mutate(Period = 1/Frequency) %>%
+mtm2 <-   mtm(df5,output = 1,verbose = F) |> 
+  mutate(Period = 1/Frequency, #Calculate frequency
+         Power = Power/1000, #account for differing units in astrochrons MTM
+        AR1_95_power = AR1_95_power/1000) |>  #account for differing units in astrochrons MTM
   dplyr::select(Period, Power)
 
 ggplot(mtm2, aes(x=Period, y=Power)) +
@@ -174,9 +177,12 @@ Now let's apply spectral analysis to the trend component:
 df6 <- df5 |> 
   mutate(discharge = as.numeric(stl_res$time.series[,2]))
 
+
+mtm3 <-   mtm(df6,output = 1,verbose = F,)  |> 
+  mutate(Period = 1/Frequency,
+         Power = Power/1000, #account for differing units in astrochrons MTM
+         AR1_95_power = AR1_95_power/1000) #account for differing units in astrochrons MTM
   
-mtm3 <-   mtm(df6,output = 1,verbose = F) %>%
-  mutate(Period = 1/Frequency) 
 
 trendOnlySpectrum <- ggplot(mtm3, aes(x=Period, y=Power)) +
   labs(title = "Rio Grande discharge trend-only spectrum (mtm)") +
@@ -237,34 +243,52 @@ We see that this results in a much flatter line, i.e. a smaller scaling exponent
 
 ## Gap-tolerant spectral analysis
 
-We return to the original series and apply 2 techniques to obtain the spectrum, keeping gaps in the series.
-
-1. Lomb-Scargle periodogram:
+We return to the original series and apply a technique to obtain the spectrum, keeping gaps in the series, known as the Lomb-Scargle periodogram:
 ```{r}
-# Convert to numeric vector and remove NAs
-dis_vec <- as.numeric(df$`discharge (cf/s)`)
-dis_vec <- dis_vec[!is.na(dis_vec)]
-
-# Create time vector (in days)
-time_vec <- as.numeric(df$datetime[!is.na(df$`discharge (cf/s)`)]) - as.numeric(df$datetime[1])
+#Let's average (or bin) the data into monthly intervals
+dfBinned <- df |> 
+  mutate(year = year(datetime),
+         month = month(datetime)) |> 
+  group_by(year,month) |> 
+  summarize(discharge = mean(`discharge (cf/s)`,na.rm = TRUE)) |> 
+  mutate(yearDecimal = year + month/12 - 1/24) |> 
+  filter(is.finite(discharge))
 
 # Compute Lomb-Scargle periodogram
-lomb <- astrochron::ls(dis_vec, times = time_vec, ofac = 4, scaleType = "period", plot = FALSE)
+lomb <- lomb::lsp(x = dfBinned$discharge, 
+                  times = dfBinned$yearDecimal, 
+                  ofac = 4, 
+                  scaleType = "period",normalize = "press",
+                  plot = FALSE)
 
+ltp <- data.frame(Period = 1/lomb$scanned, Power = lomb$power)
 # Plot
-plot(lomb$scanned, lomb$spec, type = "l", log = "xy",
-     xlab = "Period [days]", ylab = "PSD", main = "Lomb-Scargle Periodogram")
+ ggplot(ltp, aes(x=Period, y=Power)) +
+  labs(title = "Rio Grande discharge Lomb-Scargle spectrum") +
+  geom_line() +
+  #geom_line(aes(y = AR1_95_power),color = "red") +
+  scale_y_log10() + 
+  scale_x_continuous(trans = reverselog_trans(10),
+                     breaks = c(100,50,20,10,5,2,1,0.5,0.2),
+                     limits = c(100,0.2)) +
+  theme_light()
+
 ```
 
-2. Wavelet analysis using the Morlet wavelet:
+We can see that this resembles our interpolated MTM approach - but has some differences. Let's plot on the same graph to take a closer look:
+
 ```{r}
-# Convert to matrix format required by biwavelet
-dat <- cbind(time_vec, dis_vec)
+comboPlotData <- bind_rows(mutate(mtm1,method = "mtm"),
+                           mutate(ltp,method = "lomb-scargle"))
+  
+  ggplot(comboPlotData, aes(x=Period, y=Power,color = method)) +
+  labs(title = "Rio Grande discharge spectrum") +
+  geom_line() +
+  scale_y_log10() + 
+  scale_x_continuous(trans = reverselog_trans(10),
+                     breaks = c(100,50,20,10,5,2,1,0.5,0.2),
+                     limits = c(100,0.2)) +
+  theme_light()
 
-# Compute wavelet transform
-wav <- biwavelet::wt(dat)
-
-# Plot wavelet power spectrum
-biwavelet::plot.biwavelet(wav, plot.phase = FALSE, type = "power.norm")
 ```
-
+It is often useful to be able to compare methods and/or parameter choices, to see if the results are robust. We see that some choices lump peaks into broad bands, others tend to slice them up.
