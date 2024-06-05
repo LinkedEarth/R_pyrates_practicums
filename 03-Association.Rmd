@@ -1,4 +1,6 @@
-# Association: Correlation and Significance in R
+# Association
+
+Exploring correlation and significance in R
 
 
 ## Measures of association: NAO vs SOI
@@ -10,7 +12,10 @@ In this notebook we explore the relationship between two well-known climate indi
 * various measures of association
 * various methods of establishing the significance of a relationship
 
-### R packages
+
+### Load data and packages
+
+#### R packages
 
 * We will use `tidyverse` for data formating/manipulation as well as for plotting
 * We will also make use of `reshape2` for data formatting
@@ -23,8 +28,7 @@ library(tidyverse)
 library(astrochron)
 ```
 
-
-### Data Wrangling
+#### Data
 
 * The NAO data are from NCEP
 * The SOI data ship with Pyleoclim, which houses a few datasets that make it easy to experiment with real-world geoscientific timeseries. We'll grab the data directly from the github page.
@@ -66,7 +70,7 @@ ggplot(NAO, aes(x=datetime, y=value)) +
   labs(title = "North Atlantic Oscillation",
        y="Index",
        x="Year") +
-  theme_minimal()
+  theme_light()
 ```
 
 
@@ -135,7 +139,7 @@ ggplot(allLong, aes(x=datetime, y=value, group=variable)) +
   labs(title = "NAO vs SOI (Interpolated)",
        y="Index",
        x="Year") +
-  theme_minimal()
+  theme_light()
 ```
 
 ### Correlation
@@ -183,7 +187,7 @@ ggplot(allLong2, aes(x=datetime, y=value, group=group, color=type)) +
   labs(title = "NAO vs SOI",
        y="Index",
        x="Year") +
-  theme_minimal()
+  theme_light()
 ```
 
 

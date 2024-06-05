@@ -7,7 +7,10 @@ Goals
 * Become familiar with various filtering methods and some of their arguments
 * Become familiar with various detrending methods and some of their arguments 
 
-## Packages
+
+## Data and packages
+
+### Packages
 
 Let's first load necessary packages:
 
@@ -20,9 +23,7 @@ library(Rssa)
 library(tidyverse)
 ```
 
-## Filtering
-
-The goal of filtering is to enhance part of a signal, or suppress one or more parts. We'll use R's `signal` package, which provides a variety of filters.
+### Data
 
 Let's use data from a Hawai'i seismogram and isolate certain oscillations.
 
@@ -33,22 +34,27 @@ df$ground_motion <- df$ground_motion * 1000
 
 ggplot(df, aes(x = time, y = ground_motion)) +
   geom_line() +
-  labs(x = 'time [s]', y = 'amplitude (m)', title = 'Hawaii.e')
+  labs(x = 'time [s]', y = 'amplitude (m)', title = 'Hawaii.e') +
+  theme_light()
 ```
 
-### Filter Types
+## Filtering
+
+### Data spacing
+
+The goal of filtering is to enhance part of a signal, or suppress one or more parts. We'll use R's `signal` package, which provides a variety of filters.
 
 First, let's check if the data is evenly spaced:
 
 ```{r, echo=TRUE,message=FALSE,warning=FALSE}
 diff_time <- data.frame(resolution= diff(df$time),
-                        time = rowMeans(cbind(df$time[-1],df$time[-length(df$time)])))
-
+                        time =rowMeans(cbind(df$time[-1],df$time[-length(df$time)])))
 
 #make a histogram of the options
 ggplot(diff_time) + 
   geom_line(aes(x = time,y = resolution)) + 
-  labs(x = 'time [s]', y = 'time difference [s]', title = 'Resolution')
+  labs(x = 'time [s]', y = 'time difference [s]', title = 'Resolution') +
+  theme_light()
 ```
 
 It appears that the resolution jumps at around the 100th second. Let's interpolate to get an even resolution of 1ms:
@@ -61,12 +67,13 @@ ggplot() +
   geom_line(data = df, aes(x = time, y = ground_motion, color = 'original'), alpha = 0.4) +
   geom_line(data = data.frame(time = index(ts_interp), ground_motion = coredata(ts_interp)), 
            aes(x = time, y = ground_motion, color = 'interpolated'), alpha = 0.4) +
-  labs(x = 'time [s]', y = 'amplitude (m)', color = '')
+  labs(x = 'time [s]', y = 'amplitude (m)', color = '') +
+  theme_light()
 ```
 
 The two series are indistinguishable, so we are safe to proceed.
 
-#### Lowpass filter
+### Lowpass filter
 Let's use a Butterworth filter with a `cutoff_scale` of 2 to remove all frequencies with a period of less than 2s. This is known as a **low-pass filter**.
 
 ```{r, echo=TRUE,message=FALSE,warning=FALSE}
@@ -85,10 +92,11 @@ ggplot() +
            aes(x = time, y = ground_motion, color = 'original')) +
   geom_line(data = data.frame(time = index(ts_interp), ground_motion = lp), 
            aes(x = time, y = ground_motion, color = 'low-pass')) +
-  labs(x = 'time [s]', y = 'amplitude (m)', color = '')
+  labs(x = 'time [s]', y = 'amplitude (m)', color = '') +
+  theme_light()
 ```
 
-#### High-pass filter
+### High-pass filter
 The opposite operation is a **high-pass** filter, which keeps only frequencies higher than a given cutoff. To generate a high-pass filter, you can simply subtract the low-pass filtered version from the original:
 
 ```{r, echo=TRUE,message=FALSE,warning=FALSE}
@@ -99,10 +107,11 @@ ggplot() +
            aes(x = time, y = ground_motion, color = 'original')) +
   geom_line(data = data.frame(time = index(ts_interp), ground_motion = hp), 
            aes(x = time, y = ground_motion, color = 'high-pass'), alpha = 0.8) +
-  labs(x = 'time [s]', y = 'amplitude (m)', color = '')
+  labs(x = 'time [s]', y = 'amplitude (m)', color = '') +
+  theme_light()
 ```
 
-#### Band-pass filter
+### Band-pass filter
 If you want to isolate variability in a band of frequencies (say 1-2s), you can create a band-pass filter:
 
 ```{r, echo=TRUE,message=FALSE,warning=FALSE}
@@ -117,10 +126,11 @@ ggplot() +
            aes(x = time, y = ground_motion, color = 'original')) +
   geom_line(data = data.frame(time = index(ts_interp), ground_motion = bp), 
            aes(x = time, y = ground_motion, color = '1-2s band-pass'), alpha = 0.8) +
-  labs(x = 'time [s]', y = 'amplitude (m)', color = '')
+  labs(x = 'time [s]', y = 'amplitude (m)', color = '') +
+  theme_light()
 ```
 
-#### Notch filter
+### Notch filter
 Conversely, if you wanted to remove all variability between 1-2s (a **notch** in frequency space), you would subtract the bandpass-filtered version.
 
 ```{r, echo=TRUE,message=FALSE,warning=FALSE}
@@ -131,7 +141,8 @@ ggplot() +
            aes(x = time, y = ground_motion, color = 'original')) +
   geom_line(data = data.frame(time = index(ts_interp), ground_motion = notch), 
            aes(x = time, y = ground_motion, color = '1-2s notch'), alpha = 0.8) +
-  labs(x = 'time [s]', y = 'amplitude (m)', color = '')
+  labs(x = 'time [s]', y = 'amplitude (m)', color = '') +
+  theme_light()
 ```
 
 ## Detrending
@@ -145,7 +156,8 @@ gmst <- read_csv("https://github.com/LinkedEarth/Pyleoclim_util/raw/master/pyleo
 
 ggplot(gmst, aes(x = time, y = temp)) +
   geom_line() +
-  labs(x = 'Time [year C.E.]', y = 'GMST [°C]')
+  labs(x = 'Time [year C.E.]', y = 'GMST [°C]') +
+  theme_light()
 ```
 
 ### Detrending methods in R
@@ -183,7 +195,8 @@ gmstToPlot <- dplyr::bind_rows(gmstLinear,gmstEmd,gmstSg) %>%
 # Plot it!
 ggplot(gmstToPlot) + 
   geom_line(aes(x = time, y = Temperature, color = options)) +
-  facet_grid(method ~ .)
+  facet_grid(method ~ .) +
+  theme_light()
 
 ```
 
@@ -214,8 +227,11 @@ ggplot(gmst, aes(x = time, y = temp)) +
   geom_line() +
   geom_line(aes(y = ssa_trend$trend, color = "SSA trend"), alpha = 0.8) +
   geom_line(aes(y = gmst_ssa_dtd$temp, color = "SSA detrended"), alpha = 0.8) +
-  labs(x = 'Time [year C.E.]', y = 'GMST [°C]', color = '')
+  labs(x = 'Time [year C.E.]', y = 'GMST [°C]', color = '') +
+  theme_light()
 ```
+
+## Comparing methods
 
 This pre-processing allows us to better isolate oscillatory behavior. To see this, let's look at the spectra of the original and detrended versions:
 
@@ -248,7 +264,8 @@ bind_rows(mtmOrig,mtmSSA) %>%
   geom_line(aes(x = period,y = Power)) + 
   scale_x_continuous(trans = reverselog_trans(10),breaks = c(100,50,20,10,5,2),limits = c(100,2)) + 
   scale_y_log10() + 
-  facet_grid(data ~ .)
+  facet_grid(data ~ .) +
+  theme_light()
  
 
 ```

@@ -2,6 +2,8 @@
 
 Recall that in spectral analysis we step into a "bizarro world", switching from the time domain to the frequency domain. There, two essential features are of interest: peaks, and background. In this tutorial, we will perform spectral analysis on Rio Grande streamflow, and see if we can learn anything interesting about it in this way.
 
+## Load Data and Packages
+
 ### Packages
 
 ```{r, message=FALSE}
@@ -24,6 +26,8 @@ df$datetime <- lubridate::as_datetime(df$datetime)
 head(df)
 ```
 
+## Data preview
+
 First, let us inspect the distribution of values:
 
 ```{r}
@@ -35,10 +39,13 @@ Like many other variables, streamflow is **positively skewed**: the distribution
 ```{r}
 ggplot(df, aes(x = datetime, y = `discharge (cf/s)`)) +
   geom_line() +
-  labs(x = "Time", y = "Discharge (cf/s)")
+  labs(x = "Time", y = "Discharge (cf/s)") +
+  theme_light()
 ```
 
-## Aggregate to monthly
+## Data cleaning
+
+### Aggregate to monthly
 
 ```{r}
 discharge_monthly <- df |> 
@@ -80,7 +87,9 @@ ggplot(df4, aes(x=Date, y=discharge)) +
   theme_light()
 ```
 
-### multi-taper
+### Spectral analysis
+
+#### multi-taper
 
 ```{r}
 mtm1 <- mtm(df4,output = 1,verbose = F) |> 
@@ -109,11 +118,11 @@ The prominent feature is a strong annual cycle and higher-order harmonics, super
 
 In addition, we may be interested in interannual (year-to-year) to interdecadal (decade-to-decade) variations in streamflow. We would like to know whether the peak observed around 3-4 years in the plot above is *significant* with respect to a reasonable null.
 
-## STL
+### STL
 
 To do both of these things it would make sense to remove the annual cycle. We'll use STL decomposition for this.
 
-### Gaussianize
+#### Gaussianize
 
 Now, because of the positive skew mentioned above, it turns out that the STL decomposition has trouble with this dataset. Instead, we can use the gaussianize() to map this dataset to a standard normal. There are applications for which this would be undesirable, but for this purpose it is good:
 
@@ -139,7 +148,7 @@ gaussianize <- function(X) {
 
 ```
 
-### MTM, again
+#### MTM, again
 
 Let's take a look at how this affects the spectrum:
 
@@ -164,7 +173,7 @@ ggplot(mtm2, aes(x=Period, y=Power)) +
   theme_light()
 ```
 
-### Applying STL
+#### Applying STL
 
 We see that the spectrum is nearly unchanged, but now we can apply STL:
 
@@ -174,7 +183,7 @@ stl_res <- stl(dis, s.window = "periodic")
 plot(stl_res)
 ```
 
-### The trend
+#### The trend
 
 Now let's apply spectral analysis to the trend component:
 
@@ -206,7 +215,7 @@ Indeed this removed the annual cycle and its harmonics (for the most part). It's
 
 We see that the broadband peak in the 2-10y range is above the AR(1) spectrum, so these frequencies could be considered significant.
 
-## Estimation of scaling behavior
+### Estimation of scaling behavior
 
 In this last example, we fit a single scaling exponent to the timeseries, spanning the entire range of frequencies (periods). Under the hood, all we are doing is fitting a straight line to the spectrum:
 

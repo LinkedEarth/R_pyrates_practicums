@@ -30,7 +30,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="packages.html"/>
+<link rel="prev" href="data-and-packages.html"/>
 <link rel="next" href="detrending.html"/>
 <script src="assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
@@ -137,12 +137,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <ul class="summary">
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Time Series Analysis in R</a></li>
-<li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a>
+<li class="chapter" data-level="2" data-path="introduction-to-timeseries.html"><a href="introduction-to-timeseries.html"><i class="fa fa-check"></i><b>2</b> Introduction to Timeseries</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="background.html"><a href="background.html"><i class="fa fa-check"></i><b>2.1</b> Background</a></li>
 <li class="chapter" data-level="2.2" data-path="data-wrangling.html"><a href="data-wrangling.html"><i class="fa fa-check"></i><b>2.2</b> Data Wrangling</a>
 <ul>
 <li class="chapter" data-level="2.2.1" data-path="data-wrangling.html"><a href="data-wrangling.html#load-packages"><i class="fa fa-check"></i><b>2.2.1</b> Load packages</a></li>
+<li class="chapter" data-level="2.2.2" data-path="data-wrangling.html"><a href="data-wrangling.html#load-data"><i class="fa fa-check"></i><b>2.2.2</b> Load data</a></li>
+<li class="chapter" data-level="2.2.3" data-path="data-wrangling.html"><a href="data-wrangling.html#format-data"><i class="fa fa-check"></i><b>2.2.3</b> Format data</a></li>
+<li class="chapter" data-level="2.2.4" data-path="data-wrangling.html"><a href="data-wrangling.html#first-viz"><i class="fa fa-check"></i><b>2.2.4</b> First viz</a></li>
 </ul></li>
 <li class="chapter" data-level="2.3" data-path="trend-extraction.html"><a href="trend-extraction.html"><i class="fa fa-check"></i><b>2.3</b> Trend Extraction</a>
 <ul>
@@ -155,28 +158,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3" data-path="signal-processing-in-r.html"><a href="signal-processing-in-r.html"><i class="fa fa-check"></i><b>3</b> Signal Processing in R</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i><b>3.1</b> Packages</a></li>
+<li class="chapter" data-level="3.1" data-path="data-and-packages.html"><a href="data-and-packages.html"><i class="fa fa-check"></i><b>3.1</b> Data and packages</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="data-and-packages.html"><a href="data-and-packages.html#packages"><i class="fa fa-check"></i><b>3.1.1</b> Packages</a></li>
+<li class="chapter" data-level="3.1.2" data-path="data-and-packages.html"><a href="data-and-packages.html#data"><i class="fa fa-check"></i><b>3.1.2</b> Data</a></li>
+</ul></li>
 <li class="chapter" data-level="3.2" data-path="filtering.html"><a href="filtering.html"><i class="fa fa-check"></i><b>3.2</b> Filtering</a>
 <ul>
-<li class="chapter" data-level="3.2.1" data-path="filtering.html"><a href="filtering.html#filter-types"><i class="fa fa-check"></i><b>3.2.1</b> Filter Types</a></li>
+<li class="chapter" data-level="3.2.1" data-path="filtering.html"><a href="filtering.html#data-spacing"><i class="fa fa-check"></i><b>3.2.1</b> Data spacing</a></li>
+<li class="chapter" data-level="3.2.2" data-path="filtering.html"><a href="filtering.html#lowpass-filter"><i class="fa fa-check"></i><b>3.2.2</b> Lowpass filter</a></li>
+<li class="chapter" data-level="3.2.3" data-path="filtering.html"><a href="filtering.html#high-pass-filter"><i class="fa fa-check"></i><b>3.2.3</b> High-pass filter</a></li>
+<li class="chapter" data-level="3.2.4" data-path="filtering.html"><a href="filtering.html#band-pass-filter"><i class="fa fa-check"></i><b>3.2.4</b> Band-pass filter</a></li>
+<li class="chapter" data-level="3.2.5" data-path="filtering.html"><a href="filtering.html#notch-filter"><i class="fa fa-check"></i><b>3.2.5</b> Notch filter</a></li>
 </ul></li>
 <li class="chapter" data-level="3.3" data-path="detrending.html"><a href="detrending.html"><i class="fa fa-check"></i><b>3.3</b> Detrending</a>
 <ul>
 <li class="chapter" data-level="3.3.1" data-path="detrending.html"><a href="detrending.html#detrending-methods-in-r"><i class="fa fa-check"></i><b>3.3.1</b> Detrending methods in R</a></li>
 <li class="chapter" data-level="3.3.2" data-path="detrending.html"><a href="detrending.html#ssa-detrending"><i class="fa fa-check"></i><b>3.3.2</b> SSA detrending</a></li>
 </ul></li>
-<li class="chapter" data-level="3.4" data-path="takeways.html"><a href="takeways.html"><i class="fa fa-check"></i><b>3.4</b> Takeways</a></li>
+<li class="chapter" data-level="3.4" data-path="comparing-methods.html"><a href="comparing-methods.html"><i class="fa fa-check"></i><b>3.4</b> Comparing methods</a></li>
+<li class="chapter" data-level="3.5" data-path="takeways.html"><a href="takeways.html"><i class="fa fa-check"></i><b>3.5</b> Takeways</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="association-correlation-and-significance-in-r.html"><a href="association-correlation-and-significance-in-r.html"><i class="fa fa-check"></i><b>4</b> Association: Correlation and Significance in R</a>
 <ul>
 <li class="chapter" data-level="4.1" data-path="measures-of-association-nao-vs-soi.html"><a href="measures-of-association-nao-vs-soi.html"><i class="fa fa-check"></i><b>4.1</b> Measures of association: NAO vs SOI</a>
 <ul>
-<li class="chapter" data-level="4.1.1" data-path="measures-of-association-nao-vs-soi.html"><a href="measures-of-association-nao-vs-soi.html#r-packages"><i class="fa fa-check"></i><b>4.1.1</b> R packages</a></li>
-<li class="chapter" data-level="4.1.2" data-path="measures-of-association-nao-vs-soi.html"><a href="measures-of-association-nao-vs-soi.html#data-wrangling-1"><i class="fa fa-check"></i><b>4.1.2</b> Data Wrangling</a></li>
-<li class="chapter" data-level="4.1.3" data-path="measures-of-association-nao-vs-soi.html"><a href="measures-of-association-nao-vs-soi.html#format-and-plot-the-nao-data"><i class="fa fa-check"></i><b>4.1.3</b> Format and plot the NAO data</a></li>
-<li class="chapter" data-level="4.1.4" data-path="measures-of-association-nao-vs-soi.html"><a href="measures-of-association-nao-vs-soi.html#merge-the-soi-data-into-the-nao-data.frame"><i class="fa fa-check"></i><b>4.1.4</b> Merge the SOI data into the NAO data.frame</a></li>
-<li class="chapter" data-level="4.1.5" data-path="measures-of-association-nao-vs-soi.html"><a href="measures-of-association-nao-vs-soi.html#interpolation"><i class="fa fa-check"></i><b>4.1.5</b> Interpolation</a></li>
-<li class="chapter" data-level="4.1.6" data-path="measures-of-association-nao-vs-soi.html"><a href="measures-of-association-nao-vs-soi.html#correlation"><i class="fa fa-check"></i><b>4.1.6</b> Correlation</a></li>
+<li class="chapter" data-level="4.1.1" data-path="measures-of-association-nao-vs-soi.html"><a href="measures-of-association-nao-vs-soi.html#load-data-and-packages"><i class="fa fa-check"></i><b>4.1.1</b> Load data and packages</a></li>
+<li class="chapter" data-level="4.1.2" data-path="measures-of-association-nao-vs-soi.html"><a href="measures-of-association-nao-vs-soi.html#format-and-plot-the-nao-data"><i class="fa fa-check"></i><b>4.1.2</b> Format and plot the NAO data</a></li>
+<li class="chapter" data-level="4.1.3" data-path="measures-of-association-nao-vs-soi.html"><a href="measures-of-association-nao-vs-soi.html#merge-the-soi-data-into-the-nao-data.frame"><i class="fa fa-check"></i><b>4.1.3</b> Merge the SOI data into the NAO data.frame</a></li>
+<li class="chapter" data-level="4.1.4" data-path="measures-of-association-nao-vs-soi.html"><a href="measures-of-association-nao-vs-soi.html#interpolation"><i class="fa fa-check"></i><b>4.1.4</b> Interpolation</a></li>
+<li class="chapter" data-level="4.1.5" data-path="measures-of-association-nao-vs-soi.html"><a href="measures-of-association-nao-vs-soi.html#correlation"><i class="fa fa-check"></i><b>4.1.5</b> Correlation</a></li>
 </ul></li>
 <li class="chapter" data-level="4.2" data-path="spurious-correlations.html"><a href="spurious-correlations.html"><i class="fa fa-check"></i><b>4.2</b> Spurious Correlations</a>
 <ul>
@@ -247,27 +258,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="filtering" class="section level2 hasAnchor" number="3.2">
 <h2><span class="header-section-number">3.2</span> Filtering<a href="filtering.html#filtering" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="data-spacing" class="section level3 hasAnchor" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> Data spacing<a href="filtering.html#data-spacing" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The goal of filtering is to enhance part of a signal, or suppress one or more parts. We’ll use R’s <code>signal</code> package, which provides a variety of filters.</p>
-<p>Let’s use data from a Hawai’i seismogram and isolate certain oscillations.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="filtering.html#cb35-1" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&#39;https://github.com/LinkedEarth/PyRATES_practicums_py/raw/main/jbook/data/hawaii.e.dat&#39;</span>, <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">&#39;time&#39;</span>, <span class="st">&#39;ground_motion&#39;</span>))</span>
-<span id="cb35-2"><a href="filtering.html#cb35-2" tabindex="-1"></a>df<span class="sc">$</span>time <span class="ot">&lt;-</span> df<span class="sc">$</span>time <span class="sc">/</span> <span class="dv">1000</span></span>
-<span id="cb35-3"><a href="filtering.html#cb35-3" tabindex="-1"></a>df<span class="sc">$</span>ground_motion <span class="ot">&lt;-</span> df<span class="sc">$</span>ground_motion <span class="sc">*</span> <span class="dv">1000</span></span>
-<span id="cb35-4"><a href="filtering.html#cb35-4" tabindex="-1"></a></span>
-<span id="cb35-5"><a href="filtering.html#cb35-5" tabindex="-1"></a><span class="fu">ggplot</span>(df, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> ground_motion)) <span class="sc">+</span></span>
-<span id="cb35-6"><a href="filtering.html#cb35-6" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb35-7"><a href="filtering.html#cb35-7" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;time [s]&#39;</span>, <span class="at">y =</span> <span class="st">&#39;amplitude (m)&#39;</span>, <span class="at">title =</span> <span class="st">&#39;Hawaii.e&#39;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
-<div id="filter-types" class="section level3 hasAnchor" number="3.2.1">
-<h3><span class="header-section-number">3.2.1</span> Filter Types<a href="filtering.html#filter-types" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>First, let’s check if the data is evenly spaced:</p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="filtering.html#cb36-1" tabindex="-1"></a>diff_time <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">resolution=</span> <span class="fu">diff</span>(df<span class="sc">$</span>time),</span>
-<span id="cb36-2"><a href="filtering.html#cb36-2" tabindex="-1"></a>                        <span class="at">time =</span> <span class="fu">rowMeans</span>(<span class="fu">cbind</span>(df<span class="sc">$</span>time[<span class="sc">-</span><span class="dv">1</span>],df<span class="sc">$</span>time[<span class="sc">-</span><span class="fu">length</span>(df<span class="sc">$</span>time)])))</span>
+<span id="cb36-2"><a href="filtering.html#cb36-2" tabindex="-1"></a>                        <span class="at">time =</span><span class="fu">rowMeans</span>(<span class="fu">cbind</span>(df<span class="sc">$</span>time[<span class="sc">-</span><span class="dv">1</span>],df<span class="sc">$</span>time[<span class="sc">-</span><span class="fu">length</span>(df<span class="sc">$</span>time)])))</span>
 <span id="cb36-3"><a href="filtering.html#cb36-3" tabindex="-1"></a></span>
-<span id="cb36-4"><a href="filtering.html#cb36-4" tabindex="-1"></a></span>
-<span id="cb36-5"><a href="filtering.html#cb36-5" tabindex="-1"></a><span class="co">#make a histogram of the options</span></span>
-<span id="cb36-6"><a href="filtering.html#cb36-6" tabindex="-1"></a><span class="fu">ggplot</span>(diff_time) <span class="sc">+</span> </span>
-<span id="cb36-7"><a href="filtering.html#cb36-7" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> time,<span class="at">y =</span> resolution)) <span class="sc">+</span> </span>
-<span id="cb36-8"><a href="filtering.html#cb36-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;time [s]&#39;</span>, <span class="at">y =</span> <span class="st">&#39;time difference [s]&#39;</span>, <span class="at">title =</span> <span class="st">&#39;Resolution&#39;</span>)</span></code></pre></div>
+<span id="cb36-4"><a href="filtering.html#cb36-4" tabindex="-1"></a><span class="co">#make a histogram of the options</span></span>
+<span id="cb36-5"><a href="filtering.html#cb36-5" tabindex="-1"></a><span class="fu">ggplot</span>(diff_time) <span class="sc">+</span> </span>
+<span id="cb36-6"><a href="filtering.html#cb36-6" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> time,<span class="at">y =</span> resolution)) <span class="sc">+</span> </span>
+<span id="cb36-7"><a href="filtering.html#cb36-7" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;time [s]&#39;</span>, <span class="at">y =</span> <span class="st">&#39;time difference [s]&#39;</span>, <span class="at">title =</span> <span class="st">&#39;Resolution&#39;</span>) <span class="sc">+</span></span>
+<span id="cb36-8"><a href="filtering.html#cb36-8" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 <p>It appears that the resolution jumps at around the 100th second. Let’s interpolate to get an even resolution of 1ms:</p>
 <div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="filtering.html#cb37-1" tabindex="-1"></a>ts <span class="ot">&lt;-</span> <span class="fu">zoo</span>(df<span class="sc">$</span>ground_motion, df<span class="sc">$</span>time)</span>
@@ -277,11 +279,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb37-5"><a href="filtering.html#cb37-5" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> df, <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> ground_motion, <span class="at">color =</span> <span class="st">&#39;original&#39;</span>), <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
 <span id="cb37-6"><a href="filtering.html#cb37-6" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">time =</span> <span class="fu">index</span>(ts_interp), <span class="at">ground_motion =</span> <span class="fu">coredata</span>(ts_interp)), </span>
 <span id="cb37-7"><a href="filtering.html#cb37-7" tabindex="-1"></a>           <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> ground_motion, <span class="at">color =</span> <span class="st">&#39;interpolated&#39;</span>), <span class="at">alpha =</span> <span class="fl">0.4</span>) <span class="sc">+</span></span>
-<span id="cb37-8"><a href="filtering.html#cb37-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;time [s]&#39;</span>, <span class="at">y =</span> <span class="st">&#39;amplitude (m)&#39;</span>, <span class="at">color =</span> <span class="st">&#39;&#39;</span>)</span></code></pre></div>
+<span id="cb37-8"><a href="filtering.html#cb37-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;time [s]&#39;</span>, <span class="at">y =</span> <span class="st">&#39;amplitude (m)&#39;</span>, <span class="at">color =</span> <span class="st">&#39;&#39;</span>) <span class="sc">+</span></span>
+<span id="cb37-9"><a href="filtering.html#cb37-9" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 <p>The two series are indistinguishable, so we are safe to proceed.</p>
-<div id="lowpass-filter" class="section level4 hasAnchor" number="3.2.1.1">
-<h4><span class="header-section-number">3.2.1.1</span> Lowpass filter<a href="filtering.html#lowpass-filter" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+</div>
+<div id="lowpass-filter" class="section level3 hasAnchor" number="3.2.2">
+<h3><span class="header-section-number">3.2.2</span> Lowpass filter<a href="filtering.html#lowpass-filter" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Let’s use a Butterworth filter with a <code>cutoff_scale</code> of 2 to remove all frequencies with a period of less than 2s. This is known as a <strong>low-pass filter</strong>.</p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="filtering.html#cb38-1" tabindex="-1"></a>fs <span class="ot">&lt;-</span> <span class="dv">1000</span>  <span class="co"># 1 kHz sampling rate</span></span>
 <span id="cb38-2"><a href="filtering.html#cb38-2" tabindex="-1"></a>f_nyq <span class="ot">&lt;-</span> fs <span class="sc">/</span> <span class="dv">2</span>  <span class="co"># Nyquist frequency</span></span>
@@ -298,11 +302,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb38-13"><a href="filtering.html#cb38-13" tabindex="-1"></a>           <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> ground_motion, <span class="at">color =</span> <span class="st">&#39;original&#39;</span>)) <span class="sc">+</span></span>
 <span id="cb38-14"><a href="filtering.html#cb38-14" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">time =</span> <span class="fu">index</span>(ts_interp), <span class="at">ground_motion =</span> lp), </span>
 <span id="cb38-15"><a href="filtering.html#cb38-15" tabindex="-1"></a>           <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> ground_motion, <span class="at">color =</span> <span class="st">&#39;low-pass&#39;</span>)) <span class="sc">+</span></span>
-<span id="cb38-16"><a href="filtering.html#cb38-16" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;time [s]&#39;</span>, <span class="at">y =</span> <span class="st">&#39;amplitude (m)&#39;</span>, <span class="at">color =</span> <span class="st">&#39;&#39;</span>)</span></code></pre></div>
+<span id="cb38-16"><a href="filtering.html#cb38-16" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;time [s]&#39;</span>, <span class="at">y =</span> <span class="st">&#39;amplitude (m)&#39;</span>, <span class="at">color =</span> <span class="st">&#39;&#39;</span>) <span class="sc">+</span></span>
+<span id="cb38-17"><a href="filtering.html#cb38-17" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 </div>
-<div id="high-pass-filter" class="section level4 hasAnchor" number="3.2.1.2">
-<h4><span class="header-section-number">3.2.1.2</span> High-pass filter<a href="filtering.html#high-pass-filter" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="high-pass-filter" class="section level3 hasAnchor" number="3.2.3">
+<h3><span class="header-section-number">3.2.3</span> High-pass filter<a href="filtering.html#high-pass-filter" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The opposite operation is a <strong>high-pass</strong> filter, which keeps only frequencies higher than a given cutoff. To generate a high-pass filter, you can simply subtract the low-pass filtered version from the original:</p>
 <div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="filtering.html#cb39-1" tabindex="-1"></a>hp <span class="ot">&lt;-</span> <span class="fu">coredata</span>(ts_interp) <span class="sc">-</span> lp</span>
 <span id="cb39-2"><a href="filtering.html#cb39-2" tabindex="-1"></a></span>
@@ -311,11 +316,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb39-5"><a href="filtering.html#cb39-5" tabindex="-1"></a>           <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> ground_motion, <span class="at">color =</span> <span class="st">&#39;original&#39;</span>)) <span class="sc">+</span></span>
 <span id="cb39-6"><a href="filtering.html#cb39-6" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">time =</span> <span class="fu">index</span>(ts_interp), <span class="at">ground_motion =</span> hp), </span>
 <span id="cb39-7"><a href="filtering.html#cb39-7" tabindex="-1"></a>           <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> ground_motion, <span class="at">color =</span> <span class="st">&#39;high-pass&#39;</span>), <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb39-8"><a href="filtering.html#cb39-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;time [s]&#39;</span>, <span class="at">y =</span> <span class="st">&#39;amplitude (m)&#39;</span>, <span class="at">color =</span> <span class="st">&#39;&#39;</span>)</span></code></pre></div>
+<span id="cb39-8"><a href="filtering.html#cb39-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;time [s]&#39;</span>, <span class="at">y =</span> <span class="st">&#39;amplitude (m)&#39;</span>, <span class="at">color =</span> <span class="st">&#39;&#39;</span>) <span class="sc">+</span></span>
+<span id="cb39-9"><a href="filtering.html#cb39-9" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
 </div>
-<div id="band-pass-filter" class="section level4 hasAnchor" number="3.2.1.3">
-<h4><span class="header-section-number">3.2.1.3</span> Band-pass filter<a href="filtering.html#band-pass-filter" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="band-pass-filter" class="section level3 hasAnchor" number="3.2.4">
+<h3><span class="header-section-number">3.2.4</span> Band-pass filter<a href="filtering.html#band-pass-filter" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>If you want to isolate variability in a band of frequencies (say 1-2s), you can create a band-pass filter:</p>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="filtering.html#cb40-1" tabindex="-1"></a>f_low <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>  <span class="co"># 2s period</span></span>
 <span id="cb40-2"><a href="filtering.html#cb40-2" tabindex="-1"></a>f_high <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">1</span>  <span class="co"># 1s period</span></span>
@@ -328,11 +334,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb40-9"><a href="filtering.html#cb40-9" tabindex="-1"></a>           <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> ground_motion, <span class="at">color =</span> <span class="st">&#39;original&#39;</span>)) <span class="sc">+</span></span>
 <span id="cb40-10"><a href="filtering.html#cb40-10" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">time =</span> <span class="fu">index</span>(ts_interp), <span class="at">ground_motion =</span> bp), </span>
 <span id="cb40-11"><a href="filtering.html#cb40-11" tabindex="-1"></a>           <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> ground_motion, <span class="at">color =</span> <span class="st">&#39;1-2s band-pass&#39;</span>), <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb40-12"><a href="filtering.html#cb40-12" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;time [s]&#39;</span>, <span class="at">y =</span> <span class="st">&#39;amplitude (m)&#39;</span>, <span class="at">color =</span> <span class="st">&#39;&#39;</span>)</span></code></pre></div>
+<span id="cb40-12"><a href="filtering.html#cb40-12" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;time [s]&#39;</span>, <span class="at">y =</span> <span class="st">&#39;amplitude (m)&#39;</span>, <span class="at">color =</span> <span class="st">&#39;&#39;</span>) <span class="sc">+</span></span>
+<span id="cb40-13"><a href="filtering.html#cb40-13" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
 </div>
-<div id="notch-filter" class="section level4 hasAnchor" number="3.2.1.4">
-<h4><span class="header-section-number">3.2.1.4</span> Notch filter<a href="filtering.html#notch-filter" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="notch-filter" class="section level3 hasAnchor" number="3.2.5">
+<h3><span class="header-section-number">3.2.5</span> Notch filter<a href="filtering.html#notch-filter" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Conversely, if you wanted to remove all variability between 1-2s (a <strong>notch</strong> in frequency space), you would subtract the bandpass-filtered version.</p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="filtering.html#cb41-1" tabindex="-1"></a>notch <span class="ot">&lt;-</span> <span class="fu">coredata</span>(ts_interp) <span class="sc">-</span> bp</span>
 <span id="cb41-2"><a href="filtering.html#cb41-2" tabindex="-1"></a></span>
@@ -341,9 +348,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb41-5"><a href="filtering.html#cb41-5" tabindex="-1"></a>           <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> ground_motion, <span class="at">color =</span> <span class="st">&#39;original&#39;</span>)) <span class="sc">+</span></span>
 <span id="cb41-6"><a href="filtering.html#cb41-6" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">time =</span> <span class="fu">index</span>(ts_interp), <span class="at">ground_motion =</span> notch), </span>
 <span id="cb41-7"><a href="filtering.html#cb41-7" tabindex="-1"></a>           <span class="fu">aes</span>(<span class="at">x =</span> time, <span class="at">y =</span> ground_motion, <span class="at">color =</span> <span class="st">&#39;1-2s notch&#39;</span>), <span class="at">alpha =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
-<span id="cb41-8"><a href="filtering.html#cb41-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;time [s]&#39;</span>, <span class="at">y =</span> <span class="st">&#39;amplitude (m)&#39;</span>, <span class="at">color =</span> <span class="st">&#39;&#39;</span>)</span></code></pre></div>
+<span id="cb41-8"><a href="filtering.html#cb41-8" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&#39;time [s]&#39;</span>, <span class="at">y =</span> <span class="st">&#39;amplitude (m)&#39;</span>, <span class="at">color =</span> <span class="st">&#39;&#39;</span>) <span class="sc">+</span></span>
+<span id="cb41-9"><a href="filtering.html#cb41-9" tabindex="-1"></a>  <span class="fu">theme_light</span>()</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
-</div>
 </div>
 </div>
             </section>
@@ -351,7 +358,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="packages.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="data-and-packages.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="detrending.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>

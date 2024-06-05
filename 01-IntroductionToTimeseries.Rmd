@@ -1,8 +1,8 @@
-# Introduction
+# Introduction to Timeseries
+
+What is a time series? Let's play with some data to get the concept
 
 Content: Data Wrangling, Trend estimation
-
-adapted from the Python tutorial by: Julien Emile-Geay, USC Earth Sciences (link)
 
 ## Background
 
@@ -28,6 +28,8 @@ library(dplyr)
 library(ggplot2)
 ```
 
+### Load data
+
 We can pull the data directly from the Scripps Institute website
 
 ```{r}
@@ -45,7 +47,11 @@ df1 <- read.csv("https://scrippsco2.ucsd.edu/assets/data/atmospheric/stations/in
 head(df1)
 ```
 
-Okay, not the data looks right. Lets add the column names.
+Okay, not the data looks right. 
+
+### Format data
+
+Lets add the column names.
 
 ```{r}
 names(df1) <- c('Yr','Mn','XLDate','Date','CO2','seasonally adjusted','fit','seasonally adjusted fit','CO2 filled','seasonally adjusted filled','Sta')
@@ -58,13 +64,16 @@ The missing value default here is -99.99, let's change that to `NA`, R's standar
 df1 <- df1 %>% mutate(across(everything(), ~replace(., . ==  -99.99 , NA)))
 ```
 
+### First viz
+
 Okay, we're ready for an initial plot
 
 ```{r}
 ggplot(data=df1, mapping=aes(x=Date, y=CO2)) + 
   geom_line() +
   labs(title = "Mauna Loa Dataset (latest)",
-       y="CO2 (ppm)")
+       y="CO2 (ppm)") +
+  theme_light()
 ```
 
 Great, that looks right.
@@ -92,7 +101,6 @@ What information can you glean from this summary? What features would you check 
 
 Let us look at the plot, shall we? How well does the time variable predict CO2?
 
-Next, we can use the `predict()` method to predict CO2 given the design matrix (1, t)
 
 ```{r}
 df1 <-df1 %>% 
@@ -102,7 +110,8 @@ ggplot(data=df1, mapping=aes(x=Date, y=CO2)) +
   geom_line() +
   geom_line(data=df1, mapping=aes(x=Date, y=linear_model), inherit.aes = F, color="red") +
   labs(title = "Mauna Loa Dataset (linear model)",
-       y="CO2 (ppm)")
+       y="CO2 (ppm)") +
+  theme_light()
 ```
 
 We see that the line captures the first order behavior of the series, but that leaves a lot to be desired. To zoom in, we can look at the residuals (original values - fitted values) as a function of fitted values:
@@ -114,7 +123,8 @@ df1 <-df1 %>%
 ggplot(data=df1, mapping=aes(x=Date, y=linear_model_resids)) + 
   geom_line() +
   labs(title = "Linear Model Residuals Fit",
-       y="Residuals")
+       y="Residuals") +
+  theme_light()
 ```
 
 To be quantitative, we can look at the [Root Mean Squared Error](https://en.wikipedia.org/wiki/Root_mean_square_deviation) of these residuals:
@@ -141,7 +151,8 @@ ggplot(data=df1, mapping=aes(x=Date, y=CO2)) +
   geom_line() +
   geom_line(data=df1, mapping=aes(x=Date, y=quadratic_model), inherit.aes = F, color="red") +
   labs(title = "Mauna Loa Dataset (quadratic model)",
-       y="CO2 (ppm)")
+       y="CO2 (ppm)") +
+  theme_light()
 ```
 
 Let's see the residuals and the RMSE for this model
@@ -155,7 +166,8 @@ df1 <-df1 %>%
 ggplot(data=df1, mapping=aes(x=Date, y=quadratic_model_resids)) + 
   geom_line() +
   labs(title = "Quadratic Model Residuals Fit",
-       y="Residuals")
+       y="Residuals") +
+  theme_light()
 ```
 
 Does this improve the fit? By how much have we shrunk the RMSE of residuals?
@@ -182,7 +194,8 @@ ggplot(data=df1, mapping=aes(x=Date, y=CO2)) +
   geom_line() +
   geom_line(data=df1, mapping=aes(x=Date, y=harmonic_model), inherit.aes = F, color="red") +
   labs(title = "Mauna Loa Dataset (quadratic + harmonic model)",
-       y="CO2 (ppm)")
+       y="CO2 (ppm)") +
+  theme_light()
 ```
 
 And the residuals...
@@ -194,7 +207,8 @@ df1 <-df1 %>%
 ggplot(data=df1, mapping=aes(x=Date, y=harmonic_model_resids)) + 
   geom_line() +
   labs(title = "Quadratic+Harmonic Model Residuals Fit",
-       y="Residuals")
+       y="Residuals") +
+  theme_light()
 ```
 
 This should look better. Does it? By how much have we shrunk the RMSE of residuals (compared to the linear model)?
@@ -222,7 +236,8 @@ ggplot(data=df1, mapping=aes(x=Date, y=CO2)) +
   geom_line() +
   geom_line(data=df1, mapping=aes(x=Date, y=arima_model), inherit.aes = F, color="red") +
   labs(title = "Mauna Loa Dataset (arima_model)",
-       y="CO2 (ppm)")
+       y="CO2 (ppm)") +
+  theme_light()
 
 ```
 
@@ -250,6 +265,7 @@ ggplot(data=df1, mapping=aes(x=Date, y=CO2)) +
   geom_line() +
   geom_line(data=df2, mapping=aes(x=Date, y=CO2_predicted), inherit.aes = F, color="red") +
   labs(title = "Mauna Loa CO2 forecast",
-       y="CO2 (ppm)")
+       y="CO2 (ppm)") +
+  theme_light()
 
 ```

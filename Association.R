@@ -25,7 +25,7 @@ ggplot(NAO, aes(x=datetime, y=value)) +
   labs(title = "North Atlantic Oscillation",
        y="Index",
        x="Year") +
-  theme_minimal()
+  theme_light()
 
 #Evenly sampled version:
 # NAO <- NAO %>%
@@ -37,7 +37,7 @@ ggplot(NAO, aes(x=datetime, y=value)) +
 #   labs(title = "North Atlantic Oscillation (Interpolated)",
 #        y="Index",
 #        x="Year") +
-#   theme_minimal()
+#   theme_light()
 
 #Merge with SOI
 SOI <- SOI %>%
@@ -70,7 +70,7 @@ ggplot(allLong, aes(x=datetime, y=value, group=variable)) +
   labs(title = "NAO vs SOI (Interpolated)",
        y="Index",
        x="Year") +
-  theme_minimal()
+  theme_light()
 
 lapply(c("pearson", "spearman", "kendall"), function(x) cor.test(dfAll$NAO, dfAll$SOI, method = x))
 
@@ -94,7 +94,7 @@ ggplot(allLong2, aes(x=datetime, y=value, group=group, color=type)) +
   labs(title = "NAO vs SOI",
        y="Index",
        x="Year") +
-  theme_minimal()
+  theme_light()
 
 lapply(c("pearson", "spearman", "kendall"), function(x) cor.test(dfAll$lowpassNAO, dfAll$lowpassSOI, method = x))
 lapply(c(1,2,3), function(x) surrogateCor(dfAll$lowpassNAO,dfAll$lowpassSOI,nsim = 10000,cormethod = x, genplot = F, verbose = F))

@@ -2,13 +2,15 @@
 
 Wavelet analysis is one of the most misused tools in climate timeseries analysis, partially due to the popularity of [this webpage](https://atoc.colorado.edu/research/wavelets/), which used to feature an interactive plotter. Wavelets are a very broad topic in applied mathematics, which we won’t attempt to summarize here. In the paleoclimate context, the term nearly always refers to the Continuous Wavelet Transform, and 99% of the time this uses the Morlet wavelet, which is a generalization of Fourier bases to endow them with localization in time and scale. Accordingly, this demo focuses on how to obtain wavelet spectra from the iconic EPICA Dome C record by [Jouzel et al. (2007)](https://doi.org/10.1126/science.1141038), and how to establish its coherency with a record of atmospheric CO2.
 
+## Data and packages
+
 ### Packages
 
 dplyr, ggplot2, tidyr, biwavelet
 
 Let's load these:
 
-```{r, echo = FALSE, message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE}
 library(dplyr)
 library(tidyr)
 library(ggplot2)
@@ -56,7 +58,9 @@ First, take a look at the distribution of time increments. We'll use the base fu
 deltaT <- data.frame("ID" = 1:(length(dDdf$AgeKy)-1),
                      "interval" = diff(dDdf$AgeKy))
 
-ggplot(data = deltaT, mapping = aes(x=interval)) + geom_histogram()
+ggplot(data = deltaT, mapping = aes(x=interval)) + 
+  geom_histogram() +
+  theme_light()
 ```
 
 The data are not evenly spaced, which is a challenge because most timeseries analysis methods (particularly Fourier and wavelet analysis) make the implicit assumption that data are evenly spaced, so applying those tools to unevenly-spaced data will result in methods not behaving as they are supposed to. We therefore interpolate the data at 500y resolution to enable the much faster CWT algorithm of Torrence & Compo (1998) to run. We also standardize because the original data range is rather large, which could cause numerical issues.
@@ -158,8 +162,9 @@ co2_dD <- merge.data.frame(co2df, dDdfnew, all = T)
 co2_dD_long <- gather(co2_dD, variable, value, -Age)
 co2_dD_long <- na.omit(co2_dD_long)
 
-ggplot(data=co2_dD_long, mapping = aes(x=Age, y=value, color=variable)) + geom_line() +
-theme_light()
+ggplot(data=co2_dD_long, mapping = aes(x=Age, y=value, color=variable)) + 
+  geom_line() +
+  theme_light()
 
 ```
 
