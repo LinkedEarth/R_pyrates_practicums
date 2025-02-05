@@ -1,0 +1,10 @@
+cff-version: 0.0.1.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: "Edge"
+    given-names: "David"
+    orcid: "https://orcid.org/0000-0001-6938-2850"
+title: "Time Series Analysis in R - Practicum"
+version: v0.0.1
+date-released: 2025-02-04
+url: "https://github.com/LinkedEarth/R_pyrates_practicums"
